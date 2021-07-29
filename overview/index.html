@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Spring框架概述 #  Version 5.2.2.RELEASE
+ Spring让创建企业级的Java应用变得更简单。它提供了在企业环境中使用Java语言所需的一切，支持Groovy和Kotlin作为JVM上的替代语言，并具有根据应用程序的需要而创建多种体系结构的灵活性。从Spring框架5.1开始，Spring需要JDK8&#43;（Java SE 8&#43;）并为JDK 11 LTS提供开箱即用的支持。建议使用Java SE 8 update 60作为Java 8的最低补丁版本，但通常更建议使用最新的补丁版本。
+Spring支持广泛的应用场景。在大型企业中，应用程序通常存在了很长时间，并且必须在JDK和应用程序服务器上运行，其升级周期超出了开发人员的控制。其他的可能作为一个jar运行，服务器可能嵌入到云环境中。还有一些可能是不需要服务器的独立应用程序（如批处理或集成工作负载）。
+Spring是开源的。它有一个庞大而活跃的社区，根据各种各样的实际用例提供持续的反馈。这帮助Spring在很长一段时间内成功地进化。
+1. 我们所说的“Spring” #  “Spring”一词在不同的语境中意味着不同的事物。它可以用来指代Spring框架项目本身，而Spring正是从这里开始的。随着时间的推移，其他Spring项目已经构建在Spring框架之上。通常，当人们说“Spring”时，他们指的是整个项目家族。这份参考文档主要关注Spring的基础：Spring框架本身。
+Spring框架分为几个模块，应用程序可以选择他们需要的模块。核心容器模块是核心，包括了配置模型和依赖注入机制。除此之外，Spring框架还为不同的应用程序体系结构提供了基础支持，包括消息传递、事务数据和持久化以及web服务。它还包括基于Servlet的Spring MVC框架和Spring WebFlux反应式web框架。
+关于模块的注意事项：Spring的framework jar允许部署到Jdk9的模块路径（“Jigsaw”）。为了在开启Jigsaw的应用程序中使用，Spring框架5个jar附带了“Automatic-Module-Name”清单条目，这些条目定义了独立于jar artifact的稳定语言级模块名（“spring.core”、“spring.context”等）（jar遵循相同的命名模式，用“-”代替“.”，例如“spring-core”和“spring-context”）。当然，Spring的framework jar在JDK8和JDK9&#43;上的类路径上都能正常工作。
+ 2. Spring和Spring框架的历史 #  Spring作为对早期J2EE规范复杂性的解决方案于2003年诞生。虽然有些人认为Java EE和Spring将处于竞争状态，但实际上，Spring是java EE的补充。Spring编程模型不支持Java EE的平台规范；相反，它与从EE旗下精心挑选的单个规范相结合：
+ Servlet API (JSR 340) WebSocket API (JSR 356) Concurrency Utilities (JSR 236) JSON Binding API (JSR 367) Bean Validation (JSR 303) JPA (JSR 338) JMS (JSR 914) 以及JTA/JCA设置，以便在必要时进行事务协调。  Spring框架还支持依赖注入（JSR 330）和公共注解（JSR 250）规范，应用程序开发人员可以选择使用这些规范来代替Spring框架提供的特定于Spring的机制。">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Spring框架概述" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://hongmao.run/spring-doc/overview/" />
+
+<title>Spring框架概述 | Spring文档</title>
+<link rel="manifest" href="/spring-doc/manifest.json">
+<link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/spring-doc/book.min.4c015d2cbe17c46838109b6b152357f8f0fcf840e8ea389a2c242fc5203163da.css" integrity="sha256-TAFdLL4XxGg4EJtrFSNX&#43;PD8&#43;EDo6jiaLCQvxSAxY9o=" crossorigin="anonymous">
+  <script defer src="/spring-doc/flexsearch.min.js"></script>
+  <script defer src="/spring-doc/en.search.min.0d63c48d64bcf50089f95537ad4380d46bb54feafa79f95c0cf7cb8f77a5b4a3.js" integrity="sha256-DWPEjWS89QCJ&#43;VU3rUOA1Gu1T&#43;r6eflcDPfLj3eltKM=" crossorigin="anonymous"></script>
+<link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/overview/index.xml" title="Spring文档" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/overview/" class=" active">Spring框架概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0d1affe253952d37201d1163f8079748" class="toggle"  />
+    <label for="section-0d1affe253952d37201d1163f8079748" class="flex justify-between">
+      <a href="https://hongmao.run/spring-doc/core/" class="">核心技术</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1e45fa7b6e1aa0f46c421ed604cc1ed2" class="toggle"  />
+    <label for="section-1e45fa7b6e1aa0f46c421ed604cc1ed2" class="flex justify-between">
+      <a href="https://hongmao.run/spring-doc/core/ioc-container/" class="">1. IoC容器</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-basics/" class="">1.2 容器概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/testing/" class="">测试</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/data-access/" class="">数据访问</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/web-servlet/" class="">Servlet栈上的Web</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/web-reactive/" class="">响应式Web</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/integration/" class="">集成</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/languages/" class="">支持的语言</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/spring-doc/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Spring框架概述</strong>
+
+  <label for="toc-control">
+    
+    <img src="/spring-doc/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-我们所说的spring">1. 我们所说的“Spring”</a></li>
+    <li><a href="#2-spring和spring框架的历史">2. Spring和Spring框架的历史</a></li>
+    <li><a href="#3-设计理念">3. 设计理念</a></li>
+    <li><a href="#4-反馈和贡献">4. 反馈和贡献</a></li>
+    <li><a href="#5-入门">5. 入门</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="spring框架概述">
+  Spring框架概述
+  <a class="anchor" href="#spring%e6%a1%86%e6%9e%b6%e6%a6%82%e8%bf%b0">#</a>
+</h1>
+<p>Version 5.2.2.RELEASE</p>
+<hr>
+<p>Spring让创建企业级的Java应用变得更简单。它提供了在企业环境中使用Java语言所需的一切，支持Groovy和Kotlin作为JVM上的替代语言，并具有根据应用程序的需要而创建多种体系结构的灵活性。从Spring框架5.1开始，Spring需要JDK8+（Java SE 8+）并为JDK 11 LTS提供开箱即用的支持。建议使用Java SE 8 update 60作为Java 8的最低补丁版本，但通常更建议使用最新的补丁版本。</p>
+<p>Spring支持广泛的应用场景。在大型企业中，应用程序通常存在了很长时间，并且必须在JDK和应用程序服务器上运行，其升级周期超出了开发人员的控制。其他的可能作为一个jar运行，服务器可能嵌入到云环境中。还有一些可能是不需要服务器的独立应用程序（如批处理或集成工作负载）。</p>
+<p>Spring是开源的。它有一个庞大而活跃的社区，根据各种各样的实际用例提供持续的反馈。这帮助Spring在很长一段时间内成功地进化。</p>
+<h2 id="1-我们所说的spring">
+  1. 我们所说的“Spring”
+  <a class="anchor" href="#1-%e6%88%91%e4%bb%ac%e6%89%80%e8%af%b4%e7%9a%84spring">#</a>
+</h2>
+<p>“Spring”一词在不同的语境中意味着不同的事物。它可以用来指代Spring框架项目本身，而Spring正是从这里开始的。随着时间的推移，其他Spring项目已经构建在Spring框架之上。通常，当人们说“Spring”时，他们指的是整个项目家族。这份参考文档主要关注Spring的基础：Spring框架本身。</p>
+<p>Spring框架分为几个模块，应用程序可以选择他们需要的模块。核心容器模块是核心，包括了配置模型和依赖注入机制。除此之外，Spring框架还为不同的应用程序体系结构提供了基础支持，包括消息传递、事务数据和持久化以及web服务。它还包括基于Servlet的Spring MVC框架和Spring WebFlux反应式web框架。</p>
+<p>关于模块的注意事项：Spring的framework jar允许部署到Jdk9的模块路径（“Jigsaw”）。为了在开启Jigsaw的应用程序中使用，Spring框架5个jar附带了“Automatic-Module-Name”清单条目，这些条目定义了独立于jar artifact的稳定语言级模块名（“spring.core”、“spring.context”等）（jar遵循相同的命名模式，用“-”代替“.”，例如“spring-core”和“spring-context”）。当然，Spring的framework jar在JDK8和JDK9+上的类路径上都能正常工作。</p>
+<hr>
+<h2 id="2-spring和spring框架的历史">
+  2. Spring和Spring框架的历史
+  <a class="anchor" href="#2-spring%e5%92%8cspring%e6%a1%86%e6%9e%b6%e7%9a%84%e5%8e%86%e5%8f%b2">#</a>
+</h2>
+<p>Spring作为对早期<a href="https://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition">J2EE</a>规范复杂性的解决方案于2003年诞生。虽然有些人认为Java EE和Spring将处于竞争状态，但实际上，Spring是java EE的补充。Spring编程模型不支持Java EE的平台规范；相反，它与从EE旗下精心挑选的单个规范相结合：</p>
+<ul>
+<li>Servlet API (<a href="https://jcp.org/en/jsr/detail?id=340">JSR 340</a>)</li>
+<li>WebSocket API (<a href="https://www.jcp.org/en/jsr/detail?id=356">JSR 356</a>)</li>
+<li>Concurrency Utilities (<a href="https://www.jcp.org/en/jsr/detail?id=236">JSR 236</a>)</li>
+<li>JSON Binding API (<a href="https://jcp.org/en/jsr/detail?id=367">JSR 367</a>)</li>
+<li>Bean Validation (<a href="https://jcp.org/en/jsr/detail?id=303">JSR 303</a>)</li>
+<li>JPA (<a href="https://jcp.org/en/jsr/detail?id=338">JSR 338</a>)</li>
+<li>JMS (<a href="https://jcp.org/en/jsr/detail?id=914">JSR 914</a>)</li>
+<li>以及JTA/JCA设置，以便在必要时进行事务协调。</li>
+</ul>
+<p>Spring框架还支持依赖注入（<a href="https://www.jcp.org/en/jsr/detail?id=330">JSR 330</a>）和公共注解（<a href="https://jcp.org/en/jsr/detail?id=250">JSR 250</a>）规范，应用程序开发人员可以选择使用这些规范来代替Spring框架提供的特定于Spring的机制。</p>
+<p>从Spring Framework 5.0开始，Spring至少需要Java EE 7的级别（例如Servlet 3.1+，JPA 2.1+），同时在运行时遇到Java EE 8级别的新API（例如Servlet 4.0，JSON Binding API）时提供开箱即用的集成。这使得Spring与Tomcat 8和9、WebSphere 9和JBoss EAP 7完全兼容。</p>
+<p>随着时间的推移，Java EE在应用程序开发中的角色已经发生了变化。在Java EE和Spring的早期，创建的应用程序被部署到应用服务器上。今天，在SpringBoot的帮助下，应用程序只需要微不足道的改动就可以通过嵌入式Servlet容器以devops和云友好的方式创建的。从Spring Framework 5开始，WebFlux应用程序甚至不直接使用Servlet API，可以在不是Servlet容器的服务器（比如Netty）上运行。</p>
+<p>Spring将继续创新和进化。除了Spring框架，还有其他项目，比如Spring Boot、Spring Security、Spring Data、Spring Cloud、Spring Batch等等。重要的是要记住，每个项目都有自己的代码库、问题跟踪器和发布节奏。有关Spring项目的完整列表，请参见<a href="https://spring.io/projects">spring.io/projects</a>。</p>
+<hr>
+<h2 id="3-设计理念">
+  3. 设计理念
+  <a class="anchor" href="#3-%e8%ae%be%e8%ae%a1%e7%90%86%e5%bf%b5">#</a>
+</h2>
+<p>当您学习一个框架时，不仅要知道它做什么，还要知道它遵循什么原则。以下是Spring框架的指导原则：</p>
+<ul>
+<li>在各个级别提供选择。Spring允许您尽可能推迟设计决策。例如，您可以通过配置切换持久化提供程序，而无需更改代码。许多其他基础架构问题和与第三方API的集成也是如此。</li>
+<li>适应不同的视角。Spring具有灵活性，对于应该如何做并不固执己见。它以不同的视角支持广泛的应用需求。</li>
+<li>保持强大的向后兼容性。Spring的发展经过了精心管理，在版本之间几乎没有突破性的变化。Spring支持一系列经过精心挑选的JDK版本和第三方库，以便于维护依赖Spring的应用程序和库。</li>
+<li>注重API设计。Spring团队投入了大量的精力和时间来创建直观的API，这些API可以跨多个版本和多年使用。</li>
+<li>为代码质量设置高标准。Spring框架非常强调有意义、最新和准确的javadoc。它是为数不多的几个可以声明代码结构清晰、包之间没有循环依赖关系的项目之一。</li>
+</ul>
+<hr>
+<h2 id="4-反馈和贡献">
+  4. 反馈和贡献
+  <a class="anchor" href="#4-%e5%8f%8d%e9%a6%88%e5%92%8c%e8%b4%a1%e7%8c%ae">#</a>
+</h2>
+<p>对于“how-to”类的问题或诊断、调试问题，我们建议使用StackOverflow，并且我们有一个<a href="https://spring.io/questions">问题页面</a>，其中列出了建议使用的标记。如果您非常确定Spring框架中存在问题，或者想建议一个特性，请使用<a href="https://github.com/spring-projects/spring-framework/issues">GitHub Issues</a>。</p>
+<p>如果您有一个解决方案或建议的修复方案，您可以在<a href="https://github.com/spring-projects/spring-framework">Github</a>上提交一个pull请求。但是，请记住，对于除最琐碎的问题外的所有问题，我们希望在问题跟踪器中提交一张记录单，在那里进行讨论并留下记录以供将来参考。</p>
+<p>有关更多详细信息，请参见<a href="https://github.com/spring-projects/spring-framework/blob/master/CONTRIBUTING.md">参与</a>顶级项目页面上的指导原则。</p>
+<hr>
+<h2 id="5-入门">
+  5. 入门
+  <a class="anchor" href="#5-%e5%85%a5%e9%97%a8">#</a>
+</h2>
+<p>如果您刚刚开始使用Spring，那么您可能希望通过创建一个基于<a href="https://projects.spring.io/spring-boot/">Spring Boot</a>的应用程序来开始使用Spring框架。Spring Boot提供了一种快速（而且固定）的方法来创建一个基于Spring的准生产应用程序。它基于Spring框架，推崇约定大于配置，旨在让您尽快启动并运行。</p>
+<p>您可以使用<a href="https://start.spring.io/">start.spring.io</a>生成一个基本项目，或者依照某个<a href="https://spring.io/guides">“指南”</a>，例如：<a href="https://spring.io/guides/gs/rest-service/">构建RESTful Web 服务指南</a>。除了更容易理解之外，这些指南非常聚焦于task，而且大多数都是基于Spring Boot的。它们还涵盖了在解决特定问题时可能需要考虑的Spring文件夹中的其他项目。</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-我们所说的spring">1. 我们所说的“Spring”</a></li>
+    <li><a href="#2-spring和spring框架的历史">2. Spring和Spring框架的历史</a></li>
+    <li><a href="#3-设计理念">3. 设计理念</a></li>
+    <li><a href="#4-反馈和贡献">4. 反馈和贡献</a></li>
+    <li><a href="#5-入门">5. 入门</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

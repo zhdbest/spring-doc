@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://hongmao.run/spring-doc/core/ioc-container/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-introduction/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/overview/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-basics/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/core/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/testing/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/data-access/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/web-servlet/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/web-reactive/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/integration/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/languages/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/categories/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/tags/</loc>
+  </url>
+</urlset>
