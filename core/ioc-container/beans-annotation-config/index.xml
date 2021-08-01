@@ -5,6 +5,6 @@
     <link>https://hongmao.run/spring-doc/core/ioc-container/beans-annotation-config/</link>
     <description>Recent content in 1.9 基于注解的容器配置 on Spring文档</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://hongmao.run/spring-doc/core/ioc-container/beans-annotation-config/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language><atom:link href="https://hongmao.run/spring-doc/core/ioc-container/beans-annotation-config/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
