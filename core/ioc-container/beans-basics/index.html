@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="1.2 容器概述 #  Version 5.2.2.RELEASE
- ">
+ org.springframework.context.ApplicationContext接口就是Spring IoC容器，负责实例化、配置和装配bean。容器通过读取配置元数据获取关于实例化、配置和装配哪些对象的指令。配置元数据用XML、Java注解或Java代码表示，它可以用来表示组成应用程序的对象以及这些对象之间丰富的相互依赖关系。
+Spring提供了ApplicationContext接口的几种实现。在独立的应用中，通常创建的是ClassPathXmlApplicationContext或FileSystemXmlApplicationContext的实例。虽然XML一直是传统的定义配置元数据的格式，但您仍然可以使用Java注解或代码作为元数据格式，只需要通过提供少量XML配置来显式地开启对这些其他元数据格式的支持。
+在大多数应用程序场景中，实例化Spring IoC容器的一个或多个实例不需要显式的用户代码。例如，在web应用程序场景中，应用程序的样板web描述XML web.xml 中简单的八行（大约八行）通常就足够了（请参见[context create]）。如果您使用Spring Tool Suite（Eclipse驱动的开发环境），只需单击几下鼠标或按键，就可以轻松创建此样板配置。
+下图展示了Spring如何工作的高等级视图。您的应用程序类与配置元数据相结合，在创建和初始化ApplicationContext后，您便拥有了一个完全配置好且可执行的系统或应用程序。
+ 图1. Spring IoC容器   1.2.1 配置元数据 #  如上图所示，Spring IoC容器使用一种形式的配置元数据。此配置元数据表示作为应用程序开发人员，您如何告知Spring容器实例化、配置和组装您应用程序中的对象。">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.2 容器概述" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -15,7 +19,7 @@
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.1849ed2c8c43fa5997c6d891779fb0ed411abde709523f7a0abce2bdd28b87dc.css" integrity="sha256-GEntLIxD&#43;lmXxtiRd5&#43;w7UEavecJUj96CrzivdKLh9w=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.cb83aeb2ba0cd067e4be8ef620e4f636aba9c0953604a707c9375bacf676b7d8.js" integrity="sha256-y4OusroM0Gfkvo72IOT2NqupwJU2BKcHyTdbrPZ2t9g=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.1905324d239204263f6ca1d1c4b18b690549f36251d5030ef890ecc17d77efe6.js" integrity="sha256-GQUyTSOSBCY/bKHRxLGLaQVJ82JR1QMO&#43;JDswX137&#43;Y=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/ioc-container/beans-basics/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -334,7 +338,11 @@ https://github.com/alex-shpak/hugo-book
   <aside class="hidden clearfix">
     
   
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#121-配置元数据">1.2.1 配置元数据</a></li>
+  </ul>
+</nav>
 
 
 
@@ -351,6 +359,20 @@ https://github.com/alex-shpak/hugo-book
 </h1>
 <p>Version 5.2.2.RELEASE</p>
 <hr>
+<p><code>org.springframework.context.ApplicationContext</code>接口就是Spring IoC容器，负责实例化、配置和装配bean。容器通过读取配置元数据获取关于实例化、配置和装配哪些对象的指令。配置元数据用XML、Java注解或Java代码表示，它可以用来表示组成应用程序的对象以及这些对象之间丰富的相互依赖关系。</p>
+<p>Spring提供了<code>ApplicationContext</code>接口的几种实现。在独立的应用中，通常创建的是<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/context/support/ClassPathXmlApplicationContext.html"><code>ClassPathXmlApplicationContext</code></a>或<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/context/support/FileSystemXmlApplicationContext.html"><code>FileSystemXmlApplicationContext</code></a>的实例。虽然XML一直是传统的定义配置元数据的格式，但您仍然可以使用Java注解或代码作为元数据格式，只需要通过提供少量XML配置来显式地开启对这些其他元数据格式的支持。</p>
+<p>在大多数应用程序场景中，实例化Spring IoC容器的一个或多个实例不需要显式的用户代码。例如，在web应用程序场景中，应用程序的样板web描述XML <code>web.xml</code> 中简单的八行（大约八行）通常就足够了（请参见<a href="../beans-annotation-config/#context-create">[context create]</a>）。如果您使用<a href="https://spring.io/tools/sts">Spring Tool Suite</a>（Eclipse驱动的开发环境），只需单击几下鼠标或按键，就可以轻松创建此样板配置。</p>
+<p>下图展示了Spring如何工作的高等级视图。您的应用程序类与配置元数据相结合，在创建和初始化<code>ApplicationContext</code>后，您便拥有了一个完全配置好且可执行的系统或应用程序。</p>
+<figure><img src="https://img.hongmao.run/blog/2021/08/spring-ioc-container.png" width="60%"/><figcaption>
+            <h4>图1. Spring IoC容器</h4>
+        </figcaption>
+</figure>
+
+<h2 id="121-配置元数据">
+  1.2.1 配置元数据
+  <a class="anchor" href="#121-%e9%85%8d%e7%bd%ae%e5%85%83%e6%95%b0%e6%8d%ae">#</a>
+</h2>
+<p>如上图所示，Spring IoC容器使用一种形式的配置元数据。此配置元数据表示作为应用程序开发人员，您如何告知Spring容器实例化、配置和组装您应用程序中的对象。</p>
 </article>
  
       
@@ -390,7 +412,11 @@ https://github.com/alex-shpak/hugo-book
       <div class="book-toc-content">
         
   
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#121-配置元数据">1.2.1 配置元数据</a></li>
+  </ul>
+</nav>
 
 
  
