@@ -8,7 +8,10 @@
 Spring提供了ApplicationContext接口的几种实现。在独立的应用中，通常创建的是ClassPathXmlApplicationContext或FileSystemXmlApplicationContext的实例。虽然XML一直是传统的定义配置元数据的格式，但您仍然可以使用Java注解或代码作为元数据格式，只需要通过提供少量XML配置来显式地开启对这些其他元数据格式的支持。
 在大多数应用程序场景中，实例化Spring IoC容器的一个或多个实例不需要显式的用户代码。例如，在web应用程序场景中，应用程序的样板web描述XML web.xml 中简单的八行（大约八行）通常就足够了（请参见[context create]）。如果您使用Spring Tool Suite（Eclipse驱动的开发环境），只需单击几下鼠标或按键，就可以轻松创建此样板配置。
 下图展示了Spring如何工作的高等级视图。您的应用程序类与配置元数据相结合，在创建和初始化ApplicationContext后，您便拥有了一个完全配置好且可执行的系统或应用程序。
- 图1. Spring IoC容器   1.2.1 配置元数据 #  如上图所示，Spring IoC容器使用一种形式的配置元数据。此配置元数据表示作为应用程序开发人员，您如何告知Spring容器实例化、配置和组装您应用程序中的对象。">
+ 图1. Spring IoC容器   1.2.1 配置元数据 #  如上图所示，Spring IoC容器使用一种形式的配置元数据。此配置元数据表示作为应用程序开发人员，您如何告知Spring容器实例化、配置和组装您应用程序中的对象。
+配置元数据传统上是以简单直观的XML格式提供的，本章大部分内容用它来表达Spring IoC容器的关键概念和特性的。
+基于XML的元数据不是唯一允许的配置元数据形式。Spring IoC容器本身与实际写入此配置元数据的格式完全解耦。现在，许多开发人员为他们的Spring应用选择基于Java的配置。  有关在Spring容器中使用其他形式元数据的信息，请参阅：
+ 基于注解的配置：Spring 2.5引入了对基于注解的配置元数据的支持。 基于Java的配置：从Spring 3.0开始，Spring JavaConfig项目提供的许多特性成为了核心Spring框架的一部分。因此，您可以使用Java而不是XML文件来定义应用程序类外的bean。要使用这些新功能，请参阅@Configuration、@Bean、@Import和@DependsOn注解。  ">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.2 容器概述" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -19,7 +22,7 @@ Spring提供了ApplicationContext接口的几种实现。在独立的应用中�
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.1849ed2c8c43fa5997c6d891779fb0ed411abde709523f7a0abce2bdd28b87dc.css" integrity="sha256-GEntLIxD&#43;lmXxtiRd5&#43;w7UEavecJUj96CrzivdKLh9w=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.1905324d239204263f6ca1d1c4b18b690549f36251d5030ef890ecc17d77efe6.js" integrity="sha256-GQUyTSOSBCY/bKHRxLGLaQVJ82JR1QMO&#43;JDswX137&#43;Y=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.36c0aa5ebead050c949623a3495071a52420efe7d82c8d49aa465e38fa38d69b.js" integrity="sha256-NsCqXr6tBQyUliOjSVBxpSQg7&#43;fYLI1JqkZeOPo41ps=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/ioc-container/beans-basics/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -373,6 +376,16 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#121-%e9%85%8d%e7%bd%ae%e5%85%83%e6%95%b0%e6%8d%ae">#</a>
 </h2>
 <p>如上图所示，Spring IoC容器使用一种形式的配置元数据。此配置元数据表示作为应用程序开发人员，您如何告知Spring容器实例化、配置和组装您应用程序中的对象。</p>
+<p>配置元数据传统上是以简单直观的XML格式提供的，本章大部分内容用它来表达Spring IoC容器的关键概念和特性的。</p>
+<blockquote class="book-hint note">
+  基于XML的元数据不是唯一允许的配置元数据形式。Spring IoC容器本身与实际写入此配置元数据的格式完全解耦。现在，许多开发人员为他们的Spring应用选择<a href="../beans-annotation-config/#beans-java">基于Java的配置</a>。
+</blockquote>
+
+<p>有关在Spring容器中使用其他形式元数据的信息，请参阅：</p>
+<ul>
+<li><a href="../beans-annotation-config/#19-%e5%9f%ba%e4%ba%8e%e6%b3%a8%e8%a7%a3%e7%9a%84%e5%ae%b9%e5%99%a8%e9%85%8d%e7%bd%ae">基于注解的配置</a>：Spring 2.5引入了对基于注解的配置元数据的支持。</li>
+<li><a href="../beans-annotation-config/#beans-java">基于Java的配置</a>：从Spring 3.0开始，Spring JavaConfig项目提供的许多特性成为了核心Spring框架的一部分。因此，您可以使用Java而不是XML文件来定义应用程序类外的bean。要使用这些新功能，请参阅<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Configuration.html"><code>@Configuration</code></a>、<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Bean.html"><code>@Bean</code></a>、<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Import.html"><code>@Import</code></a>和<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/DependsOn.html"><code>@DependsOn</code></a>注解。</li>
+</ul>
 </article>
  
       

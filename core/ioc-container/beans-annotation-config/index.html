@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="1.9 基于注解的容器配置 #  Version 5.2.2.RELEASE
- 1.9.1 @Required #  1.9.2 使用@Autowired #  1.9.3 使用@Primary微调基于注解的自动装配 #  1.9.4 使用限定符微调基于注解的自动装配 #  === Convenient ApplicationContext Instantiation for Web Applications
-== The BeanFactory
+ 1.9.1 @Required #  1.9.2 使用@Autowired #  1.9.3 使用@Primary微调基于注解的自动装配 #  1.9.4 使用限定符微调基于注解的自动装配 #  == 基于Java的容器配置  === Web应用便利的ApplicationContext实例化
+== BeanFactory
+BeanFactory API为Spring的IoC功能提供了基础。它特定的约定主要用于与Spring的其他部分和相关第三方框架集成，其DefaultListableBeanFactory实现是更高级别的GenericaApplicationContext容器中的一个关键代表。
+BeanFactory和相关接口（如BeanFactoryAware、InitializingBean、DisposableBean）是其他框架组件的重要集成点。通过不需要任何注解甚至反射，它们允许容器及其组件之间进行非常有效的交互。应用级的bean可以使用相同的回调接口，但通常更喜欢声明式地依赖项注入，要么通过注解，要么通过编程配置。
+请注意，核心BeanFactory API级别及其DefaultListableBeanFactory实现不对要使用的配置格式或任何组件注释进行假设。所有这些风格都是通过扩展（如XmlBeanDefinitionReader和AutowiredNotationBeanPostProcessor）引入的，并作为核心元数据表示在共享BeanDefinition对象上操作。这就是Spring容器如此灵活和可扩展的本质所在。
+=== BeanFactory还是ApplicationContext？
  ">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.9 基于注解的容器配置" />
 <meta property="og:description" content="" />
@@ -17,7 +21,7 @@
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.1849ed2c8c43fa5997c6d891779fb0ed411abde709523f7a0abce2bdd28b87dc.css" integrity="sha256-GEntLIxD&#43;lmXxtiRd5&#43;w7UEavecJUj96CrzivdKLh9w=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.1905324d239204263f6ca1d1c4b18b690549f36251d5030ef890ecc17d77efe6.js" integrity="sha256-GQUyTSOSBCY/bKHRxLGLaQVJ82JR1QMO&#43;JDswX137&#43;Y=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.36c0aa5ebead050c949623a3495071a52420efe7d82c8d49aa465e38fa38d69b.js" integrity="sha256-NsCqXr6tBQyUliOjSVBxpSQg7&#43;fYLI1JqkZeOPo41ps=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/ioc-container/beans-annotation-config/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -377,8 +381,16 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#194-%e4%bd%bf%e7%94%a8%e9%99%90%e5%ae%9a%e7%ac%a6%e5%be%ae%e8%b0%83%e5%9f%ba%e4%ba%8e%e6%b3%a8%e8%a7%a3%e7%9a%84%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d">#</a>
 </h2>
 <blockquote class="book-hint grey">
-  <p><span id="context-create">=== Convenient ApplicationContext Instantiation for Web Applications</span></p>
-<p><span id="beans-beanfactory">== The <code>BeanFactory</code></span></p>
+  <span id="beans-java">== 基于Java的容器配置</span>
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <p><span id="context-create">=== Web应用便利的ApplicationContext实例化</span></p>
+<p><span id="beans-beanfactory">==  <code>BeanFactory</code></span></p>
+<p><code>BeanFactory</code> API为Spring的IoC功能提供了基础。它特定的约定主要用于与Spring的其他部分和相关第三方框架集成，其<code>DefaultListableBeanFactory</code>实现是更高级别的<code>GenericaApplicationContext</code>容器中的一个关键代表。</p>
+<p><code>BeanFactory</code>和相关接口（如<code>BeanFactoryAware</code>、<code>InitializingBean</code>、<code>DisposableBean</code>）是其他框架组件的重要集成点。通过不需要任何注解甚至反射，它们允许容器及其组件之间进行非常有效的交互。应用级的bean可以使用相同的回调接口，但通常更喜欢声明式地依赖项注入，要么通过注解，要么通过编程配置。</p>
+<p>请注意，核心<code>BeanFactory</code> API级别及其<code>DefaultListableBeanFactory</code>实现不对要使用的配置格式或任何组件注释进行假设。所有这些风格都是通过扩展（如<code>XmlBeanDefinitionReader</code>和<code>AutowiredNotationBeanPostProcessor</code>）引入的，并作为核心元数据表示在共享<code>BeanDefinition</code>对象上操作。这就是Spring容器如此灵活和可扩展的本质所在。</p>
+<p>=== <code>BeanFactory</code>还是<code>ApplicationContext</code>？</p>
 
 </blockquote>
 
