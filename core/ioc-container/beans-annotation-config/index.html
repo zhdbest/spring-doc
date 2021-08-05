@@ -10,7 +10,11 @@ BeanFactory API为Spring的IoC功能提供了基础。它特定的约定主要�
 BeanFactory和相关接口（如BeanFactoryAware、InitializingBean、DisposableBean）是其他框架组件的重要集成点。通过不需要任何注解甚至反射，它们允许容器及其组件之间进行非常有效的交互。应用级的bean可以使用相同的回调接口，但通常更喜欢声明式地依赖项注入，要么通过注解，要么通过编程配置。
 请注意，核心BeanFactory API级别及其DefaultListableBeanFactory实现不对要使用的配置格式或任何组件注释进行假设。所有这些风格都是通过扩展（如XmlBeanDefinitionReader和AutowiredNotationBeanPostProcessor）引入的，并作为核心元数据表示在共享BeanDefinition对象上操作。这就是Spring容器如此灵活和可扩展的本质所在。
 === BeanFactory还是ApplicationContext？
- ">
+本节讲解BeanFactory和ApplicationContext容器级别之间的差异以及对引导的影响。
+除非有充分的理由，否则你应该使用ApplicationContext，将GenericaApplicationContext及其子类AnnotationConfigApplicationContext作为自定义引导的常见实现。这些是Spring核心容器的主要切入点，用于所有常见目的：加载配置文件、触发类路径扫描、以编程方式注册bean定义和注解类，以及（从5.0开始）注册函数bean定义。
+ = 资源
+== 应用上下文与资源路径
+ === 使用AspectJ向Spring注入依赖域对象  ">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.9 基于注解的容器配置" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -19,9 +23,9 @@ BeanFactory和相关接口（如BeanFactoryAware、InitializingBean、Disposable
 <title>1.9 基于注解的容器配置 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/spring-doc/book.min.1849ed2c8c43fa5997c6d891779fb0ed411abde709523f7a0abce2bdd28b87dc.css" integrity="sha256-GEntLIxD&#43;lmXxtiRd5&#43;w7UEavecJUj96CrzivdKLh9w=" crossorigin="anonymous">
+<link rel="stylesheet" href="/spring-doc/book.min.63f6cbf36142d37a61e48040d530da6b2a105ea2e61972768c0d0d2651073783.css" integrity="sha256-Y/bL82FC03ph5IBA1TDaayoQXqLmGXJ2jA0NJlEHN4M=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.36c0aa5ebead050c949623a3495071a52420efe7d82c8d49aa465e38fa38d69b.js" integrity="sha256-NsCqXr6tBQyUliOjSVBxpSQg7&#43;fYLI1JqkZeOPo41ps=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.48254dbc8b98e823c94521cf80bba3bcfab30e4d0f9b3277dda3421c291a64db.js" integrity="sha256-SCVNvIuY6CPJRSHPgLujvPqzDk0PmzJ33aNCHCkaZNs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/ioc-container/beans-annotation-config/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -144,6 +148,24 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-basics/" class="">1.2 容器概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-dependencies/" class="">1.4 依赖</a>
   
 
           
@@ -391,7 +413,19 @@ https://github.com/alex-shpak/hugo-book
 <p><code>BeanFactory</code>和相关接口（如<code>BeanFactoryAware</code>、<code>InitializingBean</code>、<code>DisposableBean</code>）是其他框架组件的重要集成点。通过不需要任何注解甚至反射，它们允许容器及其组件之间进行非常有效的交互。应用级的bean可以使用相同的回调接口，但通常更喜欢声明式地依赖项注入，要么通过注解，要么通过编程配置。</p>
 <p>请注意，核心<code>BeanFactory</code> API级别及其<code>DefaultListableBeanFactory</code>实现不对要使用的配置格式或任何组件注释进行假设。所有这些风格都是通过扩展（如<code>XmlBeanDefinitionReader</code>和<code>AutowiredNotationBeanPostProcessor</code>）引入的，并作为核心元数据表示在共享<code>BeanDefinition</code>对象上操作。这就是Spring容器如此灵活和可扩展的本质所在。</p>
 <p>=== <code>BeanFactory</code>还是<code>ApplicationContext</code>？</p>
+<p>本节讲解<code>BeanFactory</code>和<code>ApplicationContext</code>容器级别之间的差异以及对引导的影响。</p>
+<p>除非有充分的理由，否则你应该使用<code>ApplicationContext</code>，将<code>GenericaApplicationContext</code>及其子类<code>AnnotationConfigApplicationContext</code>作为自定义引导的常见实现。这些是Spring核心容器的主要切入点，用于所有常见目的：加载配置文件、触发类路径扫描、以编程方式注册bean定义和注解类，以及（从5.0开始）注册函数bean定义。</p>
 
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <p><span id="resources">= 资源</span></p>
+<p><span id="resources-app-ctx">== 应用上下文与资源路径</span></p>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <span id="aop-atconfigurable">=== 使用AspectJ向Spring注入依赖域对象</span>
 </blockquote>
 
 </article>

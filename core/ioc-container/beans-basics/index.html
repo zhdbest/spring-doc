@@ -11,7 +11,10 @@ Spring提供了ApplicationContext接口的几种实现。在独立的应用中�
  图1. Spring IoC容器   1.2.1 配置元数据 #  如上图所示，Spring IoC容器使用一种形式的配置元数据。此配置元数据表示作为应用程序开发人员，您如何告知Spring容器实例化、配置和组装您应用程序中的对象。
 配置元数据传统上是以简单直观的XML格式提供的，本章大部分内容用它来表达Spring IoC容器的关键概念和特性的。
 基于XML的元数据不是唯一允许的配置元数据形式。Spring IoC容器本身与实际写入此配置元数据的格式完全解耦。现在，许多开发人员为他们的Spring应用选择基于Java的配置。  有关在Spring容器中使用其他形式元数据的信息，请参阅：
- 基于注解的配置：Spring 2.5引入了对基于注解的配置元数据的支持。 基于Java的配置：从Spring 3.0开始，Spring JavaConfig项目提供的许多特性成为了核心Spring框架的一部分。因此，您可以使用Java而不是XML文件来定义应用程序类外的bean。要使用这些新功能，请参阅@Configuration、@Bean、@Import和@DependsOn注解。  ">
+ 基于注解的配置：Spring 2.5引入了对基于注解的配置元数据的支持。 基于Java的配置：从Spring 3.0开始，Spring JavaConfig项目提供的许多特性成为了核心Spring框架的一部分。因此，您可以使用Java而不是XML文件来定义应用程序类外的bean。要使用这些新功能，请参阅@Configuration、@Bean、@Import和@DependsOn注解。  Spring配置至少包括一个但通常不止一个必须由容器管理的bean定义。基于XML的配置元数据将这些bean配置为顶级&lt;beans/&gt;元素中的&lt;bean/&gt;元素。Java配置通常在@Configuration类中使用@Bean注解标注的方法来定义bean。
+这些bean定义对应着构成应用程序的实际对象。通常，您定义服务层对象、数据访问对象（DAO）、表示对象（如Struts中的Action实例）、基础结构对象（如Hibernate SessionFactorys）、JMS Queues等。通常，不在容器中配置细粒度域对象，因为创建和加载域对象通常是DAO和业务逻辑的责任。但是，您可以使用Spring与AspectJ的集成来配置在IoC容器控制之外创建的对象。请参阅在Spring中使用AspectJ注入依赖域对象。
+以下示例显示了基于XML的配置元数据的基本结构：
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd&#34;&gt; &lt;bean id=&#34;...&#34; class=&#34;...&#34;&gt; 1 2 &lt;!-- 此处是当前bean的协作者和配置 --&gt; &lt;/bean&gt; &lt;bean id=&#34;...&#34; class=&#34;...&#34;&gt; &lt;!-- 此处是当前bean的协作者和配置 --&gt; &lt;/bean&gt; &lt;!">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.2 容器概述" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -20,9 +23,9 @@ Spring提供了ApplicationContext接口的几种实现。在独立的应用中�
 <title>1.2 容器概述 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/spring-doc/book.min.1849ed2c8c43fa5997c6d891779fb0ed411abde709523f7a0abce2bdd28b87dc.css" integrity="sha256-GEntLIxD&#43;lmXxtiRd5&#43;w7UEavecJUj96CrzivdKLh9w=" crossorigin="anonymous">
+<link rel="stylesheet" href="/spring-doc/book.min.63f6cbf36142d37a61e48040d530da6b2a105ea2e61972768c0d0d2651073783.css" integrity="sha256-Y/bL82FC03ph5IBA1TDaayoQXqLmGXJ2jA0NJlEHN4M=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.36c0aa5ebead050c949623a3495071a52420efe7d82c8d49aa465e38fa38d69b.js" integrity="sha256-NsCqXr6tBQyUliOjSVBxpSQg7&#43;fYLI1JqkZeOPo41ps=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.48254dbc8b98e823c94521cf80bba3bcfab30e4d0f9b3277dda3421c291a64db.js" integrity="sha256-SCVNvIuY6CPJRSHPgLujvPqzDk0PmzJ33aNCHCkaZNs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/ioc-container/beans-basics/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -145,6 +148,24 @@ https://github.com/alex-shpak/hugo-book
 
   
     <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-basics/" class=" active">1.2 容器概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-dependencies/" class="">1.4 依赖</a>
   
 
           
@@ -344,6 +365,11 @@ https://github.com/alex-shpak/hugo-book
 <nav id="TableOfContents">
   <ul>
     <li><a href="#121-配置元数据">1.2.1 配置元数据</a></li>
+    <li><a href="#122-初始化容器">1.2.2 初始化容器</a>
+      <ul>
+        <li><a href="#组合基于xml的配置元数据">组合基于XML的配置元数据</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -386,7 +412,129 @@ https://github.com/alex-shpak/hugo-book
 <li><a href="../beans-annotation-config/#19-%e5%9f%ba%e4%ba%8e%e6%b3%a8%e8%a7%a3%e7%9a%84%e5%ae%b9%e5%99%a8%e9%85%8d%e7%bd%ae">基于注解的配置</a>：Spring 2.5引入了对基于注解的配置元数据的支持。</li>
 <li><a href="../beans-annotation-config/#beans-java">基于Java的配置</a>：从Spring 3.0开始，Spring JavaConfig项目提供的许多特性成为了核心Spring框架的一部分。因此，您可以使用Java而不是XML文件来定义应用程序类外的bean。要使用这些新功能，请参阅<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Configuration.html"><code>@Configuration</code></a>、<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Bean.html"><code>@Bean</code></a>、<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Import.html"><code>@Import</code></a>和<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/DependsOn.html"><code>@DependsOn</code></a>注解。</li>
 </ul>
-</article>
+<p>Spring配置至少包括一个但通常不止一个必须由容器管理的bean定义。基于XML的配置元数据将这些bean配置为顶级<code>&lt;beans/&gt;</code>元素中的<code>&lt;bean/&gt;</code>元素。Java配置通常在<code>@Configuration</code>类中使用<code>@Bean</code>注解标注的方法来定义bean。</p>
+<p>这些bean定义对应着构成应用程序的实际对象。通常，您定义服务层对象、数据访问对象（DAO）、表示对象（如Struts中的<code>Action</code>实例）、基础结构对象（如Hibernate <code>SessionFactorys</code>）、JMS <code>Queues</code>等。通常，不在容器中配置细粒度域对象，因为创建和加载域对象通常是DAO和业务逻辑的责任。但是，您可以使用Spring与AspectJ的集成来配置在IoC容器控制之外创建的对象。请参阅<a href="../beans-annotation-config/#aop-atconfigurable">在Spring中使用AspectJ注入依赖域对象</a>。</p>
+<p>以下示例显示了基于XML的配置元数据的基本结构：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">&gt;</span> <span><div class='custom_num_in_span'>1</div></span> <span><div class='custom_num_in_span'>2</div></span>
+        <span style="color:#6272a4">&lt;!-- 此处是当前bean的协作者和配置 --&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#6272a4">&lt;!-- 此处是当前bean的协作者和配置 --&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#6272a4">&lt;!-- 此处是其他的bean定义 --&gt;</span>
+
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div>
+<table style="margin: 10px 0px;">
+    <tr>
+        <td style="border: none; padding: 0px 12px">
+            <div class='custom_num_in_table'>
+                1
+            </div>
+        </td>
+        <td style="border: none; padding: 0px">
+            <code>id</code>属性是标识单个bean定义的字符串。
+        </td>
+    </tr>
+</table>
+
+
+<table style="margin: 10px 0px;">
+    <tr>
+        <td style="border: none; padding: 0px 12px">
+            <div class='custom_num_in_table'>
+                2
+            </div>
+        </td>
+        <td style="border: none; padding: 0px">
+            <code>class</code>属性定义bean的类型并且要使用全限定的类名。
+        </td>
+    </tr>
+</table>
+
+<p><code>id</code>属性的值引用协作对象。本例中的XML未展示引用协作对象。有关更多信息，请参阅<a href="../beans-dependencies/#14-%e4%be%9d%e8%b5%96">依赖</a>。</p>
+<h2 id="122-初始化容器">
+  1.2.2 初始化容器
+  <a class="anchor" href="#122-%e5%88%9d%e5%a7%8b%e5%8c%96%e5%ae%b9%e5%99%a8">#</a>
+</h2>
+<p>传给<code>ApplicationContext</code>构造函数的位置路径（可以有多个）是资源字符串，容器将从各种外部资源（如本地文件系统、Java <code>CLASSPATH</code>等）加载配置元数据。</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code" id="tabs-code-0" checked="checked" />
+  <label for="tabs-code-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ClassPathXmlApplicationContext<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.xml&#34;</span><span style="color:#ff79c6">);</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code" id="tabs-code-1"  />
+  <label for="tabs-code-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> context = ClassPathXmlApplicationContext(<span style="color:#f1fa8c">&#34;services.xml&#34;</span>, <span style="color:#f1fa8c">&#34;daos.xml&#34;</span>)
+</code></pre></div></div></div>
+
+<blockquote class="book-hint note">
+  在了解Spring的IoC容器之后，您可能想进一步了解Spring的<code>Resource</code>抽象（如<a href="../beans-annotation-config/#resources">[资源]</a>中所述），它提供了一种方便的机制，通过URI语法定义的位置读取输入流。具体而言，<code>Resource</code>路径用于构建应用上下文，如<a href="../beans-annotation-config/#resources-app-ctx">[应用上下文与资源路径]</a>中所述。
+</blockquote>
+
+<p>以下示例展示了服务层对象<code>(services.xml)</code>配置文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+
+    <span style="color:#6272a4">&lt;!-- services --&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;petStore&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.samples.jpetstore.services.PetStoreServiceImpl&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span><span style="color:#ff79c6">/&gt;</span>
+        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;itemDao&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;itemDao&#34;</span><span style="color:#ff79c6">/&gt;</span>
+        <span style="color:#6272a4">&lt;!-- 此处是当前bean的其他协作者和配置 --&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#6272a4">&lt;!-- 此处是其他服务的bean定义 --&gt;</span>
+
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div><p>以下示例展示了数据访问对象<code>daos.xml</code>文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span>
+        <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#6272a4">&lt;!-- 此处是当前bean的其他协作者和配置 --&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;itemDao&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.samples.jpetstore.dao.jpa.JpaItemDao&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#6272a4">&lt;!-- 此处是当前bean的其他协作者和配置 --&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#6272a4">&lt;!-- 此处是其他数据访问对象的bean定义 --&gt;</span>
+
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div><p>在前面的示例中，服务层由<code>PetStoreServiceImpl</code>类和两个类型为<code>JpaAccountDao</code>和<code>JpaItemDao</code>（基于JPA对象关系映射标准）的数据访问对象组成。<code>property name</code>元素指JavaBean属性的名称，<code>ref</code>元素指另一个bean定义的名称。<code>id</code>和<code>ref</code>元素之间的联动表示协作对象之间的依赖关系。有关配置对象依赖的详细信息，请参见<a href="../beans-dependencies/#14-%e4%be%9d%e8%b5%96">依赖</a>。</p>
+<h3 id="组合基于xml的配置元数据">
+  组合基于XML的配置元数据
+  <a class="anchor" href="#%e7%bb%84%e5%90%88%e5%9f%ba%e4%ba%8exml%e7%9a%84%e9%85%8d%e7%bd%ae%e5%85%83%e6%95%b0%e6%8d%ae">#</a>
+</h3>
+<p>让bean定义可以跨多个XML文件非常有用。通常，每个单独的XML配置文件都表示体系结构中的一个逻辑层或模块。</p>
+<p>您可以使用应用上下文构造函数从所有这些XML片段中加载bean定义。此构造函数可以获取多个<code>Resource</code>位置，如<a href="./#122-%e5%88%9d%e5%a7%8b%e5%8c%96%e5%ae%b9%e5%99%a8">前一节</a>所示。或者，使用一个或多个<import/>元素从另一个或多个文件中加载bean定义。以下示例展示了如何执行此操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;beans&gt;</span>
+    <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;resources/messageSource.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;/resources/themeSource.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;bean1&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;bean2&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div></article>
  
       
 
@@ -428,6 +576,11 @@ https://github.com/alex-shpak/hugo-book
 <nav id="TableOfContents">
   <ul>
     <li><a href="#121-配置元数据">1.2.1 配置元数据</a></li>
+    <li><a href="#122-初始化容器">1.2.2 初始化容器</a>
+      <ul>
+        <li><a href="#组合基于xml的配置元数据">组合基于XML的配置元数据</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
