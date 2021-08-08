@@ -14,11 +14,17 @@
   </url><url>
     <loc>https://hongmao.run/spring-doc/core/</loc>
   </url><url>
+    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-definition/</loc>
+  </url><url>
     <loc>https://hongmao.run/spring-doc/testing/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-dependencies/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/data-access/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-factory-scopes/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-factory-nature/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/web-servlet/</loc>
   </url><url>

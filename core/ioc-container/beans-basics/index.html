@@ -23,9 +23,9 @@ Spring提供了ApplicationContext接口的几种实现。在独立的应用中�
 <title>1.2 容器概述 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/spring-doc/book.min.63f6cbf36142d37a61e48040d530da6b2a105ea2e61972768c0d0d2651073783.css" integrity="sha256-Y/bL82FC03ph5IBA1TDaayoQXqLmGXJ2jA0NJlEHN4M=" crossorigin="anonymous">
+<link rel="stylesheet" href="/spring-doc/book.min.5e8918a588fee4a8354dde4e0c594d701808d0c177fc0aeb0e8c5b6845977273.css" integrity="sha256-XokYpYj&#43;5Kg1Td5ODFlNcBgI0MF3/ArrDoxbaEWXcnM=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.48254dbc8b98e823c94521cf80bba3bcfab30e4d0f9b3277dda3421c291a64db.js" integrity="sha256-SCVNvIuY6CPJRSHPgLujvPqzDk0PmzJ33aNCHCkaZNs=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.a416d0ed27e030357ccbd383b9fc3b00eec5d45e8ad73f189803022b6f5d8e80.js" integrity="sha256-pBbQ7SfgMDV8y9ODufw7AO7F1F6K1z8YmAMCK29djoA=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/ioc-container/beans-basics/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -165,7 +165,61 @@ https://github.com/alex-shpak/hugo-book
   
 
   
+    <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-definition/" class="">1.3 Bean概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
     <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-dependencies/" class="">1.4 依赖</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-factory-scopes/" class="">1.5 bean的作用域</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/ioc-container/beans-factory-nature/" class="">1.6 自定义Bean的性质</a>
   
 
           
@@ -247,7 +301,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web-servlet/" class="">Servlet栈上的Web</a>
+    <a href="https://hongmao.run/spring-doc/web-servlet/" class="">Web Servlet</a>
   
 
           
@@ -368,8 +422,10 @@ https://github.com/alex-shpak/hugo-book
     <li><a href="#122-初始化容器">1.2.2 初始化容器</a>
       <ul>
         <li><a href="#组合基于xml的配置元数据">组合基于XML的配置元数据</a></li>
+        <li><a href="#groovy-bean-定义-dsl">Groovy Bean 定义 DSL</a></li>
       </ul>
     </li>
+    <li><a href="#123-使用容器">1.2.3 使用容器</a></li>
   </ul>
 </nav>
 
@@ -386,7 +442,7 @@ https://github.com/alex-shpak/hugo-book
   1.2 容器概述
   <a class="anchor" href="#12-%e5%ae%b9%e5%99%a8%e6%a6%82%e8%bf%b0">#</a>
 </h1>
-<p>Version 5.2.2.RELEASE</p>
+<p><a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/spring-framework-reference/core.html#beans-basics">Version 5.2.2.RELEASE</a></p>
 <hr>
 <p><code>org.springframework.context.ApplicationContext</code>接口就是Spring IoC容器，负责实例化、配置和装配bean。容器通过读取配置元数据获取关于实例化、配置和装配哪些对象的指令。配置元数据用XML、Java注解或Java代码表示，它可以用来表示组成应用程序的对象以及这些对象之间丰富的相互依赖关系。</p>
 <p>Spring提供了<code>ApplicationContext</code>接口的几种实现。在独立的应用中，通常创建的是<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/context/support/ClassPathXmlApplicationContext.html"><code>ClassPathXmlApplicationContext</code></a>或<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/context/support/FileSystemXmlApplicationContext.html"><code>FileSystemXmlApplicationContext</code></a>的实例。虽然XML一直是传统的定义配置元数据的格式，但您仍然可以使用Java注解或代码作为元数据格式，只需要通过提供少量XML配置来显式地开启对这些其他元数据格式的支持。</p>
@@ -525,7 +581,7 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#%e7%bb%84%e5%90%88%e5%9f%ba%e4%ba%8exml%e7%9a%84%e9%85%8d%e7%bd%ae%e5%85%83%e6%95%b0%e6%8d%ae">#</a>
 </h3>
 <p>让bean定义可以跨多个XML文件非常有用。通常，每个单独的XML配置文件都表示体系结构中的一个逻辑层或模块。</p>
-<p>您可以使用应用上下文构造函数从所有这些XML片段中加载bean定义。此构造函数可以获取多个<code>Resource</code>位置，如<a href="./#122-%e5%88%9d%e5%a7%8b%e5%8c%96%e5%ae%b9%e5%99%a8">前一节</a>所示。或者，使用一个或多个<import/>元素从另一个或多个文件中加载bean定义。以下示例展示了如何执行此操作：</p>
+<p>您可以使用应用上下文构造函数从所有这些XML片段中加载bean定义。此构造函数可以获取多个<code>Resource</code>位置，如<a href="./#122-%e5%88%9d%e5%a7%8b%e5%8c%96%e5%ae%b9%e5%99%a8">前一节</a>所示。或者，使用一个或多个<code>&lt;import/&gt;</code>元素从另一个或多个文件中加载bean定义。以下示例展示了如何执行此操作：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;beans&gt;</span>
     <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
     <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;resources/messageSource.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
@@ -534,7 +590,121 @@ https://github.com/alex-shpak/hugo-book
     <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;bean1&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">/&gt;</span>
     <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;bean2&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">/&gt;</span>
 <span style="color:#ff79c6">&lt;/beans&gt;</span>
-</code></pre></div></article>
+</code></pre></div><p>在前面的示例中，外部bean定义从三个文件中加载：<code>services.xml</code>、<code>messageSource.xml</code>和<code>themeSource.xml</code>。所有位置路径都是执行导入的定义文件的相对路径，因此<code>services.xml</code>必须与执行导入的文件位于同一目录或类路径位置，而<code>messageSource.xml</code>和<code>themeSource.xml</code>必须位于导入文件位置的<code>resources</code>目录下。如您所见，前面的斜杠被忽略了。然而，考虑到这些路径是相对的，最好不要使用斜杠。根据Spring Schema，要导入文件的内容包括顶级<code>&lt;beans/&gt;</code>元素，而且必须是有效的XML bean定义。</p>
+<blockquote class="book-hint note">
+  <p>可以使用相对“../”路径引用父目录中的文件，但不建议这么做。这样做会创建对当前应用之外的文件的依赖关系。特别是，不建议对<code>classpath:</code>URLs（例如，<code>classpath:../services.xml</code>）使用此引用，它在运行时解析过程中选择“最近的”类路径root，然后查看其父目录。类路径配置更改可能会导致选择不同的、不正确的目录。</p>
+<p>您始终可以使用完全限定的资源位置而不是相对路径：例如，<code>file:C:/config/services.xml</code>或<code>classpath:/config/services.xml</code>。但是，请注意，您正在将应用程序的配置耦合到特定的绝对位置。通常，最好让此类绝对位置是间接的 — 例如，在运行时通过“${…}&ldquo;解析JVM系统属性的占位符获取。</p>
+
+</blockquote>
+
+<p>命名空间本身提供导入指令功能。Spring提供的一系列XML命名空间中提供了普通bean定义之外的更多配置特性 — 例如，<code>context</code>和<code>util</code>命名空间。</p>
+<h3 id="groovy-bean-定义-dsl">
+  Groovy Bean 定义 DSL
+  <a class="anchor" href="#groovy-bean-%e5%ae%9a%e4%b9%89-dsl">#</a>
+</h3>
+<p>作为外部化配置元数据的另一个示例，bean定义也可以在Spring的Groovy Bean定义DSL中表示，正如所熟知的<code>Grails</code>框架那样。通常，此类配置位于“.groovy”文件中，其结构如以下示例所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy">beans <span style="color:#ff79c6">{</span>
+    dataSource<span style="color:#ff79c6">(</span>BasicDataSource<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        driverClassName <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;org.hsqldb.jdbcDriver&#34;</span>
+        url <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;jdbc:hsqldb:mem:grailsDB&#34;</span>
+        username <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;sa&#34;</span>
+        password <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+        settings <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">[</span><span style="color:#8be9fd;font-style:italic">mynew:</span><span style="color:#f1fa8c">&#34;setting&#34;</span><span style="color:#ff79c6">]</span>
+    <span style="color:#ff79c6">}</span>
+    sessionFactory<span style="color:#ff79c6">(</span>SessionFactory<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        dataSource <span style="color:#ff79c6">=</span> dataSource
+    <span style="color:#ff79c6">}</span>
+    myService<span style="color:#ff79c6">(</span>MyService<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        nestedBean <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span> AnotherBean bean <span style="color:#ff79c6">-&gt;</span>
+            dataSource <span style="color:#ff79c6">=</span> dataSource
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>这种配置风格在很大程度上等同于XML bean定义，甚至支持Spring的XML配置命名空间。它还允许通过<code>importBeans</code>指令导入XML bean定义文件。</p>
+<h2 id="123-使用容器">
+  1.2.3 使用容器
+  <a class="anchor" href="#123-%e4%bd%bf%e7%94%a8%e5%ae%b9%e5%99%a8">#</a>
+</h2>
+<p>ApplicationContext是高级工厂的接口，能够维护不同bean的注册及其依赖。通过使用方法<code>T getBean(String name, Class&lt;T&gt; requiredType)</code>，您可以取到bean的实例。</p>
+<p><code>ApplicationContext</code>允许您读取bean定义并访问它们，如下例所示：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-0" checked="checked" />
+  <label for="tabs-code-1-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">// 创建并配置bean
+</span><span style="color:#6272a4"></span>ApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ClassPathXmlApplicationContext<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.xml&#34;</span><span style="color:#ff79c6">);</span>
+
+<span style="color:#6272a4">// 获取配置好的实例
+</span><span style="color:#6272a4"></span>PetStoreService service <span style="color:#ff79c6">=</span> context<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getBean</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;petStore&#34;</span><span style="color:#ff79c6">,</span> PetStoreService<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">);</span>
+
+<span style="color:#6272a4">// 使用配置好的实例
+</span><span style="color:#6272a4"></span>List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> userList <span style="color:#ff79c6">=</span> service<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getUsernameList</span><span style="color:#ff79c6">();</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
+  <label for="tabs-code-1-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">import</span> org.springframework.beans.factory.getBean
+
+<span style="color:#6272a4">// 创建并配置bean
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">val</span> context = ClassPathXmlApplicationContext(<span style="color:#f1fa8c">&#34;services.xml&#34;</span>, <span style="color:#f1fa8c">&#34;daos.xml&#34;</span>)
+
+<span style="color:#6272a4">// 获取配置好的实例
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">val</span> service = context.getBean&lt;PetStoreService&gt;(<span style="color:#f1fa8c">&#34;petStore&#34;</span>)
+
+<span style="color:#6272a4">// 使用配置好的实例
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">var</span> userList = service.getUsernameList()
+</code></pre></div></div></div>
+
+<p>对于Groovy配置，引导看起来非常相似。它有一个不同的上下文实现类，是识别Groovy的（但也能识别XML bean定义）。以下示例展示了Groovy配置：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-0" checked="checked" />
+  <label for="tabs-code-2-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> GenericGroovyApplicationContext<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.groovy&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span><span style="color:#ff79c6">);</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-1"  />
+  <label for="tabs-code-2-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> context = GenericGroovyApplicationContext(<span style="color:#f1fa8c">&#34;services.groovy&#34;</span>, <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span>)
+</code></pre></div></div></div>
+
+<p>最灵活的变种是<code>GenericApplicationContext</code>与读取器（reader）的组合 — 例如，对于XML文件使用<code>XmlBeanDefinitionReader</code>，如下例所示：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-0" checked="checked" />
+  <label for="tabs-code-3-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">GenericApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> GenericApplicationContext<span style="color:#ff79c6">();</span>
+<span style="color:#ff79c6">new</span> XmlBeanDefinitionReader<span style="color:#ff79c6">(</span>context<span style="color:#ff79c6">).</span><span style="color:#50fa7b">loadBeanDefinitions</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.xml&#34;</span><span style="color:#ff79c6">);</span>
+context<span style="color:#ff79c6">.</span><span style="color:#50fa7b">refresh</span><span style="color:#ff79c6">();</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-1"  />
+  <label for="tabs-code-3-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> context = GenericApplicationContext()
+XmlBeanDefinitionReader(context).loadBeanDefinitions(<span style="color:#f1fa8c">&#34;services.xml&#34;</span>, <span style="color:#f1fa8c">&#34;daos.xml&#34;</span>)
+context.refresh()
+</code></pre></div></div></div>
+
+<p>当然，对于Groovy文件，您还可以使用<code>GroovyBeanDefinitionReader</code>，如下例所示：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-0" checked="checked" />
+  <label for="tabs-code-4-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">GenericApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> GenericApplicationContext<span style="color:#ff79c6">();</span>
+<span style="color:#ff79c6">new</span> GroovyBeanDefinitionReader<span style="color:#ff79c6">(</span>context<span style="color:#ff79c6">).</span><span style="color:#50fa7b">loadBeanDefinitions</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.groovy&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span><span style="color:#ff79c6">);</span>
+context<span style="color:#ff79c6">.</span><span style="color:#50fa7b">refresh</span><span style="color:#ff79c6">();</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-1"  />
+  <label for="tabs-code-4-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> context = GenericApplicationContext()
+GroovyBeanDefinitionReader(context).loadBeanDefinitions(<span style="color:#f1fa8c">&#34;services.groovy&#34;</span>, <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span>)
+context.refresh()
+</code></pre></div></div></div>
+
+<p>您可以在同一<code>ApplicationContext</code>上混合使用这些读取器（reader），以从不同的配置源读取bean定义。</p>
+<p>然后可以使用<code>getBean</code>获取bean的实例。<code>ApplicationContext</code>接口还有有一些其他方法用于获取bean，但是，理想情况下，应用程序代码中不应该使用它们。实际上，您的应用程序代码中应该根本没有对<code>getBean()</code>方法的调用，因此也完全不依赖于Spring的API。例如，Spring与web框架的集成为各种web框架组件（如控制器和JSF托管bean）提供了依赖项注入，允许您通过元数据（如自动注入注解）声明对特定bean的依赖。</p>
+</article>
  
       
 
@@ -579,8 +749,10 @@ https://github.com/alex-shpak/hugo-book
     <li><a href="#122-初始化容器">1.2.2 初始化容器</a>
       <ul>
         <li><a href="#组合基于xml的配置元数据">组合基于XML的配置元数据</a></li>
+        <li><a href="#groovy-bean-定义-dsl">Groovy Bean 定义 DSL</a></li>
       </ul>
     </li>
+    <li><a href="#123-使用容器">1.2.3 使用容器</a></li>
   </ul>
 </nav>
 

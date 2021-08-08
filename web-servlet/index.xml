@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Servlet栈上的Web on Spring文档</title>
+    <title>Web Servlet on Spring文档</title>
     <link>https://hongmao.run/spring-doc/web-servlet/</link>
-    <description>Recent content in Servlet栈上的Web on Spring文档</description>
+    <description>Recent content in Web Servlet on Spring文档</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language><atom:link href="https://hongmao.run/spring-doc/web-servlet/index.xml" rel="self" type="application/rss+xml" />
   </channel>
