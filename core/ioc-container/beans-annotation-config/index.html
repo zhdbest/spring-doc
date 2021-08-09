@@ -4,17 +4,10 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="1.9 基于注解的容器配置 #  Version 5.2.2.RELEASE
- 1.9.1 @Required #  1.9.2 使用@Autowired #  1.9.3 使用@Primary微调基于注解的自动装配 #  1.9.4 使用限定符微调基于注解的自动装配 #  == 基于Java的容器配置  === Web应用便利的ApplicationContext实例化
-== BeanFactory
-BeanFactory API为Spring的IoC功能提供了基础。它特定的约定主要用于与Spring的其他部分和相关第三方框架集成，其DefaultListableBeanFactory实现是更高级别的GenericaApplicationContext容器中的一个关键代表。
+ 1.9.1 @Required #  1.9.2 使用@Autowired #  1.9.3 使用@Primary微调基于注解的自动装配 #  1.9.4 使用限定符微调基于注解的自动装配 #  == 基于Java的容器配置 本节介绍如何在Java代码中使用注解来配置Spring容器。它包括以下主题：
+ [基本概念：@Bean和@Configuration] [使用AnnotationConfigApplicationContext实例化Spring容器] [@Bean注解使用] [@Configuration注解使用] [组合基于Java的配置] [bean定义配置] [PropertySource抽象] [使用PropertySource] [语句中的占位符解析]  === 基本概念：@Bean和@Configuration === 使用AnnotationConfigApplicationContext实例化Spring容器 === @Bean注解使用 === @Configuration注解使用  === 组合基于Java的配置  === bean定义配置 === PropertySource抽象  === PropertySource抽象  === 使用PropertySource === 语句中的占位符解析  === Web应用简单的ApplicationContext实例化 == BeanFactory BeanFactory API为Spring的IoC功能提供了基础。它特定的约定主要用于与Spring的其他部分和相关第三方框架集成，其DefaultListableBeanFactory实现是更高级别的GenericaApplicationContext容器中的一个关键代表。
 BeanFactory和相关接口（如BeanFactoryAware、InitializingBean、DisposableBean）是其他框架组件的重要集成点。通过不需要任何注解甚至反射，它们允许容器及其组件之间进行非常有效的交互。应用级的bean可以使用相同的回调接口，但通常更喜欢声明式地依赖项注入，要么通过注解，要么通过编程配置。
-请注意，核心BeanFactory API级别及其DefaultListableBeanFactory实现不对要使用的配置格式或任何组件注释进行假设。所有这些风格都是通过扩展（如XmlBeanDefinitionReader和AutowiredNotationBeanPostProcessor）引入的，并作为核心元数据表示在共享BeanDefinition对象上操作。这就是Spring容器如此灵活和可扩展的本质所在。
-=== BeanFactory还是ApplicationContext？
-本节讲解BeanFactory和ApplicationContext容器级别之间的差异以及对引导的影响。
-除非有充分的理由，否则你应该使用ApplicationContext，将GenericaApplicationContext及其子类AnnotationConfigApplicationContext作为自定义引导的常见实现。这些是Spring核心容器的主要切入点，用于所有常见目的：加载配置文件、触发类路径扫描、以编程方式注册bean定义和注解类，以及（从5.0开始）注册函数bean定义。
- = 资源
-== 应用上下文与资源路径
- === 使用AspectJ向Spring注入依赖域对象  ">
+请注意，核心BeanFactory API级别及其DefaultListableBeanFactory实现不对要使用的配置格式或任何组件注释进行假设。所有这些风格都是通过扩展（如XmlBeanDefinitionReader和AutowiredNotationBeanPostProcessor）引入的，并作为核心元数据表示在共享BeanDefinition对象上操作。这就是Spring容器如此灵活和可扩展的本质所在。">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.9 基于注解的容器配置" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -23,9 +16,9 @@ BeanFactory和相关接口（如BeanFactoryAware、InitializingBean、Disposable
 <title>1.9 基于注解的容器配置 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/spring-doc/book.min.5e8918a588fee4a8354dde4e0c594d701808d0c177fc0aeb0e8c5b6845977273.css" integrity="sha256-XokYpYj&#43;5Kg1Td5ODFlNcBgI0MF3/ArrDoxbaEWXcnM=" crossorigin="anonymous">
+<link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.a416d0ed27e030357ccbd383b9fc3b00eec5d45e8ad73f189803022b6f5d8e80.js" integrity="sha256-pBbQ7SfgMDV8y9ODufw7AO7F1F6K1z8YmAMCK29djoA=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.92af9c425d9bddbe44a73271d07cf90b9aa4e9218117959e9a72fd6e237724e5.js" integrity="sha256-kq&#43;cQl2b3b5EpzJx0Hz5C5qk6SGBF5WemnL9biN3JOU=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/ioc-container/beans-annotation-config/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -457,12 +450,51 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#194-%e4%bd%bf%e7%94%a8%e9%99%90%e5%ae%9a%e7%ac%a6%e5%be%ae%e8%b0%83%e5%9f%ba%e4%ba%8e%e6%b3%a8%e8%a7%a3%e7%9a%84%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d">#</a>
 </h2>
 <blockquote class="book-hint grey">
-  <span id="beans-java">== 基于Java的容器配置</span>
+  <div id="beans-java">== 基于Java的容器配置</div>
+<p>本节介绍如何在Java代码中使用注解来配置Spring容器。它包括以下主题：</p>
+<ul>
+<li><a href="./#beans-java-basic-concepts">[基本概念：<code>@Bean</code>和<code>@Configuration</code>]</a></li>
+<li><a href="./#beans-java-instantiating-container">[使用<code>AnnotationConfigApplicationContext</code>实例化Spring容器]</a></li>
+<li><a href="./#beans-java-bean-annotation">[<code>@Bean</code>注解使用]</a></li>
+<li><a href="./#beans-java-configuration-annotation">[<code>@Configuration</code>注解使用]</a></li>
+<li><a href="./#beans-java-composing-configuration-classes">[组合基于Java的配置]</a></li>
+<li><a href="./#beans-definition-profiles">[bean定义配置]</a></li>
+<li><a href="./#beans-property-source-abstraction">[<code>PropertySource</code>抽象]</a></li>
+<li><a href="./#beans-using-propertysource">[使用<code>PropertySource</code>]</a></li>
+<li><a href="./#beans-placeholder-resolution-in-statements">[语句中的占位符解析]</a></li>
+</ul>
+<div id="beans-java-basic-concepts">=== 基本概念：<code>@Bean</code>和<code>@Configuration</code></div>
+<div id="beans-java-instantiating-container">=== 使用<code>AnnotationConfigApplicationContext</code>实例化Spring容器</div>
+<div id="beans-java-bean-annotation">=== <code>@Bean</code>注解使用</div>
+<div id="beans-java-configuration-annotation">=== <code>@Configuration</code>注解使用</div>
+
 </blockquote>
 
 <blockquote class="book-hint grey">
-  <p><span id="context-create">=== Web应用便利的ApplicationContext实例化</span></p>
-<p><span id="beans-beanfactory">==  <code>BeanFactory</code></span></p>
+  <div id="beans-java-composing-configuration-classes">=== 组合基于Java的配置</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="beans-definition-profiles">=== bean定义配置</div>
+<div id="beans-property-source-abstraction">=== <code>PropertySource</code>抽象</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="beans-property-source-abstraction">=== <code>PropertySource</code>抽象</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="beans-using-propertysource">=== 使用<code>PropertySource</code></div>
+<div id="beans-placeholder-resolution-in-statements">=== 语句中的占位符解析</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="context-create">=== Web应用简单的ApplicationContext实例化</div>
+<div id="beans-beanfactory">==  <code>BeanFactory</code></div>
 <p><code>BeanFactory</code> API为Spring的IoC功能提供了基础。它特定的约定主要用于与Spring的其他部分和相关第三方框架集成，其<code>DefaultListableBeanFactory</code>实现是更高级别的<code>GenericaApplicationContext</code>容器中的一个关键代表。</p>
 <p><code>BeanFactory</code>和相关接口（如<code>BeanFactoryAware</code>、<code>InitializingBean</code>、<code>DisposableBean</code>）是其他框架组件的重要集成点。通过不需要任何注解甚至反射，它们允许容器及其组件之间进行非常有效的交互。应用级的bean可以使用相同的回调接口，但通常更喜欢声明式地依赖项注入，要么通过注解，要么通过编程配置。</p>
 <p>请注意，核心<code>BeanFactory</code> API级别及其<code>DefaultListableBeanFactory</code>实现不对要使用的配置格式或任何组件注释进行假设。所有这些风格都是通过扩展（如<code>XmlBeanDefinitionReader</code>和<code>AutowiredNotationBeanPostProcessor</code>）引入的，并作为核心元数据表示在共享<code>BeanDefinition</code>对象上操作。这就是Spring容器如此灵活和可扩展的本质所在。</p>
@@ -473,13 +505,14 @@ https://github.com/alex-shpak/hugo-book
 </blockquote>
 
 <blockquote class="book-hint grey">
-  <p><span id="resources">= 资源</span></p>
-<p><span id="resources-app-ctx">== 应用上下文与资源路径</span></p>
+  <div id="resources">= 资源</div>
+<div id="resources-app-ctx">== 应用上下文与资源路径</div>
 
 </blockquote>
 
 <blockquote class="book-hint grey">
-  <span id="aop-atconfigurable">=== 使用AspectJ向Spring注入依赖域对象</span>
+  <div id="aop-atconfigurable">=== 使用AspectJ向Spring注入依赖域对象</div>
+
 </blockquote>
 
 </article>

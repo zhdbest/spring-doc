@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="1.4 依赖 #  Version 5.2.2.RELEASE
- 1.4.1 依赖注入 #  1.4.4 延迟初始化bean #  1.4.5 自动装配协作者（依赖） #  ">
+ 1.4.1 依赖注入 #  1.4.2 详细的依赖项和配置 #  内部bean #  1.4.4 延迟初始化bean #  1.4.5 自动装配协作者 #  ">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.4 依赖" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -13,9 +13,9 @@
 <title>1.4 依赖 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/spring-doc/book.min.5e8918a588fee4a8354dde4e0c594d701808d0c177fc0aeb0e8c5b6845977273.css" integrity="sha256-XokYpYj&#43;5Kg1Td5ODFlNcBgI0MF3/ArrDoxbaEWXcnM=" crossorigin="anonymous">
+<link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.a416d0ed27e030357ccbd383b9fc3b00eec5d45e8ad73f189803022b6f5d8e80.js" integrity="sha256-pBbQ7SfgMDV8y9ODufw7AO7F1F6K1z8YmAMCK29djoA=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.92af9c425d9bddbe44a73271d07cf90b9aa4e9218117959e9a72fd6e237724e5.js" integrity="sha256-kq&#43;cQl2b3b5EpzJx0Hz5C5qk6SGBF5WemnL9biN3JOU=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/ioc-container/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -409,8 +409,13 @@ https://github.com/alex-shpak/hugo-book
 <nav id="TableOfContents">
   <ul>
     <li><a href="#141-依赖注入">1.4.1 依赖注入</a></li>
+    <li><a href="#142-详细的依赖项和配置">1.4.2 详细的依赖项和配置</a>
+      <ul>
+        <li><a href="#内部bean">内部bean</a></li>
+      </ul>
+    </li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
-    <li><a href="#145-自动装配协作者依赖">1.4.5 自动装配协作者（依赖）</a></li>
+    <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a></li>
   </ul>
 </nav>
 
@@ -433,13 +438,21 @@ https://github.com/alex-shpak/hugo-book
   1.4.1 依赖注入
   <a class="anchor" href="#141-%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">#</a>
 </h2>
+<h2 id="142-详细的依赖项和配置">
+  1.4.2 详细的依赖项和配置
+  <a class="anchor" href="#142-%e8%af%a6%e7%bb%86%e7%9a%84%e4%be%9d%e8%b5%96%e9%a1%b9%e5%92%8c%e9%85%8d%e7%bd%ae">#</a>
+</h2>
+<h3 id="内部bean">
+  内部bean
+  <a class="anchor" href="#%e5%86%85%e9%83%a8bean">#</a>
+</h3>
 <h2 id="144-延迟初始化bean">
   1.4.4 延迟初始化bean
   <a class="anchor" href="#144-%e5%bb%b6%e8%bf%9f%e5%88%9d%e5%a7%8b%e5%8c%96bean">#</a>
 </h2>
-<h2 id="145-自动装配协作者依赖">
-  1.4.5 自动装配协作者（依赖）
-  <a class="anchor" href="#145-%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d%e5%8d%8f%e4%bd%9c%e8%80%85%e4%be%9d%e8%b5%96">#</a>
+<h2 id="145-自动装配协作者">
+  1.4.5 自动装配协作者
+  <a class="anchor" href="#145-%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d%e5%8d%8f%e4%bd%9c%e8%80%85">#</a>
 </h2>
 </article>
  
@@ -483,8 +496,13 @@ https://github.com/alex-shpak/hugo-book
 <nav id="TableOfContents">
   <ul>
     <li><a href="#141-依赖注入">1.4.1 依赖注入</a></li>
+    <li><a href="#142-详细的依赖项和配置">1.4.2 详细的依赖项和配置</a>
+      <ul>
+        <li><a href="#内部bean">内部bean</a></li>
+      </ul>
+    </li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
-    <li><a href="#145-自动装配协作者依赖">1.4.5 自动装配协作者（依赖）</a></li>
+    <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a></li>
   </ul>
 </nav>
 
