@@ -24,13 +24,17 @@
   </url><url>
     <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-factory-scopes/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-factory-nature/</loc>
-  </url><url>
     <loc>https://hongmao.run/spring-doc/web-servlet/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-factory-nature/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/web-reactive/</loc>
   </url><url>
+    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-child-bean-definitions/</loc>
+  </url><url>
     <loc>https://hongmao.run/spring-doc/integration/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-factory-extension/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/languages/</loc>
   </url><url>
