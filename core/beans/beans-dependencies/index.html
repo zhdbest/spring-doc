@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="1.4 依赖 #  Version 5.2.2.RELEASE
+ 典型的企业应用程序不会仅由单个对象（或Spring术语中的bean）组成的。即使是最简单的应用程序，也有几个对象一起工作，以让最终用户感觉是协调一致的应用程序。下一节将解释如何从定义大量独立的bean定义过渡到一个完全实现的应用程序，在这个应用程序中，对象相互协作以实现一个目标。
+1.4.1 依赖注入 #  依赖注入（DI）是一个过程，对象仅通过构造函数参数、工厂方法的参数或在对象实例构造或从工厂方法返回后在对象实例上设置的属性来定义其依赖项（即与之一起工作的其他对象）。然后，容器在创建bean时注入这些依赖项。这个过程基本上与bean本身通过使用类直接构造或服务定位器模式来控制其依赖项的实例化或位置相反（因此称为控制反转）。
+使用DI原理，代码更干净，当对象具有依赖关系时，解耦更有效。对象不查找其依赖项，也不知道依赖项的位置或类。因此，您的类变得更容易测试，特别是当依赖项位于接口或抽象基类上时，这允许在单元测试中使用存根或模拟实现。
+DI有两种主要变体：基于构造函数的依赖注入和基于Setter的依赖注入。
+基于构造函数的依赖注入 #  基于构造函数的DI是通过容器调用具有多个参数的构造函数来完成的，每个参数表示一个依赖项。调用带有特定参数的静态工厂方法来构造bean几乎是相同的，在此探讨中对待构造函数和静态工厂方法的参数是类似的。以下示例展示了一个类，该类只通过构造函数注入来实现依赖项注入：
+Java public class SimpleMovieLister { // SimpleMovieLister有一个依赖项：MovieFinder  private MovieFinder movieFinder; // 该构造器使得Spring容器可以注入一个MovieFinder  public SimpleMovieLister(MovieFinder movieFinder) { this.movieFinder = movieFinder; } // 此处省略了实际使用注入的MovieFinder的业务逻辑 } Kotlin // 该构造器使得Spring容器可以注入一个MovieFinder class SimpleMovieLister(private val movieFinder: MovieFinder) { // 此处省略了实际使用注入的MovieFinder的业务逻辑 }  请注意，这个类没有什么特别之处。它就是是一个POJO，不依赖于容器特定的接口、基类或注解。
+构造函数参数解析 #  构造函数参数解析是通过使用参数的类型进行匹配的。如果bean定义的构造函数参数中不存在潜在的歧义，那么在bean定义中定义构造函数参数的顺序就是在实例化bean时将这些参数提供给相应构造函数的顺序。考虑下面的类：
+Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, ThingThree thingThree) { // .">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.4 依赖" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://hongmao.run/spring-doc/core/beans/beans-dependencies/" />
+
+<title>1.4 依赖 | Spring文档</title>
+<link rel="manifest" href="/spring-doc/manifest.json">
+<link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
+  <script defer src="/spring-doc/flexsearch.min.js"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.3e3592dc59fd17ab7187caf3b5cb2a14f15ed47e9516f7a94afe6c3a60afc0d5.js" integrity="sha256-PjWS3Fn9F6txh8rztcsqFPFe1H6VFvepSv5sOmCvwNU=" crossorigin="anonymous"></script>
+<link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="" aria-label="" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/overview/" class="">Spring框架概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0d1affe253952d37201d1163f8079748" class="toggle" checked />
+    <label for="section-0d1affe253952d37201d1163f8079748" class="flex justify-between">
+      <a href="https://hongmao.run/spring-doc/core/" class="">核心技术</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-235ed86e667da8fa828dd4f659577027" class="toggle" checked />
+    <label for="section-235ed86e667da8fa828dd4f659577027" class="flex justify-between">
+      <a href="https://hongmao.run/spring-doc/core/beans/" class="">1. IoC容器</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-basics/" class="">1.2 容器概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-definition/" class="">1.3 Bean概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/" class=" active">1.4 依赖</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/" class="">1.5 bean的作用域</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-nature/" class="">1.6 自定义Bean的性质</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-child-bean-definitions/" class="">1.7 bean定义继承</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-extension/" class="">1.8 容器扩展点</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-annotation-config/" class="">1.9 基于注解的容器配置</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/testing/" class="">测试</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/data-access/" class="">数据访问</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/web-servlet/" class="">Web Servlet</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/web-reactive/" class="">响应式Web</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8b9fad4111be4155727ef91074c37605" class="toggle"  />
+    <label for="section-8b9fad4111be4155727ef91074c37605" class="flex justify-between">
+      <a href="https://hongmao.run/spring-doc/integration/" class="">集成</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/integration/jmx/" class="">4.JMX</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/languages/" class="">支持的语言</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/spring-doc/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>1.4 依赖</strong>
+
+  <label for="toc-control">
+    
+    <img src="/spring-doc/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#141-依赖注入">1.4.1 依赖注入</a>
+      <ul>
+        <li><a href="#基于构造函数的依赖注入">基于构造函数的依赖注入</a></li>
+        <li><a href="#基于setter的依赖注入">基于setter的依赖注入</a></li>
+        <li><a href="#依赖项解析过程">依赖项解析过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#142-详细的依赖项和配置">1.4.2 详细的依赖项和配置</a>
+      <ul>
+        <li><a href="#内部bean">内部bean</a></li>
+      </ul>
+    </li>
+    <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
+    <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="14-依赖">
+  1.4 依赖
+  <a class="anchor" href="#14-%e4%be%9d%e8%b5%96">#</a>
+</h1>
+<p><a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/spring-framework-reference/core.html#beans-dependencies">Version 5.2.2.RELEASE</a></p>
+<hr>
+<p>典型的企业应用程序不会仅由单个对象（或Spring术语中的bean）组成的。即使是最简单的应用程序，也有几个对象一起工作，以让最终用户感觉是协调一致的应用程序。下一节将解释如何从定义大量独立的bean定义过渡到一个完全实现的应用程序，在这个应用程序中，对象相互协作以实现一个目标。</p>
+<h2 id="141-依赖注入">
+  1.4.1 依赖注入
+  <a class="anchor" href="#141-%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">#</a>
+</h2>
+<p>依赖注入（DI）是一个过程，对象仅通过构造函数参数、工厂方法的参数或在对象实例构造或从工厂方法返回后在对象实例上设置的属性来定义其依赖项（即与之一起工作的其他对象）。然后，容器在创建bean时注入这些依赖项。这个过程基本上与bean本身通过使用类直接构造或服务定位器模式来控制其依赖项的实例化或位置相反（因此称为控制反转）。</p>
+<p>使用DI原理，代码更干净，当对象具有依赖关系时，解耦更有效。对象不查找其依赖项，也不知道依赖项的位置或类。因此，您的类变得更容易测试，特别是当依赖项位于接口或抽象基类上时，这允许在单元测试中使用存根或模拟实现。</p>
+<p>DI有两种主要变体：<a href="./#%e5%9f%ba%e4%ba%8e%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e7%9a%84%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">基于构造函数的依赖注入</a>和<a href="./#%e5%9f%ba%e4%ba%8esetter%e7%9a%84%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">基于Setter的依赖注入</a>。</p>
+<h3 id="基于构造函数的依赖注入">
+  基于构造函数的依赖注入
+  <a class="anchor" href="#%e5%9f%ba%e4%ba%8e%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e7%9a%84%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">#</a>
+</h3>
+<p>基于构造函数的DI是通过容器调用具有多个参数的构造函数来完成的，每个参数表示一个依赖项。调用带有特定参数的静态工厂方法来构造bean几乎是相同的，在此探讨中对待构造函数和静态工厂方法的参数是类似的。以下示例展示了一个类，该类只通过构造函数注入来实现依赖项注入：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-0" checked="checked" />
+  <label for="tabs-code-1-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">SimpleMovieLister</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#6272a4">// SimpleMovieLister有一个依赖项：MovieFinder
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">private</span> MovieFinder movieFinder<span style="color:#ff79c6">;</span>
+
+    <span style="color:#6272a4">// 该构造器使得Spring容器可以注入一个MovieFinder
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">SimpleMovieLister</span><span style="color:#ff79c6">(</span>MovieFinder movieFinder<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">movieFinder</span> <span style="color:#ff79c6">=</span> movieFinder<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#6272a4">// 此处省略了实际使用注入的MovieFinder的业务逻辑
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
+  <label for="tabs-code-1-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#6272a4">// 该构造器使得Spring容器可以注入一个MovieFinder
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">SimpleMovieLister</span>(<span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> movieFinder: MovieFinder) {
+    <span style="color:#6272a4">// 此处省略了实际使用注入的MovieFinder的业务逻辑
+</span><span style="color:#6272a4"></span>}
+</code></pre></div></div></div>
+
+<p>请注意，这个类没有什么特别之处。它就是是一个POJO，不依赖于容器特定的接口、基类或注解。</p>
+<h4 id="构造函数参数解析">
+  构造函数参数解析
+  <a class="anchor" href="#%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e5%8f%82%e6%95%b0%e8%a7%a3%e6%9e%90">#</a>
+</h4>
+<p>构造函数参数解析是通过使用参数的类型进行匹配的。如果bean定义的构造函数参数中不存在潜在的歧义，那么在bean定义中定义构造函数参数的顺序就是在实例化bean时将这些参数提供给相应构造函数的顺序。考虑下面的类：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-0" checked="checked" />
+  <label for="tabs-code-2-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#ff79c6">package</span> x.y<span style="color:#ff79c6">;</span>
+
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ThingOne</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">ThingOne</span><span style="color:#ff79c6">(</span>ThingTwo thingTwo<span style="color:#ff79c6">,</span> ThingThree thingThree<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-1"  />
+  <label for="tabs-code-2-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">package</span> x.y
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ThingOne</span>(thingTwo: ThingTwo, thingThree: ThingThree)
+</code></pre></div></div></div>
+
+<p>假设<code>ThingTwo</code>和<code>ThingTree</code>类没有继承关系，则不存在潜在的歧义。因此，以下配置可以正常工作，您不需要在<code>&lt;constructor arg/&gt;</code>元素中显式指定构造函数参数索引或类型。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;beans&gt;</span>
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanOne&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.ThingOne&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;beanTwo&#34;</span><span style="color:#ff79c6">/&gt;</span>
+        <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;beanThree&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanTwo&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.ThingTwo&#34;</span><span style="color:#ff79c6">/&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanThree&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.ThingThree&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div><p>当引用另一个bean时，类型已知，并且可以进行匹配（如前一个示例所示）。使用简单类型时，例如<code>&lt;value&gt;true&lt;/value&gt;</code>，Spring无法确定值的类型，因此在没有帮助的情况下无法按类型进行匹配。考虑下面的类：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-0" checked="checked" />
+  <label for="tabs-code-3-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#ff79c6">package</span> examples<span style="color:#ff79c6">;</span>
+
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ExampleBean</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#6272a4">// Number of years to calculate the Ultimate Answer
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> years<span style="color:#ff79c6">;</span>
+
+    <span style="color:#6272a4">// The Answer to Life, the Universe, and Everything
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">private</span> String ultimateAnswer<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">ExampleBean</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> years<span style="color:#ff79c6">,</span> String ultimateAnswer<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">years</span> <span style="color:#ff79c6">=</span> years<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">ultimateAnswer</span> <span style="color:#ff79c6">=</span> ultimateAnswer<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-1"  />
+  <label for="tabs-code-3-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">package</span> examples
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ExampleBean</span>(
+    <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> years: Int, <span style="color:#6272a4">// Number of years to calculate the Ultimate Answer
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> ultimateAnswer: String<span style="color:#6272a4">// The Answer to Life, the Universe, and Everything
+</span><span style="color:#6272a4"></span>)
+</code></pre></div></div></div>
+
+<p><strong>构造函数参数类型匹配</strong></p>
+<p>在前面的场景中，如果使用<code>type</code>属性显式指定构造函数参数的类型，则容器可以使用简单类型的类型匹配。如下例所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.ExampleBean&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">type=</span><span style="color:#f1fa8c">&#34;int&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;7500000&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">type=</span><span style="color:#f1fa8c">&#34;java.lang.String&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;42&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+</code></pre></div><p><strong>构造函数参数索引</strong></p>
+<p>可以使用<code>index</code>属性显式指定构造函数参数的索引，如下例所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.ExampleBean&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">index=</span><span style="color:#f1fa8c">&#34;0&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;7500000&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">index=</span><span style="color:#f1fa8c">&#34;1&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;42&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+</code></pre></div><p>除了解决多个简单值的歧义外，如果构造函数有两个相同类型的参数，则指定索引也可以解决歧义。</p>
+<blockquote class="book-hint note">
+  该索引是从0开始的。
+</blockquote>
+
+<p><strong>构造函数参数名</strong></p>
+<p>您还可以使用构造函数参数名称来消除值的歧义，如下例所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.ExampleBean&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;years&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;7500000&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;ultimateAnswer&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;42&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+</code></pre></div><p>请记住，要使这种方式开箱即用，必须在编译代码时启用调试标志，以便Spring可以从构造函数中查找参数名。如果不能或不想使用调试标志编译代码，可以使用<code>@ConstructorProperties</code> JDK注解显式命名构造函数参数。然后，示例类必须如下所示：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-0" checked="checked" />
+  <label for="tabs-code-4-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#ff79c6">package</span> examples<span style="color:#ff79c6">;</span>
+
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ExampleBean</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#6272a4">// Fields omitted
+</span><span style="color:#6272a4"></span>
+    @ConstructorProperties<span style="color:#ff79c6">({</span><span style="color:#f1fa8c">&#34;years&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;ultimateAnswer&#34;</span><span style="color:#ff79c6">})</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">ExampleBean</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> years<span style="color:#ff79c6">,</span> String ultimateAnswer<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">years</span> <span style="color:#ff79c6">=</span> years<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">ultimateAnswer</span> <span style="color:#ff79c6">=</span> ultimateAnswer<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-1"  />
+  <label for="tabs-code-4-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">package</span> examples
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ExampleBean</span>
+@ConstructorProperties(<span style="color:#f1fa8c">&#34;years&#34;</span>, <span style="color:#f1fa8c">&#34;ultimateAnswer&#34;</span>)
+<span style="color:#ff79c6">constructor</span>(<span style="color:#ff79c6">val</span> years: Int, <span style="color:#ff79c6">val</span> ultimateAnswer: String)
+</code></pre></div></div></div>
+
+<h3 id="基于setter的依赖注入">
+  基于setter的依赖注入
+  <a class="anchor" href="#%e5%9f%ba%e4%ba%8esetter%e7%9a%84%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">#</a>
+</h3>
+<p>基于setter的DI是由容器在调用无参构造函数或无参静态工厂方法实例化bean之后，在bean上调用setter方法来完成的。</p>
+<p>下面的示例展示了一个只能使用纯setter注入进行依赖注入的类。这个类是传统的Java类。它是一个POJO，不依赖于容器特定的接口、基类或注解。</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-5" id="tabs-code-5-0" checked="checked" />
+  <label for="tabs-code-5-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">SimpleMovieLister</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#6272a4">// SimpleMovieLister依赖于MovieFinder
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">private</span> MovieFinder movieFinder<span style="color:#ff79c6">;</span>
+
+    <span style="color:#6272a4">// 此setter方法可以使Spring容器注入MovieFinder
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setMovieFinder</span><span style="color:#ff79c6">(</span>MovieFinder movieFinder<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">movieFinder</span> <span style="color:#ff79c6">=</span> movieFinder<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#6272a4">// 省略了实际使用注入的MovieFinder的业务逻辑
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-5" id="tabs-code-5-1"  />
+  <label for="tabs-code-5-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">SimpleMovieLister</span> {
+
+    <span style="color:#6272a4">// 这是一个延迟初始化的属性，可以使Spring容器注入MovieFinder
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">lateinit</span> <span style="color:#ff79c6">var</span> movieFinder: MovieFinder
+
+    <span style="color:#6272a4">// 省略了实际使用注入的MovieFinder的业务逻辑
+</span><span style="color:#6272a4"></span>}
+</code></pre></div></div></div>
+
+<p><code>ApplicationContext</code>为其管理的bean支持基于构造函数和基于setter的DI。在通过构造函数方法注入一些依赖项之后，它还支持使用基于setter的DI再注入一些依赖项。您可以以<code>BeanDefinition</code>的形式配置依赖项，将其与<code>PropertyEditor</code>实例一起使用，以将属性从一种格式转换为另一种格式。然而，大多数Spring用户并不直接使用这些类（即编程），而是使用XML <code>bean</code>定义、带注解的组件（即用<code>@Component</code>、<code>@Controller</code>等注解标注的类）或基于Java的<code>@Configuration</code>类中的<code>@Bean</code>方法。然后，这些源在内部转换为<code>BeanDefinition</code>的实例，并用于加载整个Spring IoC容器实例。</p>
+<blockquote class="book-hint grey">
+  <div style="text-align: center;"><h2 id="基于构造函数的di还是基于setter的di">基于构造函数的DI还是基于setter的DI？</h2>
+</div>
+<p>因为您可以混合使用基于构造函数和基于setter的依赖注入，所以使用构造函数注入强制依赖项，使用setter方法或配置方法注入可选依赖项，这是一个很好的经验法则。注意，在setter方法上使用<a href="../beans-annotation-config#191-@required">@Required</a>注解可以使属性成为必需的依赖项；但是，最好在构造函数注入时使用编程的方式验证参数。</p>
+<p>Spring团队通常提倡构造函数注入，因为它允许您将应用程序组件实现为不可变对象，并确保所需的依赖项不为null。此外，构造函数注入的组件总是以完全初始化的状态返回给客户端代码（调用）。顺便说一下，构造函数存在大量参数是一种糟糕的代码味道，这意味着此类可能有太多的责任，应该进行重构以更好地对关注点进行分离。</p>
+<p>setter注入应该主要用于可选的依赖项，这些依赖项可以在类中分配合理的默认值。否则，必须在代码使用依赖项的任何地方执行非空检查。setter注入的一个好处是setter方法使该类的对象易于以后重新配置或重新注入。因此，通过<a href="../../../integration/jmx">JMX MBeans</a>进行管理是setter注入的一个引人注目的案例。</p>
+<p>使用对特定类最有意义的依赖方式。有时，在处理您没有源代码的第三方类时，您可以做出选择。例如，如果第三方类不公开任何setter方法，那么构造函数注入可能是唯一可用的依赖注入方式。</p>
+
+</blockquote>
+
+<h3 id="依赖项解析过程">
+  依赖项解析过程
+  <a class="anchor" href="#%e4%be%9d%e8%b5%96%e9%a1%b9%e8%a7%a3%e6%9e%90%e8%bf%87%e7%a8%8b">#</a>
+</h3>
+<p>容器执行bean依赖项解析，如下所示：</p>
+<ul>
+<li><code>ApplicationContext</code>是用描述所有bean的配置元数据创建和初始化的。配置元数据可以由XML、Java代码或注解指定。</li>
+<li>对于每个bean，其依赖项都以属性、构造函数参数或静态工厂方法参数（如果您使用静态工厂方法而不是普通构造函数）的形式提供。这些依赖关系在bean被实际创建时提供给bean。</li>
+<li>每个属性或构造函数参数都是要设置的值的实际定义，或者是对容器中另一个bean的引用。</li>
+<li>每个属性或构造函数参数的值都将从其指定格式转换为该属性或构造函数参数的实际类型。默认情况下，Spring可以将以字符串格式提供的值转换为所有内置类型，例如<code>int</code>、<code>long</code>、<code>String</code>、<code>boolean</code>等。</li>
+</ul>
+<p>Spring容器在创建容器时验证每个bean的配置。但是，在实际创建bean之前，不会设置bean的属性本身。创建容器时，将创建单例作用域并设置为预实例化（默认）的bean。作用域是在<a href="../beans-factory-scopes">bean的作用域</a>中定义的。否则，只有在请求时才创建bean。创建bean可能会导致创建bean图，因为bean的依赖项及其依赖项的依赖项（等等）是要被创建和被分配的。请注意，这些依赖项之间的解析不匹配可能会延迟暴露 — 也就是说，在第一次创建受影响的bean时才暴露。</p>
+<blockquote class="book-hint grey">
+  <div style="text-align: center;"><h2 id="循环依赖">循环依赖</h2>
+</div>
+<p>如果主要使用构造函数注入，则有可能创建无法解决的循环依赖场景。</p>
+<p>例如：类A通过构造函数注入需要类B的实例，类B通过构造函数注入需要类A的实例。如果为类A和类B配置bean以相互注入，Spring IoC容器将在运行时检测到此循环引用，并抛出<code>BeanCurrentlyInCreationException</code>。</p>
+<p>一种可能的解决方案是编辑某些类的源代码，由setter而不是构造函数进行配置。或者，避免构造函数注入，只使用setter注入。换句话说，虽然不建议使用setter注入，但您可以使用setter注入来配置循环依赖项。</p>
+<p>与常见情况（没有循环依赖）不同，bean A和bean B之间的循环依赖迫使一个bean在完全初始化之前注入另一个bean（典型的先有鸡还是先有蛋的场景）。</p>
+
+</blockquote>
+
+<p>您通常可以相信Spring会做正确的事情。它在容器加载时检测配置问题，例如对不存在的bean的引用和循环依赖项。Spring在bean实际创建时尽可能晚地设置属性并解析依赖项。这意味着，如果创建该对象或其依赖项之一时出现问题（例如，bean由于缺少或无效属性而引发异常），则已正确加载的 Spring 容器稍后可以在您请求该对象时生成异常。这可能会延迟某些配置问题的可见性，这就是<code>ApplicationContext</code>实现在默认情况下预先实例化单例bean的原因。在实际需要这些bean之前，您需要花费一些前期时间和内存来创建它们，但在创建<code>ApplicationContext</code>时（而不是以后）会发现配置问题。您仍然可以覆盖此默认行为，以便单例bean延迟初始化，而不是预先实例化。</p>
+<p>如果不存在循环依赖关系，那么当一个或多个协作bean被注入到依赖bean中时，每个协作bean在被注入到依赖bean中之前都会被完全配置。这意味着，如果bean A依赖于bean B，那么Spring IoC容器将在调用bean A上的setter方法之前完全配置完bean B。换句话说，bean被实例化了（如果它不是预实例化的单例），则它的依赖项会被设置，相关的生命周期方法（例如<a href="../beans-factory-nature#%e5%88%9d%e5%a7%8b%e5%8c%96%e6%97%b6%e5%9b%9e%e8%b0%83">配置的init方法</a>或<a href="../beans-factory-nature#%e5%88%9d%e5%a7%8b%e5%8c%96%e6%97%b6%e5%9b%9e%e8%b0%83">InitializingBean回调方法</a>）也会被调用。</p>
+<h2 id="142-详细的依赖项和配置">
+  1.4.2 详细的依赖项和配置
+  <a class="anchor" href="#142-%e8%af%a6%e7%bb%86%e7%9a%84%e4%be%9d%e8%b5%96%e9%a1%b9%e5%92%8c%e9%85%8d%e7%bd%ae">#</a>
+</h2>
+<h3 id="内部bean">
+  内部bean
+  <a class="anchor" href="#%e5%86%85%e9%83%a8bean">#</a>
+</h3>
+<h2 id="144-延迟初始化bean">
+  1.4.4 延迟初始化bean
+  <a class="anchor" href="#144-%e5%bb%b6%e8%bf%9f%e5%88%9d%e5%a7%8b%e5%8c%96bean">#</a>
+</h2>
+<h2 id="145-自动装配协作者">
+  1.4.5 自动装配协作者
+  <a class="anchor" href="#145-%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d%e5%8d%8f%e4%bd%9c%e8%80%85">#</a>
+</h2>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#141-依赖注入">1.4.1 依赖注入</a>
+      <ul>
+        <li><a href="#基于构造函数的依赖注入">基于构造函数的依赖注入</a></li>
+        <li><a href="#基于setter的依赖注入">基于setter的依赖注入</a></li>
+        <li><a href="#依赖项解析过程">依赖项解析过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#142-详细的依赖项和配置">1.4.2 详细的依赖项和配置</a>
+      <ul>
+        <li><a href="#内部bean">内部bean</a></li>
+      </ul>
+    </li>
+    <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
+    <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

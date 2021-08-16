@@ -2,43 +2,45 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-introduction/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/beans-introduction/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/overview/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-basics/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/beans-basics/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/core/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-definition/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/beans-definition/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/testing/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-dependencies/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/beans-dependencies/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/integration/jmx/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/data-access/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-factory-scopes/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/web-servlet/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-factory-nature/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/beans-factory-nature/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/web-reactive/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-child-bean-definitions/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/beans-child-bean-definitions/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/integration/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-factory-extension/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/beans-factory-extension/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/languages/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/core/ioc-container/beans-annotation-config/</loc>
+    <loc>https://hongmao.run/spring-doc/core/beans/beans-annotation-config/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/categories/</loc>
   </url><url>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="1.9 基于注解的容器配置 #  Version 5.2.2.RELEASE
+ 1.9.1 @Required #  1.9.2 使用@Autowired #  1.9.3 使用@Primary微调基于注解的自动装配 #  1.9.4 使用限定符微调基于注解的自动装配 #  == 基于Java的容器配置 本节介绍如何在Java代码中使用注解来配置Spring容器。它包括以下主题：
+ [基本概念：@Bean和@Configuration] [使用AnnotationConfigApplicationContext实例化Spring容器] [@Bean注解使用] [@Configuration注解使用] [组合基于Java的配置] [bean定义配置] [PropertySource抽象] [使用PropertySource] [语句中的占位符解析]  === 基本概念：@Bean和@Configuration === 使用AnnotationConfigApplicationContext实例化Spring容器 === @Bean注解使用 === @Configuration注解使用  === 组合基于Java的配置  === bean定义配置 === PropertySource抽象  === PropertySource抽象  === 使用PropertySource === 语句中的占位符解析  === Web应用简单的ApplicationContext实例化 == BeanFactory BeanFactory API为Spring的IoC功能提供了基础。它特定的约定主要用于与Spring的其他部分和相关第三方框架集成，其DefaultListableBeanFactory实现是更高级别的GenericaApplicationContext容器中的一个关键代表。
+BeanFactory和相关接口（如BeanFactoryAware、InitializingBean、DisposableBean）是其他框架组件的重要集成点。通过不需要任何注解甚至反射，它们允许容器及其组件之间进行非常有效的交互。应用级的bean可以使用相同的回调接口，但通常更喜欢声明式地依赖项注入，要么通过注解，要么通过编程配置。
+请注意，核心BeanFactory API级别及其DefaultListableBeanFactory实现不对要使用的配置格式或任何组件注释进行假设。所有这些风格都是通过扩展（如XmlBeanDefinitionReader和AutowiredNotationBeanPostProcessor）引入的，并作为核心元数据表示在共享BeanDefinition对象上操作。这就是Spring容器如此灵活和可扩展的本质所在。">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.9 基于注解的容器配置" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://hongmao.run/spring-doc/core/beans/beans-annotation-config/" />
+
+<title>1.9 基于注解的容器配置 | Spring文档</title>
+<link rel="manifest" href="/spring-doc/manifest.json">
+<link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
+  <script defer src="/spring-doc/flexsearch.min.js"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.3e3592dc59fd17ab7187caf3b5cb2a14f15ed47e9516f7a94afe6c3a60afc0d5.js" integrity="sha256-PjWS3Fn9F6txh8rztcsqFPFe1H6VFvepSv5sOmCvwNU=" crossorigin="anonymous"></script>
+<link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-annotation-config/index.xml" title="Spring文档" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="" aria-label="" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/overview/" class="">Spring框架概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-0d1affe253952d37201d1163f8079748" class="toggle" checked />
+    <label for="section-0d1affe253952d37201d1163f8079748" class="flex justify-between">
+      <a href="https://hongmao.run/spring-doc/core/" class="">核心技术</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-235ed86e667da8fa828dd4f659577027" class="toggle" checked />
+    <label for="section-235ed86e667da8fa828dd4f659577027" class="flex justify-between">
+      <a href="https://hongmao.run/spring-doc/core/beans/" class="">1. IoC容器</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-basics/" class="">1.2 容器概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-definition/" class="">1.3 Bean概述</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/" class="">1.4 依赖</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/" class="">1.5 bean的作用域</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-nature/" class="">1.6 自定义Bean的性质</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-child-bean-definitions/" class="">1.7 bean定义继承</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-extension/" class="">1.8 容器扩展点</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-annotation-config/" class=" active">1.9 基于注解的容器配置</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/testing/" class="">测试</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/data-access/" class="">数据访问</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/web-servlet/" class="">Web Servlet</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/web-reactive/" class="">响应式Web</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8b9fad4111be4155727ef91074c37605" class="toggle"  />
+    <label for="section-8b9fad4111be4155727ef91074c37605" class="flex justify-between">
+      <a href="https://hongmao.run/spring-doc/integration/" class="">集成</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/integration/jmx/" class="">4.JMX</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hongmao.run/spring-doc/languages/" class="">支持的语言</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/spring-doc/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>1.9 基于注解的容器配置</strong>
+
+  <label for="toc-control">
+    
+    <img src="/spring-doc/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#191-required">1.9.1 @Required</a></li>
+    <li><a href="#192-使用autowired">1.9.2 使用<code>@Autowired</code></a></li>
+    <li><a href="#193-使用primary微调基于注解的自动装配">1.9.3 使用<code>@Primary</code>微调基于注解的自动装配</a></li>
+    <li><a href="#194-使用限定符微调基于注解的自动装配">1.9.4 使用限定符微调基于注解的自动装配</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="19-基于注解的容器配置">
+  1.9 基于注解的容器配置
+  <a class="anchor" href="#19-%e5%9f%ba%e4%ba%8e%e6%b3%a8%e8%a7%a3%e7%9a%84%e5%ae%b9%e5%99%a8%e9%85%8d%e7%bd%ae">#</a>
+</h1>
+<p><a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/spring-framework-reference/core.html#beans-annotation-config">Version 5.2.2.RELEASE</a></p>
+<hr>
+<h2 id="191-required">
+  1.9.1 @Required
+  <a class="anchor" href="#191-required">#</a>
+</h2>
+<h2 id="192-使用autowired">
+  1.9.2 使用<code>@Autowired</code>
+  <a class="anchor" href="#192-%e4%bd%bf%e7%94%a8autowired">#</a>
+</h2>
+<h2 id="193-使用primary微调基于注解的自动装配">
+  1.9.3 使用<code>@Primary</code>微调基于注解的自动装配
+  <a class="anchor" href="#193-%e4%bd%bf%e7%94%a8primary%e5%be%ae%e8%b0%83%e5%9f%ba%e4%ba%8e%e6%b3%a8%e8%a7%a3%e7%9a%84%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d">#</a>
+</h2>
+<h2 id="194-使用限定符微调基于注解的自动装配">
+  1.9.4 使用限定符微调基于注解的自动装配
+  <a class="anchor" href="#194-%e4%bd%bf%e7%94%a8%e9%99%90%e5%ae%9a%e7%ac%a6%e5%be%ae%e8%b0%83%e5%9f%ba%e4%ba%8e%e6%b3%a8%e8%a7%a3%e7%9a%84%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d">#</a>
+</h2>
+<blockquote class="book-hint grey">
+  <div id="beans-java">== 基于Java的容器配置</div>
+<p>本节介绍如何在Java代码中使用注解来配置Spring容器。它包括以下主题：</p>
+<ul>
+<li><a href="./#beans-java-basic-concepts">[基本概念：<code>@Bean</code>和<code>@Configuration</code>]</a></li>
+<li><a href="./#beans-java-instantiating-container">[使用<code>AnnotationConfigApplicationContext</code>实例化Spring容器]</a></li>
+<li><a href="./#beans-java-bean-annotation">[<code>@Bean</code>注解使用]</a></li>
+<li><a href="./#beans-java-configuration-annotation">[<code>@Configuration</code>注解使用]</a></li>
+<li><a href="./#beans-java-composing-configuration-classes">[组合基于Java的配置]</a></li>
+<li><a href="./#beans-definition-profiles">[bean定义配置]</a></li>
+<li><a href="./#beans-property-source-abstraction">[<code>PropertySource</code>抽象]</a></li>
+<li><a href="./#beans-using-propertysource">[使用<code>PropertySource</code>]</a></li>
+<li><a href="./#beans-placeholder-resolution-in-statements">[语句中的占位符解析]</a></li>
+</ul>
+<div id="beans-java-basic-concepts">=== 基本概念：<code>@Bean</code>和<code>@Configuration</code></div>
+<div id="beans-java-instantiating-container">=== 使用<code>AnnotationConfigApplicationContext</code>实例化Spring容器</div>
+<div id="beans-java-bean-annotation">=== <code>@Bean</code>注解使用</div>
+<div id="beans-java-configuration-annotation">=== <code>@Configuration</code>注解使用</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="beans-java-composing-configuration-classes">=== 组合基于Java的配置</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="beans-definition-profiles">=== bean定义配置</div>
+<div id="beans-property-source-abstraction">=== <code>PropertySource</code>抽象</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="beans-property-source-abstraction">=== <code>PropertySource</code>抽象</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="beans-using-propertysource">=== 使用<code>PropertySource</code></div>
+<div id="beans-placeholder-resolution-in-statements">=== 语句中的占位符解析</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="context-create">=== Web应用简单的ApplicationContext实例化</div>
+<div id="beans-beanfactory">==  <code>BeanFactory</code></div>
+<p><code>BeanFactory</code> API为Spring的IoC功能提供了基础。它特定的约定主要用于与Spring的其他部分和相关第三方框架集成，其<code>DefaultListableBeanFactory</code>实现是更高级别的<code>GenericaApplicationContext</code>容器中的一个关键代表。</p>
+<p><code>BeanFactory</code>和相关接口（如<code>BeanFactoryAware</code>、<code>InitializingBean</code>、<code>DisposableBean</code>）是其他框架组件的重要集成点。通过不需要任何注解甚至反射，它们允许容器及其组件之间进行非常有效的交互。应用级的bean可以使用相同的回调接口，但通常更喜欢声明式地依赖项注入，要么通过注解，要么通过编程配置。</p>
+<p>请注意，核心<code>BeanFactory</code> API级别及其<code>DefaultListableBeanFactory</code>实现不对要使用的配置格式或任何组件注释进行假设。所有这些风格都是通过扩展（如<code>XmlBeanDefinitionReader</code>和<code>AutowiredNotationBeanPostProcessor</code>）引入的，并作为核心元数据表示在共享<code>BeanDefinition</code>对象上操作。这就是Spring容器如此灵活和可扩展的本质所在。</p>
+<p>=== <code>BeanFactory</code>还是<code>ApplicationContext</code>？</p>
+<p>本节讲解<code>BeanFactory</code>和<code>ApplicationContext</code>容器级别之间的差异以及对引导的影响。</p>
+<p>除非有充分的理由，否则你应该使用<code>ApplicationContext</code>，将<code>GenericaApplicationContext</code>及其子类<code>AnnotationConfigApplicationContext</code>作为自定义引导的常见实现。这些是Spring核心容器的主要切入点，用于所有常见目的：加载配置文件、触发类路径扫描、以编程方式注册bean定义和注解类，以及（从5.0开始）注册函数bean定义。</p>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="resources">= 资源</div>
+<div id="resources-app-ctx">== 应用上下文与资源路径</div>
+
+</blockquote>
+
+<blockquote class="book-hint grey">
+  <div id="aop-atconfigurable">=== 使用AspectJ向Spring注入依赖域对象</div>
+
+</blockquote>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#191-required">1.9.1 @Required</a></li>
+    <li><a href="#192-使用autowired">1.9.2 使用<code>@Autowired</code></a></li>
+    <li><a href="#193-使用primary微调基于注解的自动装配">1.9.3 使用<code>@Primary</code>微调基于注解的自动装配</a></li>
+    <li><a href="#194-使用限定符微调基于注解的自动装配">1.9.4 使用限定符微调基于注解的自动装配</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

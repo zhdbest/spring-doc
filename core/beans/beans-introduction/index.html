@@ -3,19 +3,23 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Tags" />
+<meta name="description" content="1.1 Spring IoC容器和Beans简介 #  Version 5.2.2.RELEASE
+ 本章介绍Spring框架中控制反转（IoC）理念的实现。IoC也称为依赖注入（DI）。这是一个过程，对象仅通过构造函数参数、工厂方法的参数、在对象实例构造或从工厂方法返回后在对象实例上设置的属性来定义它们的依赖关系（即它们使用的其他对象）。然后，容器在创建这个bean时注入这些依赖项。这个过程基本上是bean本身通过使用类的直接构造或服务定位器模式等机制来控制其依赖项的实例化或位置完全相反（因此称为控制反转）。
+org.springframework.bean和org.springframework.context包是Spring框架中IoC容器的基础。BeanFactory接口提供了一种高级配置机制，能够管理任何类型的对象。ApplicationContext是BeanFactory的子接口。它补充了：
+ 更容易与Spring的AOP功能集成 信息资源处理（用于国际化） 事件发布 应用层特定的上下文，如web应用程序中使用的WebApplicationContext。  简而言之，BeanFactory提供了配置框架和基本功能，ApplicationContext添加了更多特定于企业级的功能。ApplicationContext是BeanFactory的完整超集，在本章中专门用于描述Spring的IoC容器。有关使用BeanFactory而不是ApplicationContext的更多信息，请参阅[BeanFactory]。
+在Spring中，构成应用程序主干并由Spring IoC容器管理的对象称为bean。bean是由Spring IoC容器实例化、装配和管理的对象。除此之外，bean只是应用程序许多对象中的一个。bean以及它们之间的依赖关系反映在容器所使用的配置元数据中。">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.1 Spring IoC容器和Beans简介" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://hongmao.run/spring-doc/tags/" />
+<meta property="og:url" content="https://hongmao.run/spring-doc/core/beans/beans-introduction/" />
 
-<title>Tags | Spring文档</title>
+<title>1.1 Spring IoC容器和Beans简介 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
   <script defer src="/spring-doc/zh-cn.search.min.3e3592dc59fd17ab7187caf3b5cb2a14f15ed47e9516f7a94afe6c3a60afc0d5.js" integrity="sha256-PjWS3Fn9F6txh8rztcsqFPFe1H6VFvepSv5sOmCvwNU=" crossorigin="anonymous"></script>
-<link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/tags/index.xml" title="Spring文档" />
+<link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-introduction/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -86,7 +90,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <input type="checkbox" id="section-0d1affe253952d37201d1163f8079748" class="toggle"  />
+    <input type="checkbox" id="section-0d1affe253952d37201d1163f8079748" class="toggle" checked />
     <label for="section-0d1affe253952d37201d1163f8079748" class="flex justify-between">
       <a href="https://hongmao.run/spring-doc/core/" class="">核心技术</a>
     </label>
@@ -102,7 +106,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <input type="checkbox" id="section-235ed86e667da8fa828dd4f659577027" class="toggle"  />
+    <input type="checkbox" id="section-235ed86e667da8fa828dd4f659577027" class="toggle" checked />
     <label for="section-235ed86e667da8fa828dd4f659577027" class="flex justify-between">
       <a href="https://hongmao.run/spring-doc/core/beans/" class="">1. IoC容器</a>
     </label>
@@ -118,7 +122,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
+    <a href="https://hongmao.run/spring-doc/core/beans/beans-introduction/" class=" active">1.1 Spring IoC容器和Beans简介</a>
   
 
           
@@ -448,7 +452,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/spring-doc/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <strong>Tags</strong>
+  <strong>1.1 Spring IoC容器和Beans简介</strong>
 
   <label for="toc-control">
     
@@ -461,29 +465,9 @@ https://github.com/alex-shpak/hugo-book
   
   <aside class="hidden clearfix">
     
-  <nav>
-  <ul>
   
-    
-    <li class="book-section-flat">
-      <strong>Categories</strong>
-      <ul>
-      
-      </ul>
-    </li>
-    
-  
-    
-    <li class="book-section-flat">
-      <strong>Tags</strong>
-      <ul>
-      
-      </ul>
-    </li>
-    
-  
-  </ul>
-</nav>
+<nav id="TableOfContents"></nav>
+
 
 
   </aside>
@@ -493,9 +477,23 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  
-
-  
+  <article class="markdown"><h1 id="11-spring-ioc容器和beans简介">
+  1.1 Spring IoC容器和Beans简介
+  <a class="anchor" href="#11-spring-ioc%e5%ae%b9%e5%99%a8%e5%92%8cbeans%e7%ae%80%e4%bb%8b">#</a>
+</h1>
+<p><a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/spring-framework-reference/core.html#beans-introduction">Version 5.2.2.RELEASE</a></p>
+<hr>
+<p>本章介绍Spring框架中控制反转（IoC）理念的实现。IoC也称为依赖注入（DI）。这是一个过程，对象仅通过构造函数参数、工厂方法的参数、在对象实例构造或从工厂方法返回后在对象实例上设置的属性来定义它们的依赖关系（即它们使用的其他对象）。然后，容器在创建这个bean时注入这些依赖项。这个过程基本上是bean本身通过使用类的直接构造或服务定位器模式等机制来控制其依赖项的实例化或位置完全相反（因此称为控制反转）。</p>
+<p><code>org.springframework.bean</code>和<code>org.springframework.context</code>包是Spring框架中IoC容器的基础。<code>BeanFactory</code>接口提供了一种高级配置机制，能够管理任何类型的对象。<code>ApplicationContext</code>是<code>BeanFactory</code>的子接口。它补充了：</p>
+<ul>
+<li>更容易与Spring的AOP功能集成</li>
+<li>信息资源处理（用于国际化）</li>
+<li>事件发布</li>
+<li>应用层特定的上下文，如web应用程序中使用的<code>WebApplicationContext</code>。</li>
+</ul>
+<p>简而言之，<code>BeanFactory</code>提供了配置框架和基本功能，<code>ApplicationContext</code>添加了更多特定于企业级的功能。<code>ApplicationContext</code>是<code>BeanFactory</code>的完整超集，在本章中专门用于描述Spring的IoC容器。有关使用<code>BeanFactory</code>而不是<code>ApplicationContext</code>的更多信息，请参阅[<a href="../beans-annotation-config/#beans-beanfactory">BeanFactory</a>]。</p>
+<p>在Spring中，构成应用程序主干并由Spring IoC容器管理的对象称为bean。bean是由Spring IoC容器实例化、装配和管理的对象。除此之外，bean只是应用程序许多对象中的一个。bean以及它们之间的依赖关系反映在容器所使用的配置元数据中。</p>
+</article>
  
       
 
@@ -520,6 +518,10 @@ https://github.com/alex-shpak/hugo-book
 
       
   
+  <div class="book-comments">
+
+</div>
+  
  
 
       <label for="menu-control" class="hidden book-menu-overlay"></label>
@@ -529,29 +531,9 @@ https://github.com/alex-shpak/hugo-book
     <aside class="book-toc">
       <div class="book-toc-content">
         
-  <nav>
-  <ul>
   
-    
-    <li class="book-section-flat">
-      <strong>Categories</strong>
-      <ul>
-      
-      </ul>
-    </li>
-    
-  
-    
-    <li class="book-section-flat">
-      <strong>Tags</strong>
-      <ul>
-      
-      </ul>
-    </li>
-    
-  
-  </ul>
-</nav>
+<nav id="TableOfContents"></nav>
+
 
  
       </div>
