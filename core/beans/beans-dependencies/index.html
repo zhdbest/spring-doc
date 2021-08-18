@@ -22,7 +22,7 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.3e3592dc59fd17ab7187caf3b5cb2a14f15ed47e9516f7a94afe6c3a60afc0d5.js" integrity="sha256-PjWS3Fn9F6txh8rztcsqFPFe1H6VFvepSv5sOmCvwNU=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.fe413cb46b5a189294c2d2addd23f5ea3891686a77471e40871315cabeb54878.js" integrity="sha256-/kE8tGtaGJKUwtKt3SP16jiRaGp3Rx5AhxMVyr61SHg=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -477,11 +477,15 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#基于构造函数的依赖注入">基于构造函数的依赖注入</a></li>
         <li><a href="#基于setter的依赖注入">基于setter的依赖注入</a></li>
         <li><a href="#依赖项解析过程">依赖项解析过程</a></li>
+        <li><a href="#依赖注入示例">依赖注入示例</a></li>
       </ul>
     </li>
     <li><a href="#142-详细的依赖项和配置">1.4.2 详细的依赖项和配置</a>
       <ul>
+        <li><a href="#直接的值基本类型字符串等等">直接的值（基本类型、字符串等等）</a></li>
+        <li><a href="#对其他bean协作者的引用">对其他bean（协作者）的引用</a></li>
         <li><a href="#内部bean">内部bean</a></li>
+        <li><a href="#使用p-命名空间的xml快捷方式">使用p-命名空间的XML快捷方式</a></li>
       </ul>
     </li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
@@ -734,13 +738,234 @@ https://github.com/alex-shpak/hugo-book
 
 <p>您通常可以相信Spring会做正确的事情。它在容器加载时检测配置问题，例如对不存在的bean的引用和循环依赖项。Spring在bean实际创建时尽可能晚地设置属性并解析依赖项。这意味着，如果创建该对象或其依赖项之一时出现问题（例如，bean由于缺少或无效属性而引发异常），则已正确加载的 Spring 容器稍后可以在您请求该对象时生成异常。这可能会延迟某些配置问题的可见性，这就是<code>ApplicationContext</code>实现在默认情况下预先实例化单例bean的原因。在实际需要这些bean之前，您需要花费一些前期时间和内存来创建它们，但在创建<code>ApplicationContext</code>时（而不是以后）会发现配置问题。您仍然可以覆盖此默认行为，以便单例bean延迟初始化，而不是预先实例化。</p>
 <p>如果不存在循环依赖关系，那么当一个或多个协作bean被注入到依赖bean中时，每个协作bean在被注入到依赖bean中之前都会被完全配置。这意味着，如果bean A依赖于bean B，那么Spring IoC容器将在调用bean A上的setter方法之前完全配置完bean B。换句话说，bean被实例化了（如果它不是预实例化的单例），则它的依赖项会被设置，相关的生命周期方法（例如<a href="../beans-factory-nature#%e5%88%9d%e5%a7%8b%e5%8c%96%e6%97%b6%e5%9b%9e%e8%b0%83">配置的init方法</a>或<a href="../beans-factory-nature#%e5%88%9d%e5%a7%8b%e5%8c%96%e6%97%b6%e5%9b%9e%e8%b0%83">InitializingBean回调方法</a>）也会被调用。</p>
+<h3 id="依赖注入示例">
+  依赖注入示例
+  <a class="anchor" href="#%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5%e7%a4%ba%e4%be%8b">#</a>
+</h3>
+<p>以下示例将基于XML的配置元数据使用setter方式进行依赖注入。Spring XML配置文件的一小部分指定了一些bean定义，如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.ExampleBean&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#6272a4">&lt;!-- 使用嵌套ref元素的setter注入 --&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;beanOne&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;ref</span> <span style="color:#50fa7b">bean=</span><span style="color:#f1fa8c">&#34;anotherExampleBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;/property&gt;</span>
+
+    <span style="color:#6272a4">&lt;!-- 使用整洁ref属性的setter注入 --&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;beanTwo&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;yetAnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;integerProperty&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;1&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;anotherExampleBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.AnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;yetAnotherBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.YetAnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><p>以下示例展示了相应的<code>ExampleBean</code>类：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-6" id="tabs-code-6-0" checked="checked" />
+  <label for="tabs-code-6-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ExampleBean</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> AnotherBean beanOne<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> YetAnotherBean beanTwo<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setBeanOne</span><span style="color:#ff79c6">(</span>AnotherBean beanOne<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">beanOne</span> <span style="color:#ff79c6">=</span> beanOne<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setBeanTwo</span><span style="color:#ff79c6">(</span>YetAnotherBean beanTwo<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">beanTwo</span> <span style="color:#ff79c6">=</span> beanTwo<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setIntegerProperty</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">i</span> <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-6" id="tabs-code-6-1"  />
+  <label for="tabs-code-6-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ExampleBean</span> {
+    <span style="color:#ff79c6">lateinit</span> <span style="color:#ff79c6">var</span> beanOne: AnotherBean
+    <span style="color:#ff79c6">lateinit</span> <span style="color:#ff79c6">var</span> beanTwo: YetAnotherBean
+    <span style="color:#ff79c6">var</span> i: Int = <span style="color:#bd93f9">0</span>
+}
+</code></pre></div></div></div>
+
+<p>在前面的示例中，setter被声明为与XML文件中指定的属性相匹配。以下示例使用基于构造函数的依赖注入：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.ExampleBean&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#6272a4">&lt;!-- 使用嵌套ref元素的构造函数注入 --&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg&gt;</span>
+        <span style="color:#ff79c6">&lt;ref</span> <span style="color:#50fa7b">bean=</span><span style="color:#f1fa8c">&#34;anotherExampleBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;/constructor-arg&gt;</span>
+
+    <span style="color:#6272a4">&lt;!-- 使用整洁的ref属性的构造函数注入 --&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;yetAnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">type=</span><span style="color:#f1fa8c">&#34;int&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;1&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;anotherExampleBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.AnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;yetAnotherBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.YetAnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><p>以下示例展示了相应的<code>ExampleBean</code>类：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-7" id="tabs-code-7-0" checked="checked" />
+  <label for="tabs-code-7-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ExampleBean</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> AnotherBean beanOne<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> YetAnotherBean beanTwo<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">ExampleBean</span><span style="color:#ff79c6">(</span>
+        AnotherBean anotherBean<span style="color:#ff79c6">,</span> YetAnotherBean yetAnotherBean<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">beanOne</span> <span style="color:#ff79c6">=</span> anotherBean<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">beanTwo</span> <span style="color:#ff79c6">=</span> yetAnotherBean<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">i</span> <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-7" id="tabs-code-7-1"  />
+  <label for="tabs-code-7-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ExampleBean</span>(
+        <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> beanOne: AnotherBean,
+        <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> beanTwo: YetAnotherBean,
+        <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> i: Int)
+</code></pre></div></div></div>
+
+<p>bean定义中指定的构造函数参数用作<code>ExampleBean</code>构造函数的参数。</p>
+<p>现在考虑这个例子的一个变体，在这里，Spring被告知调用静态工厂方法来返回对象的实例，而不是使用构造函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.ExampleBean&#34;</span> <span style="color:#50fa7b">factory-method=</span><span style="color:#f1fa8c">&#34;createInstance&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;anotherExampleBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;yetAnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;1&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;anotherExampleBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.AnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;yetAnotherBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.YetAnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><p>以下示例展示了相应的<code>ExampleBean</code>类：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-8" id="tabs-code-8-0" checked="checked" />
+  <label for="tabs-code-8-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ExampleBean</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#6272a4">// 私有的构造函数
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#50fa7b">ExampleBean</span><span style="color:#ff79c6">(...)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">...</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#6272a4">// 静态工厂法；此方法的参数可以被视为要返回的bean的依赖项，而不管这些参数实际如何使用。
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> ExampleBean <span style="color:#50fa7b">createInstance</span> <span style="color:#ff79c6">(</span>
+        AnotherBean anotherBean<span style="color:#ff79c6">,</span> YetAnotherBean yetAnotherBean<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+
+        ExampleBean eb <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ExampleBean <span style="color:#ff79c6">(...);</span>
+        <span style="color:#6272a4">// 其他操作...
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">return</span> eb<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-8" id="tabs-code-8-1"  />
+  <label for="tabs-code-8-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ExampleBean</span> <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">constructor</span>() {
+    <span style="color:#ff79c6">companion</span> <span style="color:#ff79c6">object</span> {
+        <span style="color:#6272a4">// 静态工厂法；此方法的参数可以被视为要返回的bean的依赖项，而不管这些参数实际如何使用。
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">createInstance</span>(anotherBean: AnotherBean, yetAnotherBean: YetAnotherBean, i: Int): ExampleBean {
+            <span style="color:#ff79c6">val</span> eb = ExampleBean (<span style="color:#ff79c6">..</span>.)
+            <span style="color:#6272a4">// 其他操作...
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">return</span> eb
+        }
+    }
+}
+</code></pre></div></div></div>
+
+<p>静态工厂方法的参数由<code>&lt;constructor-arg/&gt;</code>元素提供，与实际使用的构造函数完全相同。工厂方法返回的类的类型不必与包含静态工厂方法的类的类型相同（尽管在本例中是相同的）。实例（非静态）工厂方法可以以基本相同的方式使用（除了使用<code>factory-bean</code>属性而不是<code>class</code>属性之外），因此我们这里不讨论这些细节。</p>
 <h2 id="142-详细的依赖项和配置">
   1.4.2 详细的依赖项和配置
   <a class="anchor" href="#142-%e8%af%a6%e7%bb%86%e7%9a%84%e4%be%9d%e8%b5%96%e9%a1%b9%e5%92%8c%e9%85%8d%e7%bd%ae">#</a>
 </h2>
+<p>如<a href="./#141-%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">前一节</a>所述，您可以将bean属性和构造函数参数定义为对其他bean（协作者）的引用或内联定义的值。为此，Spring基于XML的配置元数据支持其<code>&lt;property/&gt;</code>和<code>&lt;constructor-arg/&gt;</code>元素中使用子元素类型。</p>
+<h3 id="直接的值基本类型字符串等等">
+  直接的值（基本类型、字符串等等）
+  <a class="anchor" href="#%e7%9b%b4%e6%8e%a5%e7%9a%84%e5%80%bc%e5%9f%ba%e6%9c%ac%e7%b1%bb%e5%9e%8b%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%ad%89%e7%ad%89">#</a>
+</h3>
+<p><code>&lt;property/&gt;</code>元素的<code>value</code>属性将属性或构造函数参数指定为人可读字符串的表示形式。Spring的<a href="../beans-annotation-config#core-convert-ConversionService-API">转换服务</a>用于将这些值从字符串转换为属性或参数的实际类型。以下示例显示了正在设置的各种值：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;myDataSource&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.apache.commons.dbcp.BasicDataSource&#34;</span> <span style="color:#50fa7b">destroy-method=</span><span style="color:#f1fa8c">&#34;close&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#6272a4">&lt;!-- 调用setDriverClassName(String) --&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;driverClassName&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;com.mysql.jdbc.Driver&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;url&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;jdbc:mysql://localhost:3306/mydb&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;username&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;root&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;password&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;masterkaoli&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+</code></pre></div><p>以下示例使用<a href="./#%e4%bd%bf%e7%94%a8p-%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4%e7%9a%84xml%e5%bf%ab%e6%8d%b7%e6%96%b9%e5%bc%8f">p命名空间</a>进行更简洁的XML配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+    <span style="color:#50fa7b">xmlns:p=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/p&#34;</span>
+    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#f1fa8c">    https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;myDataSource&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.apache.commons.dbcp.BasicDataSource&#34;</span>
+        <span style="color:#50fa7b">destroy-method=</span><span style="color:#f1fa8c">&#34;close&#34;</span>
+        <span style="color:#50fa7b">p:driverClassName=</span><span style="color:#f1fa8c">&#34;com.mysql.jdbc.Driver&#34;</span>
+        <span style="color:#50fa7b">p:url=</span><span style="color:#f1fa8c">&#34;jdbc:mysql://localhost:3306/mydb&#34;</span>
+        <span style="color:#50fa7b">p:username=</span><span style="color:#f1fa8c">&#34;root&#34;</span>
+        <span style="color:#50fa7b">p:password=</span><span style="color:#f1fa8c">&#34;masterkaoli&#34;</span><span style="color:#ff79c6">/&gt;</span>
+
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div><p>前面的XML更简洁。但是，输入错误是在运行时而不是在设计时发现的，除非您在创建bean定义时使用支持自动属性补全的IDE（如<a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a>或<a href="https://spring.io/tools/sts">Spring Tool Suite</a>）。强烈建议使用此类IDE帮助。</p>
+<p>您还可以配置<code>java.util.Properties</code>实例，如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;mappings&#34;</span>
+    <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.context.support.PropertySourcesPlaceholderConfigurer&#34;</span><span style="color:#ff79c6">&gt;</span>
+
+    <span style="color:#6272a4">&lt;!-- 类型为 java.util.Properties --&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;properties&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;value&gt;</span>
+            jdbc.driver.className=com.mysql.jdbc.Driver
+            jdbc.url=jdbc:mysql://localhost:3306/mydb
+        <span style="color:#ff79c6">&lt;/value&gt;</span>
+    <span style="color:#ff79c6">&lt;/property&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+</code></pre></div><p>Spring容器使用JavaBeans <code>PropertyEditor</code>机制将<code>&lt;value/&gt;</code>元素中的文本转换为<code>java.util.Properties</code>实例。这是一个很好的捷径，也是Spring团队喜欢使用嵌套的<code>&lt;value/&gt;</code>元素而不是<code>value</code>属性样式的几个地方之一。</p>
+<h4 id="idref元素">
+  <code>idref</code>元素
+  <a class="anchor" href="#idref%e5%85%83%e7%b4%a0">#</a>
+</h4>
+<p><code>idref</code>元素只是一种防错误的方法，用于将容器中另一个bean的<code>id</code>（字符串的值，不是引用）传递给<code>&lt;constructor-arg/&gt;</code>或<code>&lt;property/&gt;</code>元素。以下示例展示了如何使用它：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;theTargetBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">/&gt;</span>
+
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;theClientBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;targetName&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;idref</span> <span style="color:#50fa7b">bean=</span><span style="color:#f1fa8c">&#34;theTargetBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;/property&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+</code></pre></div><p>前面的bean定义片段（在运行时）与下面的片段完全等效：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;theTargetBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#ff79c6">/&gt;</span>
+
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;client&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;targetName&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;theTargetBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+</code></pre></div><p>第一种形式比第二种形式更可取，因为使用<code>idref</code>标记可以让容器在部署时验证引用的bean是否确实存在。在第二种形式中，没有对传递给<code>client</code> bean的<code>targetName</code>属性的值执行任何验证。只有在实际实例化<code>client</code> bean时才会发现输入错误（很可能是致命的结果）。如果<code>client</code> bean是一个<a href="../beans-factory-scopes#15-bean%e7%9a%84%e4%bd%9c%e7%94%a8%e5%9f%9f">原型</a>bean，那么只有在部署容器后很长一段时间才能发现这个输入错误和由此产生的异常。</p>
+<blockquote class="book-hint note">
+  <code>idref</code>元素上的<code>local</code>属性在4.0 beans XSD中不再受支持，因为它不再提供常规<code>bean</code>引用上的值。升级到4.0架构时，需要将现有的<code>idref local</code>引用更改为<code>idref bean</code>。
+</blockquote>
+
+<p><code>&lt;idref/&gt;</code>元素带来价值的一个常见位置（至少在Spring 2.0之前的版本中）是<code>ProxyFactoryBean</code> bean定义中的<a href="../beans-annotation-config#aop-pfb-1">AOP拦截器</a>配置。在指定拦截器名称时使用<code>&lt;idref/&gt;</code>元素可以防止拼写拦截器ID错误。</p>
+<h3 id="对其他bean协作者的引用">
+  对其他bean（协作者）的引用
+  <a class="anchor" href="#%e5%af%b9%e5%85%b6%e4%bb%96bean%e5%8d%8f%e4%bd%9c%e8%80%85%e7%9a%84%e5%bc%95%e7%94%a8">#</a>
+</h3>
 <h3 id="内部bean">
   内部bean
   <a class="anchor" href="#%e5%86%85%e9%83%a8bean">#</a>
+</h3>
+<h3 id="使用p-命名空间的xml快捷方式">
+  使用p-命名空间的XML快捷方式
+  <a class="anchor" href="#%e4%bd%bf%e7%94%a8p-%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4%e7%9a%84xml%e5%bf%ab%e6%8d%b7%e6%96%b9%e5%bc%8f">#</a>
 </h3>
 <h2 id="144-延迟初始化bean">
   1.4.4 延迟初始化bean
@@ -796,11 +1021,15 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#基于构造函数的依赖注入">基于构造函数的依赖注入</a></li>
         <li><a href="#基于setter的依赖注入">基于setter的依赖注入</a></li>
         <li><a href="#依赖项解析过程">依赖项解析过程</a></li>
+        <li><a href="#依赖注入示例">依赖注入示例</a></li>
       </ul>
     </li>
     <li><a href="#142-详细的依赖项和配置">1.4.2 详细的依赖项和配置</a>
       <ul>
+        <li><a href="#直接的值基本类型字符串等等">直接的值（基本类型、字符串等等）</a></li>
+        <li><a href="#对其他bean协作者的引用">对其他bean（协作者）的引用</a></li>
         <li><a href="#内部bean">内部bean</a></li>
+        <li><a href="#使用p-命名空间的xml快捷方式">使用p-命名空间的XML快捷方式</a></li>
       </ul>
     </li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
