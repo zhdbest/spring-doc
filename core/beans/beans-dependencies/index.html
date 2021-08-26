@@ -22,7 +22,7 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.aee128f6544c074d30f12fe121b2a048867448081a5e8e1a2bcecfbadb771781.js" integrity="sha256-ruEo9lRMB00w8S/hIbKgSIZ0SAgaXo4aK87Putt3F4E=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.ea41574eb312cb09c93b8d91ccf1dd0046ffccf25579112d1afa78f4fa234080.js" integrity="sha256-6kFXTrMSywnJO42RzPHdAEb/zPJVeREtGvp49PojQIA=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -488,6 +488,7 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#集合">集合</a></li>
         <li><a href="#null和空字符串值">null和空字符串值</a></li>
         <li><a href="#使用p-命名空间的xml快捷方式">使用p-命名空间的XML快捷方式</a></li>
+        <li><a href="#使用c-命名空间的xml快捷方式">使用c-命名空间的XML快捷方式</a></li>
       </ul>
     </li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
@@ -1154,6 +1155,54 @@ support=support@example.co.uk
   使用p-命名空间的XML快捷方式
   <a class="anchor" href="#%e4%bd%bf%e7%94%a8p-%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4%e7%9a%84xml%e5%bf%ab%e6%8d%b7%e6%96%b9%e5%bc%8f">#</a>
 </h3>
+<p>p-命名空间允许您使用<code>bean</code>元素的属性（而不是嵌套的<code>&lt;property/&gt;</code>元素）来描述您的属性值、协作bean，或者两者都有。</p>
+<p>Spring支持带有<a href="../beans-annotation-config#xsd-schemas">命名空间</a>的可扩展配置格式，这些命名空间基于XML模式定义。本章讨论的<code>beans</code>配置格式在XML模式文档中定义。但是，p-命名空间没有在XSD文件中定义，只存在于Spring核心中。</p>
+<p>以下示例展示了两个解析为相同结果的XML片段（第一个使用标准XML格式，第二个使用p命名空间）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+    <span style="color:#50fa7b">xmlns:p=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/p&#34;</span>
+    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;classic&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.example.ExampleBean&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;email&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;someone@somewhere.com&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;p-namespace&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.example.ExampleBean&#34;</span>
+        <span style="color:#50fa7b">p:email=</span><span style="color:#f1fa8c">&#34;someone@somewhere.com&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div><p>该示例显示了bean定义中一个名为<code>email</code>的p命名空间中的属性。这告诉Spring包含一个属性声明。如前所述，p-命名空间没有模式定义，因此可以将属性名设置为配置名。</p>
+<p>下一个示例包括另外两个bean定义，它们都引用了另一个bean：</p>
+<p>源码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+    <span style="color:#50fa7b">xmlns:p=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/p&#34;</span>
+    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;john-classic&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.example.Person&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;name&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;John Doe&#34;</span><span style="color:#ff79c6">/&gt;</span>
+        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;spouse&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;jane&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;john-modern&#34;</span>
+        <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.example.Person&#34;</span>
+        <span style="color:#50fa7b">p:name=</span><span style="color:#f1fa8c">&#34;John Doe&#34;</span>
+        <span style="color:#50fa7b">p:spouse-ref=</span><span style="color:#f1fa8c">&#34;jane&#34;</span><span style="color:#ff79c6">/&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;jane&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.example.Person&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;name&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;Jane Doe&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div><p>此示例不仅包括使用p命名空间的属性值，还使用特殊格式声明属性引用。第一个bean定义使用<code>&lt;property name=&quot;spouse&quot; ref=&quot;jane&quot;/&gt;</code>来创建从bean <code>john</code>对bean <code>jane</code>的引用，而第二个bean定义使用<code>p:spouse-ref=&quot;jane&quot;</code>作为属性来执行完全相同的操作。在本例中，<code>spouse</code>是属性名，而<code>-ref</code>部分表示这不是一个直接的值，而是对另一个bean的引用。</p>
+<blockquote class="book-hint note">
+  p命名空间不如标准XML格式灵活。例如，用于声明属性引用的格式与以<code>Ref</code>结尾的属性冲突，而标准XML格式则不冲突。我们建议您慎重选择您的方法，并将此告知您的团队成员，以避免生成同时使用这三种方法的XML文档。
+</blockquote>
+
+<h3 id="使用c-命名空间的xml快捷方式">
+  使用c-命名空间的XML快捷方式
+  <a class="anchor" href="#%e4%bd%bf%e7%94%a8c-%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4%e7%9a%84xml%e5%bf%ab%e6%8d%b7%e6%96%b9%e5%bc%8f">#</a>
+</h3>
 <h2 id="144-延迟初始化bean">
   1.4.4 延迟初始化bean
   <a class="anchor" href="#144-%e5%bb%b6%e8%bf%9f%e5%88%9d%e5%a7%8b%e5%8c%96bean">#</a>
@@ -1219,6 +1268,7 @@ support=support@example.co.uk
         <li><a href="#集合">集合</a></li>
         <li><a href="#null和空字符串值">null和空字符串值</a></li>
         <li><a href="#使用p-命名空间的xml快捷方式">使用p-命名空间的XML快捷方式</a></li>
+        <li><a href="#使用c-命名空间的xml快捷方式">使用c-命名空间的XML快捷方式</a></li>
       </ul>
     </li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
