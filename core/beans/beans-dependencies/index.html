@@ -22,7 +22,7 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.ea41574eb312cb09c93b8d91ccf1dd0046ffccf25579112d1afa78f4fa234080.js" integrity="sha256-6kFXTrMSywnJO42RzPHdAEb/zPJVeREtGvp49PojQIA=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.8e3ff83f9cffac64326e3bdfa236401bec52733368a2bf467856bb0f57c92f45.js" integrity="sha256-jj/4P5z/rGQybjvfojZAG&#43;xSczNoor9GeFa7D1fJL0U=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -489,8 +489,10 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#null和空字符串值">null和空字符串值</a></li>
         <li><a href="#使用p-命名空间的xml快捷方式">使用p-命名空间的XML快捷方式</a></li>
         <li><a href="#使用c-命名空间的xml快捷方式">使用c-命名空间的XML快捷方式</a></li>
+        <li><a href="#复合属性名">复合属性名</a></li>
       </ul>
     </li>
+    <li><a href="#143-使用depends-on">1.4.3 使用<code>depends-on</code></a></li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
     <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a></li>
   </ul>
@@ -1203,6 +1205,52 @@ support=support@example.co.uk
   使用c-命名空间的XML快捷方式
   <a class="anchor" href="#%e4%bd%bf%e7%94%a8c-%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4%e7%9a%84xml%e5%bf%ab%e6%8d%b7%e6%96%b9%e5%bc%8f">#</a>
 </h3>
+<p>与<a href="./#%e4%bd%bf%e7%94%a8p-%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4%e7%9a%84xml%e5%bf%ab%e6%8d%b7%e6%96%b9%e5%bc%8f">p-命名空间的XML快捷方式</a>类似，Spring3.1中引入的c-命名空间允许使用行内属性来配置构造函数参数，而不是嵌套的<code>constructor-arg</code>元素。</p>
+<p>以下示例使用<code>c:</code>命名空间执行与<a href="./#%e5%9f%ba%e4%ba%8e%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e7%9a%84%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">基于构造函数的依赖注入</a>相同的操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+    <span style="color:#50fa7b">xmlns:c=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/c&#34;</span>
+    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanTwo&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.ThingTwo&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanThree&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.ThingThree&#34;</span><span style="color:#ff79c6">/&gt;</span>
+
+    <span style="color:#6272a4">&lt;!-- 使用可选参数名称的传统声明方式 --&gt;</span>
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanOne&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.ThingOne&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;thingTwo&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;beanTwo&#34;</span><span style="color:#ff79c6">/&gt;</span>
+        <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;thingThree&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;beanThree&#34;</span><span style="color:#ff79c6">/&gt;</span>
+        <span style="color:#ff79c6">&lt;constructor-arg</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;email&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;something@somewhere.com&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#6272a4">&lt;!-- 使用参数名的c-命名空间声明 --&gt;</span>
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanOne&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.ThingOne&#34;</span> <span style="color:#50fa7b">c:thingTwo-ref=</span><span style="color:#f1fa8c">&#34;beanTwo&#34;</span>
+        <span style="color:#50fa7b">c:thingThree-ref=</span><span style="color:#f1fa8c">&#34;beanThree&#34;</span> <span style="color:#50fa7b">c:email=</span><span style="color:#f1fa8c">&#34;something@somewhere.com&#34;</span><span style="color:#ff79c6">/&gt;</span>
+
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div><p><code>c:</code>命名空间使用与<code>p:</code>（对于bean引用尾部会有<code>-ref</code>）相同的约定，通过名称设置构造函数参数。类似地，它需要在XML文件中声明，即使它没有在XSD schema中定义（它存在于Spring内核中）。</p>
+<p>对于构造函数参数名称不可用的罕见情况（通常是在字节码编译时没有调试信息），作为退路可以使用参数索引，如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#6272a4">&lt;!-- c-命名空间 索引定义 --&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanOne&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.ThingOne&#34;</span> <span style="color:#50fa7b">c:_0-ref=</span><span style="color:#f1fa8c">&#34;beanTwo&#34;</span> <span style="color:#50fa7b">c:_1-ref=</span><span style="color:#f1fa8c">&#34;beanThree&#34;</span>
+    <span style="color:#50fa7b">c:_2=</span><span style="color:#f1fa8c">&#34;something@somewhere.com&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><blockquote class="book-hint note">
+  由于XML语法的原因，索引表示法要求必须以<code>_</code>开头，因为XML属性名称不能以数字开头（即使某些IDE允许）。对于<code>&lt;constructor-arg&gt;</code>元素，也可以使用相应的索引表示法，但并不常用，因为声明的简单顺序通常就足够了。
+</blockquote>
+
+<p>实际上，构造函数解析<a href="./#%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e5%8f%82%e6%95%b0%e8%a7%a3%e6%9e%90">机制</a>在匹配参数方面非常有效，因此除非您真的需要，否则我们建议在整个配置中使用名称表示法。</p>
+<h3 id="复合属性名">
+  复合属性名
+  <a class="anchor" href="#%e5%a4%8d%e5%90%88%e5%b1%9e%e6%80%a7%e5%90%8d">#</a>
+</h3>
+<p>设置bean属性时，可以使用复合属性名或嵌套属性名，只要路径上的所有组件（最终属性名除外）都不为null。考虑下面的bean定义：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;something&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;things.ThingOne&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;fred.bob.sammy&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;123&#34;</span> <span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+</code></pre></div><p><code>something</code> bean有一个<code>fred</code>属性，<code>fred</code>有一个<code>bob</code>属性，<code>bob</code>有一个<code>sammy</code>属性，最后的<code>sammy</code>属性被设置为值<code>123</code>。为了使其能达到目的，<code>something</code>的<code>fred</code>属性和<code>fred</code>的<code>bob</code>属性在构建bean后不能为<code>null</code>。否则，将抛出<code>NullPointerException</code>。</p>
+<h2 id="143-使用depends-on">
+  1.4.3 使用<code>depends-on</code>
+  <a class="anchor" href="#143-%e4%bd%bf%e7%94%a8depends-on">#</a>
+</h2>
 <h2 id="144-延迟初始化bean">
   1.4.4 延迟初始化bean
   <a class="anchor" href="#144-%e5%bb%b6%e8%bf%9f%e5%88%9d%e5%a7%8b%e5%8c%96bean">#</a>
@@ -1269,8 +1317,10 @@ support=support@example.co.uk
         <li><a href="#null和空字符串值">null和空字符串值</a></li>
         <li><a href="#使用p-命名空间的xml快捷方式">使用p-命名空间的XML快捷方式</a></li>
         <li><a href="#使用c-命名空间的xml快捷方式">使用c-命名空间的XML快捷方式</a></li>
+        <li><a href="#复合属性名">复合属性名</a></li>
       </ul>
     </li>
+    <li><a href="#143-使用depends-on">1.4.3 使用<code>depends-on</code></a></li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
     <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a></li>
   </ul>
