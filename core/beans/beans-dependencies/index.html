@@ -22,7 +22,7 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.8e3ff83f9cffac64326e3bdfa236401bec52733368a2bf467856bb0f57c92f45.js" integrity="sha256-jj/4P5z/rGQybjvfojZAG&#43;xSczNoor9GeFa7D1fJL0U=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.b623514081f15683aed5d5d7f4e3128b0047d79a2b787fe3609110a9933c6051.js" integrity="sha256-tiNRQIHxVoOu1dXX9OMSiwBH15oreH/jYJEQqZM8YFE=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -1065,7 +1065,7 @@ https://github.com/alex-shpak/hugo-book
     <span style="color:#ff79c6">&lt;/bean&gt;</span>
 <span style="color:#ff79c6">&lt;beans&gt;</span>
 </code></pre></div><p>注意在<code>child</code> bean定义的<code>adminEmails</code>属性的<code>&lt;props/&gt;</code>元素上使用了<code>merge=true</code>属性。当容器解析并实例化<code>child</code> bean时，生成的实例具有一个<code>adminEmails</code> <code>Properties</code>的集合，该集合包含将子bean的<code>adminEmails</code>集合与父bean的<code>adminEmails</code>集合合并的结果。下面的列表显示了结果：</p>
-<pre><code>administrator=administrator@example.com
+<pre tabindex="0"><code>administrator=administrator@example.com
 sales=sales@example.com
 support=support@example.co.uk
 </code></pre><p>子<code>Properties</code>集合的值继承父级<code>&lt;props/&gt;</code>的所有属性元素，并且子级中<code>support</code>的值覆盖父级集合中的<code>support</code>值。</p>
@@ -1251,6 +1251,20 @@ support=support@example.co.uk
   1.4.3 使用<code>depends-on</code>
   <a class="anchor" href="#143-%e4%bd%bf%e7%94%a8depends-on">#</a>
 </h2>
+<p>如果一个bean是另一个bean的依赖项，这通常意味着一个bean被设置为另一个bean的属性。通常，在基于XML的配置元数据中您可以通过<a href="./#%e5%af%b9%e5%85%b6%e4%bb%96bean%e5%8d%8f%e4%bd%9c%e8%80%85%e7%9a%84%e5%bc%95%e7%94%a8"><code>&lt;ref/&gt;</code>元素</a>来实现这一点。然而，有时候bean之间的依赖关系不那么直接。例如，需要触发类中的静态初始化器，例如数据库驱动程序注册。<code>depends-on</code>属性可以显式地强制一个或多个bean在使用该元素的bean初始化之前进行初始化。以下示例使用<code>depends-on</code>属性表示对单个bean的依赖关系：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanOne&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;ExampleBean&#34;</span> <span style="color:#50fa7b">depends-on=</span><span style="color:#f1fa8c">&#34;manager&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;manager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;ManagerBean&#34;</span> <span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><p>要表示对多个bean的依赖关系，需要提供一个bean名称列表作为<code>depends-on</code>属性的值（逗号、空格和分号都是有效的分隔符）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;beanOne&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;ExampleBean&#34;</span> <span style="color:#50fa7b">depends-on=</span><span style="color:#f1fa8c">&#34;manager,accountDao&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;manager&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;manager&#34;</span> <span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;manager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;ManagerBean&#34;</span> <span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.jdbc.JdbcAccountDao&#34;</span> <span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><blockquote class="book-hint note">
+  <code>depends-on</code>属性既可以指定初始化时间依赖，也可以指定相应的销毁时间依赖（仅在<a href="../beans-factory-scopes#151-%E5%8D%95%E4%BE%8B%E8%8C%83%E5%9B%B4">单例</a>bean的情况下）。通过<code>depends-on</code>定义与给定bean关系的依赖bean首先被销毁，然后再销毁给定bean本身。因此，<code>depends-on</code>还可以控制程序退出的顺序。
+</blockquote>
+
 <h2 id="144-延迟初始化bean">
   1.4.4 延迟初始化bean
   <a class="anchor" href="#144-%e5%bb%b6%e8%bf%9f%e5%88%9d%e5%a7%8b%e5%8c%96bean">#</a>
