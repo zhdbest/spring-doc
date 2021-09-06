@@ -22,7 +22,7 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.b623514081f15683aed5d5d7f4e3128b0047d79a2b787fe3609110a9933c6051.js" integrity="sha256-tiNRQIHxVoOu1dXX9OMSiwBH15oreH/jYJEQqZM8YFE=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.1f993e744e355c924f7611eb5291b8b2eaf44fee9f5ad89e551aafc90db299c3.js" integrity="sha256-H5k&#43;dE41XJJPdhHrUpG4sur0T&#43;6fWtieVRqvyQ2ymcM=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -1269,10 +1269,27 @@ support=support@example.co.uk
   1.4.4 延迟初始化bean
   <a class="anchor" href="#144-%e5%bb%b6%e8%bf%9f%e5%88%9d%e5%a7%8b%e5%8c%96bean">#</a>
 </h2>
-<h2 id="145-自动装配协作者">
+<p>默认情况下，<code>ApplicationContext</code>实现在初始化过程中早早地创建和配置好所有的单例bean。通常，这种预实例化是可取的，因为配置或周围环境中的错误会立即被发现，而不是数小时甚至数天之后。当这种行为不可取时，可以通过将bean定义标记为延迟初始化来防止单例bean的预实例化。延迟初始化bean告诉IoC容器在第一次请求时而不是在启动时创建bean实例。</p>
+<p>在XML中，此行为由<code>&lt;bean/&gt;</code>元素上的<code>lazy-init</code>属性控制，如下例所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;lazy&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.ExpensiveToCreateBean&#34;</span> <span style="color:#50fa7b">lazy-init=</span><span style="color:#f1fa8c">&#34;true&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;not.lazy&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.AnotherBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><p>当前面的配置被<code>ApplicationContext</code>使用时，当<code>ApplicationContext</code>启动，<code>lazy</code> bean并不急于预实例化，而<code>not.lazy</code> bean则会立即预实例化。</p>
+<p>但是，当延迟初始化bean是非延迟初始化的单例bean的依赖项时，<code>ApplicationContext</code>会在启动时创建延迟初始化的bean，因为它必须满足单例的依赖项。延迟初始化bean被注入到其他地方的非延迟初始化的单例bean中。</p>
+<p>您还可以通过在<code>&lt;beans/&gt;</code>元素上使用<code>default-lazy-init</code>属性来控制容器级别的延迟初始化，如下示例所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">default-lazy-init=</span><span style="color:#f1fa8c">&#34;true&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#6272a4">&lt;!-- 没有bean会被预实例化... --&gt;</span>
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div><h2 id="145-自动装配协作者">
   1.4.5 自动装配协作者
   <a class="anchor" href="#145-%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d%e5%8d%8f%e4%bd%9c%e8%80%85">#</a>
 </h2>
+<p>Spring容器可以自动装配协作bean之间的关系。通过检查<code>ApplicationContext</code>的内容，您可以让Spring为您的bean自动解析协作者（其他bean）。自动装配具有以下优点：</p>
+<ul>
+<li>自动装配可以显著减少需要指定的属性或构造函数参数（在这方面，<a href="../beans-child-bean-definitions">本章其他地方</a>讨论的其他机制（如bean模板）也很有价值。）</li>
+<li>自动装配可以随着对象的演变而更新配置。例如，如果您需要向类添加依赖项，该依赖项则可以自动满足，而无需修改配置。因此，在开发过程中，自动装配特别有用，而不会在代码库变得更稳定时取消切换到显式装配的选项。</li>
+</ul>
+<p>使用基于XML的配置元数据时（请参见<a href="./#141-%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">依赖注入</a>），可以使用<code>&lt;bean/&gt;</code>元素的<code>autowire</code>属性为bean定义指定自动装配模式。自动装配功能有四种模式，您可以为每个bean指定自动装配，从而可以选择要自动装配的bean。下表介绍了四种自动装配模式：</p>
+<p><strong>表2. 自动装配模式</strong></p>
 </article>
  
       
