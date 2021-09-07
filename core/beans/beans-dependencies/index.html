@@ -22,7 +22,7 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.1f993e744e355c924f7611eb5291b8b2eaf44fee9f5ad89e551aafc90db299c3.js" integrity="sha256-H5k&#43;dE41XJJPdhHrUpG4sur0T&#43;6fWtieVRqvyQ2ymcM=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.b4f928251841ee9508469c43c45fef08d57d5abb84149596ee4df696d512c260.js" integrity="sha256-tPkoJRhB7pUIRpxDxF/vCNV9WruEFJWW7k32ltUSwmA=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -494,7 +494,11 @@ https://github.com/alex-shpak/hugo-book
     </li>
     <li><a href="#143-使用depends-on">1.4.3 使用<code>depends-on</code></a></li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
-    <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a></li>
+    <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a>
+      <ul>
+        <li><a href="#自动装配的局限性和缺点">自动装配的局限性和缺点</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -1290,6 +1294,37 @@ support=support@example.co.uk
 </ul>
 <p>使用基于XML的配置元数据时（请参见<a href="./#141-%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5">依赖注入</a>），可以使用<code>&lt;bean/&gt;</code>元素的<code>autowire</code>属性为bean定义指定自动装配模式。自动装配功能有四种模式，您可以为每个bean指定自动装配，从而可以选择要自动装配的bean。下表介绍了四种自动装配模式：</p>
 <p><strong>表2. 自动装配模式</strong></p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>no</code></td>
+<td>（默认）无自动装配。bean引用必须由<code>ref</code>元素定义。对于较大的部署，不建议更改默认设置，因为明确指定协作者可以提供更好的控制和清晰度。在某种程度上，它记录了一个系统的结构。</td>
+</tr>
+<tr>
+<td><code>byName</code></td>
+<td>按属性名称自动装配。Spring查找与需要自动装配的属性同名的bean。例如，如果一个bean定义被设置为按名称自动装配，并且它包含一个<code>master</code>属性（即，它有一个<code>setMaster(..)</code>方法），Spring将查找一个名为<code>master</code>的bean定义并使用它来设置属性。</td>
+</tr>
+<tr>
+<td><code>byType</code></td>
+<td>如果容器中正好存在一个属性类型的bean，则可以自动装配该属性。如果存在多个，将抛出一个致命异常，这表示您可能不应该对该bean使用<code>byType</code>自动装配。如果没有匹配的bean，则不会发生任何事情（未设置属性）。</td>
+</tr>
+<tr>
+<td><code>constructor</code></td>
+<td>类似于<code>byType</code>，但适用于构造函数参数。如果容器中没有该构造函数参数类型的bean，则会引发致命错误。</td>
+</tr>
+</tbody>
+</table>
+<p>使用<code>byType</code>或<code>constructor</code>自动装配模式，可以装配数组和类型化集合。在这种情况下，将提供容器中与预期类型匹配的所有自动装配候选项以满足依赖关系。如果所需的键类型为<code>String</code>，则可以自动装配强类型<code>Map</code>实例。自动装配<code>Map</code>实例的值由与预期类型匹配的所有bean实例组成，<code>Map</code>实例的键包含相应的bean名称。</p>
+<h3 id="自动装配的局限性和缺点">
+  自动装配的局限性和缺点
+  <a class="anchor" href="#%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d%e7%9a%84%e5%b1%80%e9%99%90%e6%80%a7%e5%92%8c%e7%bc%ba%e7%82%b9">#</a>
+</h3>
 </article>
  
       
@@ -1353,7 +1388,11 @@ support=support@example.co.uk
     </li>
     <li><a href="#143-使用depends-on">1.4.3 使用<code>depends-on</code></a></li>
     <li><a href="#144-延迟初始化bean">1.4.4 延迟初始化bean</a></li>
-    <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a></li>
+    <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a>
+      <ul>
+        <li><a href="#自动装配的局限性和缺点">自动装配的局限性和缺点</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
