@@ -22,7 +22,7 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.b4f928251841ee9508469c43c45fef08d57d5abb84149596ee4df696d512c260.js" integrity="sha256-tPkoJRhB7pUIRpxDxF/vCNV9WruEFJWW7k32ltUSwmA=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.a7ca59a7a3cd2e3e13ce9cf387452888fc18c9efbd7cbac0d287d0554554322f.js" integrity="sha256-p8pZp6PNLj4Tzpzzh0UoiPwYye&#43;9fLrA0ofQVUVUMi8=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -497,8 +497,10 @@ https://github.com/alex-shpak/hugo-book
     <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a>
       <ul>
         <li><a href="#自动装配的局限性和缺点">自动装配的局限性和缺点</a></li>
+        <li><a href="#从自动装配中排除bean">从自动装配中排除bean</a></li>
       </ul>
     </li>
+    <li><a href="#146-方法注入">1.4.6 方法注入</a></li>
   </ul>
 </nav>
 
@@ -1325,6 +1327,36 @@ support=support@example.co.uk
   自动装配的局限性和缺点
   <a class="anchor" href="#%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d%e7%9a%84%e5%b1%80%e9%99%90%e6%80%a7%e5%92%8c%e7%bc%ba%e7%82%b9">#</a>
 </h3>
+<p>在整个项目中一致使用自动装配时效果最佳。如果通常不使用自动装配，那么仅使用它装配一个或两个bean定义可能会让开发人员感到困惑。</p>
+<p>考虑如下自动装配的局限性和缺点：</p>
+<ul>
+<li><code>property</code>和<code>constructor-arg</code>设置中的显式依赖项始终会覆盖自动装配。不能自动装配简单属性，例如基本数据类型、<code>Strings</code>和<code>Classes</code>（以及此类简单属性的数组）。这一限制是由设计造成的。</li>
+<li>自动装配不如显式装配精确。尽管如此，如前表所述，Spring小心避免在可能产生意外结果的歧义情况下进行猜测。Spring托管对象之间的关系不再明确记录。</li>
+<li>装配信息也需不适用于可能从Spring容器生成文档的工具。</li>
+<li>容器中的多个bean定义可能与要自动装配的setter方法或构造函数参数指定的类型匹配。对于数组、集合或<code>Map</code>实例，这不一定是问题。然而，对于期望单个值的依赖项，这种模糊性并不是随意解决的。如果没有唯一的bean定义可用，将引发异常。</li>
+</ul>
+<p>在后一种情况下，您有几个选项：</p>
+<ul>
+<li>放弃自动装配，采用显式装配。</li>
+<li>通过将bean定义的<code>autowire-candidate</code>属性设置为<code>false</code>，以避免自动装配，如<a href="./#%e4%bb%8e%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d%e4%b8%ad%e6%8e%92%e9%99%a4bean">下一节</a>所述。</li>
+<li>通过将其<code>&lt;bean/&gt;</code>元素的<code>primary</code>属性设置为<code>true</code>，将单个bean定义指定为主要候选项。</li>
+<li>如<a href="../beans-annotation-config">基于注解的容器配置</a>中所述，使用基于注解的配置实现更细粒度的控制。</li>
+</ul>
+<h3 id="从自动装配中排除bean">
+  从自动装配中排除bean
+  <a class="anchor" href="#%e4%bb%8e%e8%87%aa%e5%8a%a8%e8%a3%85%e9%85%8d%e4%b8%ad%e6%8e%92%e9%99%a4bean">#</a>
+</h3>
+<p>在每个bean的基础上，您可以将bean从自动装配中排除。在Spring的XML格式中，将<code>&lt;bean/&gt;</code>元素的<code>autowire-candidate</code>属性设置为<code>false</code>。该容器使该特定bean定义对自动装配基础结构（包括注解放个配置，如<code>@Autowired</code>）不可用。</p>
+<blockquote class="book-hint note">
+  <code>autowire-candidate</code>属性被设计为仅影响基于类型的自动装配。它不会通过名称影响显式引用，即使指定的bean未标记为自动装配候选，也会解析显式的引用。因此，如果名称匹配，按名称自动装配将注入该bean。
+</blockquote>
+
+<p>您还可以基于对bean名称的模式匹配来限制自动装配候选项。顶级<code>&lt;beans/&gt;</code>元素在其<code>default-autowire-candidates</code>属性中接受一个或多个模式。例如，要将自动装配候选状态限制为名称以<code>Repository</code>结尾的任何bean，那请提供值<code>*Repository</code>。要提供多个模式，请在逗号分隔的列表中定义它们。bean定义的<code>autowire-candidate</code>属性的显式值<code>true</code>或<code>false</code>始终更优先。对于这样的bean，模式匹配规则不适用。</p>
+<p>这些技术对于您永远不希望通过自动装配注入其他bean的bean非常有用。这并不意味着排除的bean本身不能通过使用自动装配进行配置。相反，bean本身不是自动装配其他bean的候选对象。</p>
+<h2 id="146-方法注入">
+  1.4.6 方法注入
+  <a class="anchor" href="#146-%e6%96%b9%e6%b3%95%e6%b3%a8%e5%85%a5">#</a>
+</h2>
 </article>
  
       
@@ -1391,8 +1423,10 @@ support=support@example.co.uk
     <li><a href="#145-自动装配协作者">1.4.5 自动装配协作者</a>
       <ul>
         <li><a href="#自动装配的局限性和缺点">自动装配的局限性和缺点</a></li>
+        <li><a href="#从自动装配中排除bean">从自动装配中排除bean</a></li>
       </ul>
     </li>
+    <li><a href="#146-方法注入">1.4.6 方法注入</a></li>
   </ul>
 </nav>
 
