@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="1.6 自定义Bean的性质 #  Version 5.2.2.RELEASE
- 1.6.1 生命周期回调 #  初始化时回调 #  销毁时回调 #  ">
+ 1.6.1 生命周期回调 #  初始化时回调 #  销毁时回调 #  1.6.2. ApplicationContextAware 和 BeanNameAware #  ">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.6 自定义Bean的性质" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -15,7 +15,7 @@
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.a7ca59a7a3cd2e3e13ce9cf387452888fc18c9efbd7cbac0d287d0554554322f.js" integrity="sha256-p8pZp6PNLj4Tzpzzh0UoiPwYye&#43;9fLrA0ofQVUVUMi8=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.573900af5dd2c5c1c5e534f1b4efa128094f72133fc91442c577a3a38ff5af90.js" integrity="sha256-VzkAr13SxcHF5TTxtO&#43;hKAlPchM/yRRCxXejo4/1r5A=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-nature/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -471,6 +471,7 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#销毁时回调">销毁时回调</a></li>
       </ul>
     </li>
+    <li><a href="#162-applicationcontextaware-和-beannameaware">1.6.2. <code>ApplicationContextAware</code> 和 <code>BeanNameAware</code></a></li>
   </ul>
 </nav>
 
@@ -501,6 +502,10 @@ https://github.com/alex-shpak/hugo-book
   销毁时回调
   <a class="anchor" href="#%e9%94%80%e6%af%81%e6%97%b6%e5%9b%9e%e8%b0%83">#</a>
 </h3>
+<h2 id="162-applicationcontextaware-和-beannameaware">
+  1.6.2. <code>ApplicationContextAware</code> 和 <code>BeanNameAware</code>
+  <a class="anchor" href="#162-applicationcontextaware-%e5%92%8c-beannameaware">#</a>
+</h2>
 </article>
  
       
@@ -548,6 +553,7 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#销毁时回调">销毁时回调</a></li>
       </ul>
     </li>
+    <li><a href="#162-applicationcontextaware-和-beannameaware">1.6.2. <code>ApplicationContextAware</code> 和 <code>BeanNameAware</code></a></li>
   </ul>
 </nav>
 

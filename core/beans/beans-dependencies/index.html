@@ -22,7 +22,7 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.a7ca59a7a3cd2e3e13ce9cf387452888fc18c9efbd7cbac0d287d0554554322f.js" integrity="sha256-p8pZp6PNLj4Tzpzzh0UoiPwYye&#43;9fLrA0ofQVUVUMi8=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.573900af5dd2c5c1c5e534f1b4efa128094f72133fc91442c577a3a38ff5af90.js" integrity="sha256-VzkAr13SxcHF5TTxtO&#43;hKAlPchM/yRRCxXejo4/1r5A=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -500,7 +500,11 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#从自动装配中排除bean">从自动装配中排除bean</a></li>
       </ul>
     </li>
-    <li><a href="#146-方法注入">1.4.6 方法注入</a></li>
+    <li><a href="#146-方法注入">1.4.6 方法注入</a>
+      <ul>
+        <li><a href="#查找方法注入">查找方法注入</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -1357,7 +1361,153 @@ support=support@example.co.uk
   1.4.6 方法注入
   <a class="anchor" href="#146-%e6%96%b9%e6%b3%95%e6%b3%a8%e5%85%a5">#</a>
 </h2>
-</article>
+<p>在大多数应用程序场景中，容器中的大多数bean都是单例的。当一个单例bean需要与另一个单例bean协作，或者一个非单例bean需要与另一个非单例bean协作时，通常通过将一个bean定义为另一个bean的属性来处理依赖关系。当bean的生命周期不同时，就会出现问题。假设单例bean A可能是在A上的每个方法调用时需要使用非单例（原型）bean B，。容器只创建单例bean A一次，因此只有一次机会设置属性。容器不能在每次需要时为bean A提供bean B的新实例。</p>
+<p>一个解决办法是放弃部分控制反转。您可以通过实现<code>ApplicationContextAware</code>接口<a href="../beans-factory-nature#162-applicationcontextaware-%e5%92%8c-beannameaware">使bean A对容器有所感知</a>，并在每次bean A需要时<a href="../beans-basics#123-%e4%bd%bf%e7%94%a8%e5%ae%b9%e5%99%a8">对容器发出<code>getBean(&quot;B&quot;)</code>调用</a>以请求（通常是新的）bean B实例。以下示例展示了此方法：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-12" id="tabs-code-12-0" checked="checked" />
+  <label for="tabs-code-12-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">// 使用有状态的命令风格类执行某些处理的类
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">package</span> fiona.apple<span style="color:#ff79c6">;</span>
+
+<span style="color:#6272a4">// 导入Spring的相关API
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">import</span> org.springframework.beans.BeansException<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">import</span> org.springframework.context.ApplicationContext<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">import</span> org.springframework.context.ApplicationContextAware<span style="color:#ff79c6">;</span>
+
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">CommandManager</span> <span style="color:#8be9fd;font-style:italic">implements</span> ApplicationContextAware <span style="color:#ff79c6">{</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> ApplicationContext applicationContext<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> Object <span style="color:#50fa7b">process</span><span style="color:#ff79c6">(</span>Map commandState<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// 获取相应Command的新实例
+</span><span style="color:#6272a4"></span>        Command command <span style="color:#ff79c6">=</span> createCommand<span style="color:#ff79c6">();</span>
+        <span style="color:#6272a4">// 在（希望是全新的）Command实例上设置状态
+</span><span style="color:#6272a4"></span>        command<span style="color:#ff79c6">.</span><span style="color:#50fa7b">setState</span><span style="color:#ff79c6">(</span>commandState<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">return</span> command<span style="color:#ff79c6">.</span><span style="color:#50fa7b">execute</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">protected</span> Command <span style="color:#50fa7b">createCommand</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// 注意Spring API的依赖关系！
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">applicationContext</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">getBean</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;command&#34;</span><span style="color:#ff79c6">,</span> Command<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setApplicationContext</span><span style="color:#ff79c6">(</span>
+            ApplicationContext applicationContext<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">throws</span> BeansException <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">applicationContext</span> <span style="color:#ff79c6">=</span> applicationContext<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-12" id="tabs-code-12-1"  />
+  <label for="tabs-code-12-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#6272a4">// 使用有状态的命令风格类执行某些处理的类
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">package</span> fiona.apple
+
+<span style="color:#6272a4">// 导入Spring的相关API
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">import</span> org.springframework.context.ApplicationContext
+<span style="color:#ff79c6">import</span> org.springframework.context.ApplicationContextAware
+
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">CommandManager</span> : ApplicationContextAware {
+
+    <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">lateinit</span> <span style="color:#ff79c6">var</span> applicationContext: ApplicationContext
+
+    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">process</span>(commandState: Map&lt;*, *&gt;): Any {
+        <span style="color:#6272a4">// 获取相应Command的新实例
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">val</span> command = createCommand()
+        <span style="color:#6272a4">// 在（希望是全新的）Command实例上设置状态
+</span><span style="color:#6272a4"></span>        command.state = commandState
+        <span style="color:#ff79c6">return</span> command.execute()
+    }
+
+    <span style="color:#6272a4">// 注意Spring API的依赖关系！
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">protected</span> <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">createCommand</span>() =
+            applicationContext.getBean(<span style="color:#f1fa8c">&#34;command&#34;</span>, Command<span style="color:#ff79c6">::</span><span style="color:#ff79c6">class</span>.java)
+
+    <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">setApplicationContext</span>(applicationContext: ApplicationContext) {
+        <span style="color:#ff79c6">this</span>.applicationContext = applicationContext
+    }
+}
+</code></pre></div></div></div>
+
+<p>前面的内容是不可取的，因为业务代码能感知到Spring框架并与之耦合。方法注入是Spring IoC容器的一个稍微高级的特性，它允许您干净地处理这种场景。</p>
+<blockquote class="book-hint grey">
+  您可以在<a href="https://spring.io/blog/2004/08/06/method-injection/">这篇博客文章</a>中阅读更多关于方法注入动机的信息。
+</blockquote>
+
+<h3 id="查找方法注入">
+  查找方法注入
+  <a class="anchor" href="#%e6%9f%a5%e6%89%be%e6%96%b9%e6%b3%95%e6%b3%a8%e5%85%a5">#</a>
+</h3>
+<p>查找方法注入是容器重写容器管理bean上的方法并返回容器中另一个命名bean的查找结果的能力。查找通常涉及一个原型bean，如<a href="./#146-%e6%96%b9%e6%b3%95%e6%b3%a8%e5%85%a5">前一节</a>所述。Spring框架通过使用CGLIB库中的字节码生成来动态生成重写该方法的子类，从而实现这种方法注入。</p>
+<blockquote class="book-hint note">
+  <ul>
+<li>为了使这个动态子类能够工作，Spring bean容器子类的类不能是<code>final</code>，要重写的方法也不能是<code>final</code>。</li>
+<li>对具有<code>abstract</code>方法的类进行单元测试需要您自己对该类进行子类化，并提供<code>abstract</code>方法的存根实现。</li>
+<li>组件扫描还需要具体的方法，这需要具体的类来提供。</li>
+<li>另一个关键限制是，查找方法不适用于工厂方法，特别是配置类中的<code>@Bean</code>方法，因为在这种情况下，容器不负责创建实例，因此无法动态创建运行时生成的子类。</li>
+</ul>
+
+</blockquote>
+
+<p>对于前面代码段中的<code>CommandManager</code>类，Spring容器动态重写<code>createCommand()</code>方法的实现。<code>CommandManager</code>类没有任何Spring依赖项，修改后的示例如下所示：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-13" id="tabs-code-13-0" checked="checked" />
+  <label for="tabs-code-13-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#ff79c6">package</span> fiona.apple<span style="color:#ff79c6">;</span>
+
+<span style="color:#6272a4">// 没有Spring导入
+</span><span style="color:#6272a4"></span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">abstract</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">CommandManager</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> Object <span style="color:#50fa7b">process</span><span style="color:#ff79c6">(</span>Object commandState<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// 获取相应Command接口的新实例
+</span><span style="color:#6272a4"></span>        Command command <span style="color:#ff79c6">=</span> createCommand<span style="color:#ff79c6">();</span>
+        <span style="color:#6272a4">// 在（希望是全新的）Command实例上设置状态
+</span><span style="color:#6272a4"></span>        command<span style="color:#ff79c6">.</span><span style="color:#50fa7b">setState</span><span style="color:#ff79c6">(</span>commandState<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">return</span> command<span style="color:#ff79c6">.</span><span style="color:#50fa7b">execute</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#6272a4">// 可以，但是这种方法的实现在哪里呢？
+</span><span style="color:#6272a4"></span>    <span style="color:#8be9fd;font-style:italic">protected</span> <span style="color:#8be9fd;font-style:italic">abstract</span> Command <span style="color:#50fa7b">createCommand</span><span style="color:#ff79c6">();</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-13" id="tabs-code-13-1"  />
+  <label for="tabs-code-13-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">package</span> fiona.apple
+
+<span style="color:#6272a4">// 没有Spring导入
+</span><span style="color:#6272a4"></span>
+<span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">class</span> <span style="color:#50fa7b">CommandManager</span> {
+
+    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">process</span>(commandState: Any): Any {
+        <span style="color:#6272a4">// 获取相应Command接口的新实例
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">val</span> command = createCommand()
+        <span style="color:#6272a4">// 在（希望是全新的）Command实例上设置状态
+</span><span style="color:#6272a4"></span>        command.state = commandState
+        <span style="color:#ff79c6">return</span> command.execute()
+    }
+
+    <span style="color:#6272a4">// 可以，但是这种方法的实现在哪里呢？
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">protected</span> <span style="color:#ff79c6">abstract</span> <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">createCommand</span>(): Command
+}
+</code></pre></div></div></div>
+
+<p>在包含要注入的方法的客户端类（本例中为<code>CommandManager</code>）中，要注入的方法需要以下形式的签名：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;public</span>|protected<span style="color:#ff79c6">&gt;</span> [abstract] <span style="color:#ff79c6">&lt;return-type&gt;</span> theMethodName(no-arguments);
+</code></pre></div><p>如果方法是<code>abstract</code>的，则动态生成的子类将实现该方法。否则，动态生成的子类将重写在原始类中定义的具体方法。考虑下面的例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#6272a4">&lt;!-- 作为原型部署的有状态bean（非单例） --&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;myCommand&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;fiona.apple.AsyncCommand&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;prototype&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#6272a4">&lt;!-- 根据需要在此处注入依赖项 --&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+<span style="color:#6272a4">&lt;!-- commandProcessor使用statefulCommandHelper --&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;commandManager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;fiona.apple.CommandManager&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#ff79c6">&lt;lookup-method</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;createCommand&#34;</span> <span style="color:#50fa7b">bean=</span><span style="color:#f1fa8c">&#34;myCommand&#34;</span><span style="color:#ff79c6">/&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+</code></pre></div></article>
  
       
 
@@ -1426,7 +1576,11 @@ support=support@example.co.uk
         <li><a href="#从自动装配中排除bean">从自动装配中排除bean</a></li>
       </ul>
     </li>
-    <li><a href="#146-方法注入">1.4.6 方法注入</a></li>
+    <li><a href="#146-方法注入">1.4.6 方法注入</a>
+      <ul>
+        <li><a href="#查找方法注入">查找方法注入</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
