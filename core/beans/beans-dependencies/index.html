@@ -22,7 +22,7 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.f3ebcf528f2852597dc8718d2ae70dcfa2506a04e56798f7a00386e5ccc7faaa.js" integrity="sha256-8&#43;vPUo8oUll9yHGNKucNz6JQagTlZ5j3oAOG5czH&#43;qo=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.83831e5a5fc6f3d1c7d6e3d031ab9429cbda44f79a91102d28f4abff6b227a03.js" integrity="sha256-g4MeWl/G89HH1uPQMauUKcvaRPeakRAtKPSr/2siegM=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -1586,6 +1586,84 @@ support=support@example.co.uk
   任意方法替换
   <a class="anchor" href="#%e4%bb%bb%e6%84%8f%e6%96%b9%e6%b3%95%e6%9b%bf%e6%8d%a2">#</a>
 </h3>
+<p>与查找方法注入相比，方法注入的一种不太有用的形式是能够用另一种方法实现替换托管bean中的任意方法。在实际需要此功能之前，您可以安全地跳过本节的其余部分。</p>
+<p>对于基于XML的配置元数据，对于已部署的bean，可以使用<code>replaced-method</code>元素将现有的方法实现替换为另一个方法实现。考虑下面的类，它有一个我们想重写的叫做<code>computeValue</code>的方法：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-16" id="tabs-code-16-0" checked="checked" />
+  <label for="tabs-code-16-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">MyValueCalculator</span> <span style="color:#ff79c6">{</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">computeValue</span><span style="color:#ff79c6">(</span>String input<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// 一些真实的代码...
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#6272a4">// 一些其他方法...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-16" id="tabs-code-16-1"  />
+  <label for="tabs-code-16-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MyValueCalculator</span> {
+
+    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">computeValue</span>(input: String): String {
+        <span style="color:#6272a4">// 一些真实的代码...
+</span><span style="color:#6272a4"></span>    }
+
+    <span style="color:#6272a4">// 一些其他方法...
+</span><span style="color:#6272a4"></span>}
+</code></pre></div></div></div>
+
+<p>一个实现了<code>org.springframework.beans.factory.support.MethodReplacer</code>接口的类提供了新的方法定义，如下例所示：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-17" id="tabs-code-17-0" checked="checked" />
+  <label for="tabs-code-17-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">/**
+</span><span style="color:#6272a4"> * 用于MyValueCalculator中重写现有的computeValue(String)实现
+</span><span style="color:#6272a4"> */</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ReplacementComputeValue</span> <span style="color:#8be9fd;font-style:italic">implements</span> MethodReplacer <span style="color:#ff79c6">{</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> Object <span style="color:#50fa7b">reimplement</span><span style="color:#ff79c6">(</span>Object o<span style="color:#ff79c6">,</span> Method m<span style="color:#ff79c6">,</span> Object<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">throws</span> Throwable <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// 获取输入值，使用它，并返回计算结果
+</span><span style="color:#6272a4"></span>        String input <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">)</span> args<span style="color:#ff79c6">[</span>0<span style="color:#ff79c6">];</span>
+        <span style="color:#ff79c6">...</span>
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">...;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-17" id="tabs-code-17-1"  />
+  <label for="tabs-code-17-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#6272a4">/**
+</span><span style="color:#6272a4"> * 用于MyValueCalculator中重写现有的computeValue(String)实现
+</span><span style="color:#6272a4"> */</span>
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ReplacementComputeValue</span> : MethodReplacer {
+
+    <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">reimplement</span>(obj: Any, method: Method, args: Array&lt;<span style="color:#ff79c6">out</span> Any&gt;): Any {
+        <span style="color:#6272a4">// 获取输入值，使用它，并返回计算结果
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">val</span> input = args[<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">as</span> String;
+        <span style="color:#ff79c6">..</span>.
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">..</span>.;
+    }
+}
+</code></pre></div></div></div>
+
+<p>部署原始类并指定方法重写的bean定义类似于以下示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;myValueCalculator&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.z.MyValueCalculator&#34;</span><span style="color:#ff79c6">&gt;</span>
+    <span style="color:#6272a4">&lt;!-- 任意方法替换 --&gt;</span>
+    <span style="color:#ff79c6">&lt;replaced-method</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;computeValue&#34;</span> <span style="color:#50fa7b">replacer=</span><span style="color:#f1fa8c">&#34;replacementComputeValue&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;arg-type&gt;</span>String<span style="color:#ff79c6">&lt;/arg-type&gt;</span>
+    <span style="color:#ff79c6">&lt;/replaced-method&gt;</span>
+<span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;replacementComputeValue&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;a.b.c.ReplacementComputeValue&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><p>您可以在<code>&lt;replaced-method/&gt;</code>元素中使用一个或多个<code>&lt;arg-type/&gt;</code>元素来指定要重写的方法的方法签名。只有当方法重载且类中存在多种变体时，才需要参数的签名。为方便起见，参数的字符串类型可以是完全限定类名的子字符串。例如，以下所有选项都与<code>java.lang.String</code>匹配：</p>
+<pre tabindex="0"><code>java.lang.String
+String
+Str
+</code></pre><p>由于参数的数量通常足以区分每个可能的选择，因此此快捷方式可以通过只允许键入与参数类型匹配的最短字符串来节省大量键入。</p>
 </article>
  
       
