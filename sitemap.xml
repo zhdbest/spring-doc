@@ -24,9 +24,21 @@
   </url><url>
     <loc>https://hongmao.run/spring-doc/data-access/</loc>
   </url><url>
+    <loc>https://hongmao.run/spring-doc/web/mvc/</loc>
+  </url><url>
     <loc>https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/</loc>
   </url><url>
-    <loc>https://hongmao.run/spring-doc/web-servlet/</loc>
+    <loc>https://hongmao.run/spring-doc/web/webmvc-client/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/web/testing/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/web/websocket/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/web/websocket/websocket-stomp/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/web/web-integration/</loc>
+  </url><url>
+    <loc>https://hongmao.run/spring-doc/web/</loc>
   </url><url>
     <loc>https://hongmao.run/spring-doc/core/beans/beans-factory-nature/</loc>
   </url><url>
