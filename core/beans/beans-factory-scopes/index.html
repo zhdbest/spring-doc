@@ -8,7 +8,10 @@
 您不仅可以控制要插入到从特定bean定义创建的对象中的各种依赖项和配置值，还可以控制从特定bean定义创建的对象的作用域。这种方法功能强大且灵活，因为您可以选择通过配置创建的对象的作用域，而不必在Java类级别烤入对象的作用域。可以将bean定义为部署在多个作用域中的一个。Spring框架支持六个作用域，其中四个只有在使用web相关的ApplicationContext时才可用。您还可以创建自定义作用域。
 下表描述了支持的作用域：
 表3. Bean作用域
-   作用域 描述     singleton    prototype    request    session    application    websocket     1.5.1 单例作用域 #  1.5.2 原型作用域 #  1.5.4 Request、Session、Application和WebSocket作用域 #  请求作用域 #  Session作用域 #  应用作用域 #  有作用域的bean作为依赖项 #  1.">
+   作用域 描述     singleton （默认）为每个Spring IoC容器将单个bean定义的作用域限定为单个对象实例。   prototype 将单个bean定义的作用域限定为任意数量的对象实例。   request 将单个bean定义的作用域限定为单次HTTP请求的生命周期。也就是说，每个HTTP请求都有自己的bean实例，该实例是在单个bean定义的后面创建的。仅在支持web的Spring ApplicationContext中有效。   session 将单个bean定义的作用域限定为HTTP Session的生命周期。仅在支持web的Spring ApplicationContext中有效。   application 将单个bean定义的作用域限定到ServletContext的生命周期。仅在支持web的Spring ApplicationContext中有效。   websocket 将单个bean定义的作用域限定到WebSocket的生命周期。仅在支持web的Spring ApplicationContext中有效。    从Spring 3.0开始，线程作用域可以使用，但默认情况下是不注册的。有关更多信息，请参阅SimpleThreadScope的文档。有关如何注册此作用域或任何其他自定义作用域的说明，请参阅使用自定义作用域。  1.5.1 单例作用域 #  一个单例bean被管理的只有一个共享实例，通过ID请求该bean定义所匹配bean的所有请求都会导致Spring容器返回该特定的bean实例。
+换句话说，当您定义一个bean定义并将其作用域限定为一个单例时，Spring IoC容器只创建该bean定义所定义对象的一个实例。这个实例存储在这些单例bean的缓存中，后续所有对该命名bean的请求和引用都返回缓存对象。下图显示了单例作用域的工作原理：
+Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的单例模式。GoF单例硬编码对象的作用域，这样每个类加载器只创建一个特定类的实例。Spring单例的范围最好描述为每个容器和每个bean。这意味着，如果在单个Spring容器中为特定类定义一个bean，Spring容器将仅创建该bean定义的类的一个实例。单例作用域是Spring中的默认作用域。要在XML中将bean定义为单例，可以如下例所示定义bean：
+&lt;bean id=&#34;accountService&#34; class=&#34;com.something.DefaultAccountService&#34;/&gt; &lt;!-- 以下是等效的，尽管多余（默认是单例作用域） --&gt; &lt;bean id=&#34;accountService&#34; class=&#34;com.">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.5 bean的作用域" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -19,7 +22,7 @@
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.cbf651b30bcc314cae9f91b07e6e0d247c41d32b96f9f8666e6f7a4a23889bdc.js" integrity="sha256-y/ZRswvMMUyun5Gwfm4NJHxB0yuW&#43;fhmbm96SiOIm9w=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.7a0aec9084f208b60d8312cde27d99311ef01387fcbcc964a2db3e89769bc609.js" integrity="sha256-egrskITyCLYNgxLN4n2ZMR7wE4f8vMlkots&#43;iXabxgk=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -590,7 +593,11 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#有作用域的bean作为依赖项">有作用域的bean作为依赖项</a></li>
       </ul>
     </li>
-    <li><a href="#155-自定义作用域">1.5.5 自定义作用域</a></li>
+    <li><a href="#155-自定义作用域">1.5.5 自定义作用域</a>
+      <ul>
+        <li><a href="#使用自定义作用域">使用自定义作用域</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -623,38 +630,53 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td><a href="./#151-%e5%8d%95%e4%be%8b%e4%bd%9c%e7%94%a8%e5%9f%9f">singleton</a></td>
-<td></td>
+<td>（默认）为每个Spring IoC容器将单个bean定义的作用域限定为单个对象实例。</td>
 </tr>
 <tr>
 <td><a href="./#152-%e5%8e%9f%e5%9e%8b%e4%bd%9c%e7%94%a8%e5%9f%9f">prototype</a></td>
-<td></td>
+<td>将单个bean定义的作用域限定为任意数量的对象实例。</td>
 </tr>
 <tr>
 <td><a href="./#%e8%af%b7%e6%b1%82%e4%bd%9c%e7%94%a8%e5%9f%9f">request</a></td>
-<td></td>
+<td>将单个bean定义的作用域限定为单次HTTP请求的生命周期。也就是说，每个HTTP请求都有自己的bean实例，该实例是在单个bean定义的后面创建的。仅在支持web的Spring <code>ApplicationContext</code>中有效。</td>
 </tr>
 <tr>
 <td><a href="./#session%e4%bd%9c%e7%94%a8%e5%9f%9f">session</a></td>
-<td></td>
+<td>将单个bean定义的作用域限定为HTTP <code>Session</code>的生命周期。仅在支持web的Spring <code>ApplicationContext</code>中有效。</td>
 </tr>
 <tr>
 <td><a href="./#%e5%ba%94%e7%94%a8%e4%bd%9c%e7%94%a8%e5%9f%9f">application</a></td>
-<td></td>
+<td>将单个bean定义的作用域限定到<code>ServletContext</code>的生命周期。仅在支持web的Spring <code>ApplicationContext</code>中有效。</td>
 </tr>
 <tr>
 <td><a href="../../../web/websocket/websocket-stomp/#4419-websocket%e4%bd%9c%e7%94%a8%e5%9f%9f">websocket</a></td>
-<td></td>
+<td>将单个bean定义的作用域限定到<code>WebSocket</code>的生命周期。仅在支持web的Spring <code>ApplicationContext</code>中有效。</td>
 </tr>
 </tbody>
 </table>
+<blockquote class="book-hint note">
+  从Spring 3.0开始，线程作用域可以使用，但默认情况下是不注册的。有关更多信息，请参阅<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/context/support/SimpleThreadScope.html"><code>SimpleThreadScope</code></a>的文档。有关如何注册此作用域或任何其他自定义作用域的说明，请参阅<a href="./#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BD%9C%E7%94%A8%E5%9F%9F">使用自定义作用域</a>。
+</blockquote>
+
 <h2 id="151-单例作用域">
   1.5.1 单例作用域
   <a class="anchor" href="#151-%e5%8d%95%e4%be%8b%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h2>
-<h2 id="152-原型作用域">
+<p>一个单例bean被管理的只有一个共享实例，通过ID请求该bean定义所匹配bean的所有请求都会导致Spring容器返回该特定的bean实例。</p>
+<p>换句话说，当您定义一个bean定义并将其作用域限定为一个单例时，Spring IoC容器只创建该bean定义所定义对象的一个实例。这个实例存储在这些单例bean的缓存中，后续所有对该命名bean的请求和引用都返回缓存对象。下图显示了单例作用域的工作原理：</p>
+<p><img src="https://img.hongmao.run/blog/2021/10/%E5%8D%95%E4%BE%8Bbean%E5%8E%9F%E7%90%86.png" alt="单例bean原理" /></p>
+<p>Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的单例模式。GoF单例硬编码对象的作用域，这样每个类加载器只创建一个特定类的实例。Spring单例的范围最好描述为每个容器和每个bean。这意味着，如果在单个Spring容器中为特定类定义一个bean，Spring容器将仅创建该bean定义的类的一个实例。单例作用域是Spring中的默认作用域。要在XML中将bean定义为单例，可以如下例所示定义bean：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.DefaultAccountService&#34;</span><span style="color:#ff79c6">/&gt;</span>
+
+<span style="color:#6272a4">&lt;!-- 以下是等效的，尽管多余（默认是单例作用域） --&gt;</span>
+<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.DefaultAccountService&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;singleton&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><h2 id="152-原型作用域">
   1.5.2 原型作用域
   <a class="anchor" href="#152-%e5%8e%9f%e5%9e%8b%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h2>
+<p>bean部署为非单例原型作用域将导致每次对特定bean发出请求时都创建一个新的bean实例。也就是说，bean被注入到另一个bean中，或者通过容器上的<code>getBean()</code>方法调用来请求它。通常，所有有状态bean都应该使用原型作用域，无状态bean应该使用单例作用域。</p>
+<p>下图说明了Spring的原型作用域：</p>
+<p><img src="https://img.hongmao.run/blog/2021/10/%E5%8E%9F%E5%9E%8Bbean%E5%8E%9F%E7%90%86.png" alt="原型bean原理" /></p>
 <h2 id="154-requestsessionapplication和websocket作用域">
   1.5.4 Request、Session、Application和WebSocket作用域
   <a class="anchor" href="#154-requestsessionapplication%e5%92%8cwebsocket%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
@@ -679,6 +701,10 @@ https://github.com/alex-shpak/hugo-book
   1.5.5 自定义作用域
   <a class="anchor" href="#155-%e8%87%aa%e5%ae%9a%e4%b9%89%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h2>
+<h3 id="使用自定义作用域">
+  使用自定义作用域
+  <a class="anchor" href="#%e4%bd%bf%e7%94%a8%e8%87%aa%e5%ae%9a%e4%b9%89%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
+</h3>
 </article>
  
       
@@ -730,7 +756,11 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#有作用域的bean作为依赖项">有作用域的bean作为依赖项</a></li>
       </ul>
     </li>
-    <li><a href="#155-自定义作用域">1.5.5 自定义作用域</a></li>
+    <li><a href="#155-自定义作用域">1.5.5 自定义作用域</a>
+      <ul>
+        <li><a href="#使用自定义作用域">使用自定义作用域</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
