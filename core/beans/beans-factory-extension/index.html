@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="1.8 容器扩展点 #  Version 5.2.2.RELEASE
- 1.8.3 使用FactoryBean自定义实例化逻辑 #  ">
+ 1.8.1 使用BeanPostProcessor自定义bean #  1.8.3 使用FactoryBean自定义实例化逻辑 #  ">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.8 容器扩展点" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -15,7 +15,7 @@
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.7a0aec9084f208b60d8312cde27d99311ef01387fcbcc964a2db3e89769bc609.js" integrity="sha256-egrskITyCLYNgxLN4n2ZMR7wE4f8vMlkots&#43;iXabxgk=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.7dc6a28c6961956a5b77356992fee809873fa111469b3b1c9ce290e871312848.js" integrity="sha256-fcaijGlhlWpbdzVpkv7oCYc/oRFGmzscnOKQ6HExKEg=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-extension/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -576,6 +576,7 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
+    <li><a href="#181-使用beanpostprocessor自定义bean">1.8.1 使用<code>BeanPostProcessor</code>自定义bean</a></li>
     <li><a href="#183-使用factorybean自定义实例化逻辑">1.8.3 使用FactoryBean自定义实例化逻辑</a></li>
   </ul>
 </nav>
@@ -595,6 +596,10 @@ https://github.com/alex-shpak/hugo-book
 </h1>
 <p><a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/spring-framework-reference/core.html#beans-factory-extension">Version 5.2.2.RELEASE</a></p>
 <hr>
+<h2 id="181-使用beanpostprocessor自定义bean">
+  1.8.1 使用<code>BeanPostProcessor</code>自定义bean
+  <a class="anchor" href="#181-%e4%bd%bf%e7%94%a8beanpostprocessor%e8%87%aa%e5%ae%9a%e4%b9%89bean">#</a>
+</h2>
 <h2 id="183-使用factorybean自定义实例化逻辑">
   1.8.3 使用FactoryBean自定义实例化逻辑
   <a class="anchor" href="#183-%e4%bd%bf%e7%94%a8factorybean%e8%87%aa%e5%ae%9a%e4%b9%89%e5%ae%9e%e4%be%8b%e5%8c%96%e9%80%bb%e8%be%91">#</a>
@@ -640,6 +645,7 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
+    <li><a href="#181-使用beanpostprocessor自定义bean">1.8.1 使用<code>BeanPostProcessor</code>自定义bean</a></li>
     <li><a href="#183-使用factorybean自定义实例化逻辑">1.8.3 使用FactoryBean自定义实例化逻辑</a></li>
   </ul>
 </nav>
