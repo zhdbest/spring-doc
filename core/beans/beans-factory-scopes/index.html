@@ -22,7 +22,7 @@ Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的�
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.7dc6a28c6961956a5b77356992fee809873fa111469b3b1c9ce290e871312848.js" integrity="sha256-fcaijGlhlWpbdzVpkv7oCYc/oRFGmzscnOKQ6HExKEg=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.286a49c2ddb1d2fc8c06239389831275ba2e880667e79e6b56a5b7ac17c0be22.js" integrity="sha256-KGpJwt2x0vyMBiOTiYMSdbouiAZn555rVqW3rBfAviI=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -588,6 +588,7 @@ https://github.com/alex-shpak/hugo-book
     <li><a href="#153-具有原型bean依赖项的单例bean">1.5.3 具有原型bean依赖项的单例bean</a></li>
     <li><a href="#154-requestsessionapplication和websocket作用域">1.5.4 Request、Session、Application和WebSocket作用域</a>
       <ul>
+        <li><a href="#初始web配置">初始Web配置</a></li>
         <li><a href="#请求作用域">请求作用域</a></li>
         <li><a href="#session作用域">Session作用域</a></li>
         <li><a href="#应用作用域">应用作用域</a></li>
@@ -693,6 +694,38 @@ https://github.com/alex-shpak/hugo-book
   1.5.4 Request、Session、Application和WebSocket作用域
   <a class="anchor" href="#154-requestsessionapplication%e5%92%8cwebsocket%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h2>
+<p><code>request</code>、<code>session</code>、<code>application</code>和<code>websocket</code>作用域仅在用于web相关的Spring <code>ApplicationContext</code>实现（如<code>XmlWebApplicationContext</code>）中可用。如果将这些作用域用于常规Spring IoC容器（如<code>ClassPathXmlApplicationContext</code>），则会引发一个关于未知bean作用域的<code>IllegalStateException</code>。</p>
+<h3 id="初始web配置">
+  初始Web配置
+  <a class="anchor" href="#%e5%88%9d%e5%a7%8bweb%e9%85%8d%e7%bd%ae">#</a>
+</h3>
+<p>为了在<code>request</code>、<code>session</code>、<code>application</code>和<code>websocket</code>级别（web范围的bean）支持bean的作用域，在定义bean之前需要进行一些较小的初始配置。（标准作用域<code>singleton</code>和<code>prototype</code>不需要此初始设置。）</p>
+<p>如何完成初始设置取决于特定的Servlet环境。</p>
+<p>如果您在Spring  WebMVC中访问作用域bean，请求实际上是在Spring <code>DispatcherServlet</code>处理的，则不需要特殊设置。<code>DispatcherServlet</code>已公开所有相关状态。</p>
+<p>如果使用Servlet 2.5 web容器，请求是在Spring的<code>DispatcherServlet</code>之外处理（例如，当使用JSF或Struts时），则需要注册<code>org.springframework.web.context.request.RequestContextListener</code> <code>ServletRequestListener</code>。对于Servlet 3.0+，这可以通过使用<code>WebApplicationInitializer</code>接口以编程方式完成。或者，对于旧容器，将以下声明添加到web应用程序的<code>web.xml</code>文件中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;web-app&gt;</span>
+    ...
+    <span style="color:#ff79c6">&lt;listener&gt;</span>
+        <span style="color:#ff79c6">&lt;listener-class&gt;</span>
+            org.springframework.web.context.request.RequestContextListener
+        <span style="color:#ff79c6">&lt;/listener-class&gt;</span>
+    <span style="color:#ff79c6">&lt;/listener&gt;</span>
+    ...
+<span style="color:#ff79c6">&lt;/web-app&gt;</span>
+</code></pre></div><p>或者，如果您的监听器设置存在问题，请考虑使用Spring的<code>RequestContextFilter</code>过滤器。过滤器映射取决于周围的web应用程序配置，因此必须根据需要进行更改。以下列表展示了web应用程序的过滤器部分：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;web-app&gt;</span>
+    ...
+    <span style="color:#ff79c6">&lt;filter&gt;</span>
+        <span style="color:#ff79c6">&lt;filter-name&gt;</span>requestContextFilter<span style="color:#ff79c6">&lt;/filter-name&gt;</span>
+        <span style="color:#ff79c6">&lt;filter-class&gt;</span>org.springframework.web.filter.RequestContextFilter<span style="color:#ff79c6">&lt;/filter-class&gt;</span>
+    <span style="color:#ff79c6">&lt;/filter&gt;</span>
+    <span style="color:#ff79c6">&lt;filter-mapping&gt;</span>
+        <span style="color:#ff79c6">&lt;filter-name&gt;</span>requestContextFilter<span style="color:#ff79c6">&lt;/filter-name&gt;</span>
+        <span style="color:#ff79c6">&lt;url-pattern&gt;</span>/*<span style="color:#ff79c6">&lt;/url-pattern&gt;</span>
+    <span style="color:#ff79c6">&lt;/filter-mapping&gt;</span>
+    ...
+<span style="color:#ff79c6">&lt;/web-app&gt;</span>
+</code></pre></div><p><code>DispatcherServlet</code>、<code>RequestContextListener</code>和<code>RequestContextFilter</code>都执行完全相同的操作，即将HTTP请求对象绑定到为该请求提供服务的<code>Thread</code>。这使得请求和会话作用域的bean在调用链的更下游可用。</p>
 <h3 id="请求作用域">
   请求作用域
   <a class="anchor" href="#%e8%af%b7%e6%b1%82%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
@@ -763,6 +796,7 @@ https://github.com/alex-shpak/hugo-book
     <li><a href="#153-具有原型bean依赖项的单例bean">1.5.3 具有原型bean依赖项的单例bean</a></li>
     <li><a href="#154-requestsessionapplication和websocket作用域">1.5.4 Request、Session、Application和WebSocket作用域</a>
       <ul>
+        <li><a href="#初始web配置">初始Web配置</a></li>
         <li><a href="#请求作用域">请求作用域</a></li>
         <li><a href="#session作用域">Session作用域</a></li>
         <li><a href="#应用作用域">应用作用域</a></li>
