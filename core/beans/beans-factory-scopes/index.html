@@ -22,7 +22,7 @@ Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的�
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.286a49c2ddb1d2fc8c06239389831275ba2e880667e79e6b56a5b7ac17c0be22.js" integrity="sha256-KGpJwt2x0vyMBiOTiYMSdbouiAZn555rVqW3rBfAviI=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.811c09bada691e17b567d6a835bac1259d3edafb3cce71c51216afeb6e629e9a.js" integrity="sha256-gRwJutppHhe1Z9aoNbrBJZ0&#43;2vs8znHFEhav625inpo=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -730,11 +730,37 @@ https://github.com/alex-shpak/hugo-book
   请求作用域
   <a class="anchor" href="#%e8%af%b7%e6%b1%82%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h3>
+<p>考虑如下bean定义的XML配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;loginAction&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.LoginAction&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;request&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><p>Spring容器使用<code>loginAction</code> bean定义为每个HTTP请求来创建<code>LoginAction</code> bean的新实例。也就是说，<code>loginAction</code> bean的作用域是HTTP请求级别的。您可以随意更改所创建实例的内部状态，因为通过同一<code>loginAction</code> bean定义创建的其他实例看不到这些更改的状态。它们是特定于单个请求的。当请求完成处理时，作用域为请求的bean将被丢弃。</p>
+<p>使用注解驱动的组件或Java配置时，<code>@RequestScope</code>注解可用于将组件分配为<code>request</code>作用域的。以下示例显示了如何执行此操作：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-0" id="tabs-code-0-0" checked="checked" />
+  <label for="tabs-code-0-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">@RequestScope
+@Component
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">LoginAction</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-0" id="tabs-code-0-1"  />
+  <label for="tabs-code-0-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">@RequestScope
+@Component
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">LoginAction</span> {
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span>}
+</code></pre></div></div></div>
+
 <h3 id="session作用域">
   Session作用域
   <a class="anchor" href="#session%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h3>
-<h3 id="应用作用域">
+<p>考虑如下bean定义的XML配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><h3 id="应用作用域">
   应用作用域
   <a class="anchor" href="#%e5%ba%94%e7%94%a8%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h3>
