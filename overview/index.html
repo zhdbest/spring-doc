@@ -12,7 +12,8 @@ Spring框架分为几个模块，应用程序可以选择他们需要的模块�
 关于模块的注意事项：Spring的framework jar允许部署到Jdk9的模块路径（“Jigsaw”）。为了在开启Jigsaw的应用程序中使用，Spring框架5个jar附带了“Automatic-Module-Name”清单条目，这些条目定义了独立于jar artifact的稳定语言级模块名（“spring.core”、“spring.context”等）（jar遵循相同的命名模式，用“-”代替“.”，例如“spring-core”和“spring-context”）。当然，Spring的framework jar在JDK8和JDK9&#43;上的类路径上都能正常工作。
  2. Spring和Spring框架的历史 #  Spring作为对早期J2EE规范复杂性的解决方案于2003年诞生。虽然有些人认为Java EE和Spring将处于竞争状态，但实际上，Spring是java EE的补充。Spring编程模型不支持Java EE的平台规范；相反，它与从EE旗下精心挑选的单个规范相结合：
  Servlet API (JSR 340) WebSocket API (JSR 356) Concurrency Utilities (JSR 236) JSON Binding API (JSR 367) Bean Validation (JSR 303) JPA (JSR 338) JMS (JSR 914) 以及JTA/JCA设置，以便在必要时进行事务协调。  Spring框架还支持依赖注入（JSR 330）和公共注解（JSR 250）规范，应用程序开发人员可以选择使用这些规范来代替Spring框架提供的特定于Spring的机制。">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Spring框架概述" />
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="Spring框架概述" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hongmao.run/spring-doc/overview/" />
@@ -20,9 +21,9 @@ Spring框架分为几个模块，应用程序可以选择他们需要的模块�
 <title>Spring框架概述 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
+<link rel="stylesheet" href="/spring-doc/book.min.405d4346254ce257bd3e5575e8d315f376e36657e806f7d20dd7db045a5370f9.css" integrity="sha256-QF1DRiVM4le9PlV16NMV83bjZlfoBvfSDdfbBFpTcPk=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.811c09bada691e17b567d6a835bac1259d3edafb3cce71c51216afeb6e629e9a.js" integrity="sha256-gRwJutppHhe1Z9aoNbrBJZ0&#43;2vs8znHFEhav625inpo=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.ed96fa3601fb629eabfa8410941fde4defd19dbe31254cab748e0afd5ec94dcb.js" integrity="sha256-7Zb6NgH7Yp6r&#43;oQQlB/eTe/Rnb4xJUyrdI4K/V7JTcs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/overview/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -39,7 +40,7 @@ https://github.com/alex-shpak/hugo-book
         
   <nav>
 <h2 class="book-brand">
-  <a href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
+  <a class="flex align-center" href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
   </a>
 </h2>
 
@@ -49,6 +50,7 @@ https://github.com/alex-shpak/hugo-book
   <div class="book-search-spinner hidden"></div>
   <ul id="book-search-results"></ul>
 </div>
+
 
 
 

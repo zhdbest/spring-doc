@@ -12,7 +12,8 @@ DI有两种主要变体：基于构造函数的依赖注入和基于Setter的依
 Java public class SimpleMovieLister { // SimpleMovieLister有一个依赖项：MovieFinder  private MovieFinder movieFinder; // 该构造器使得Spring容器可以注入一个MovieFinder  public SimpleMovieLister(MovieFinder movieFinder) { this.movieFinder = movieFinder; } // 此处省略了实际使用注入的MovieFinder的业务逻辑 } Kotlin // 该构造器使得Spring容器可以注入一个MovieFinder class SimpleMovieLister(private val movieFinder: MovieFinder) { // 此处省略了实际使用注入的MovieFinder的业务逻辑 }  请注意，这个类没有什么特别之处。它就是是一个POJO，不依赖于容器特定的接口、基类或注解。
 构造函数参数解析 #  构造函数参数解析是通过使用参数的类型进行匹配的。如果bean定义的构造函数参数中不存在潜在的歧义，那么在bean定义中定义构造函数参数的顺序就是在实例化bean时将这些参数提供给相应构造函数的顺序。考虑下面的类：
 Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, ThingThree thingThree) { // .">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.4 依赖" />
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="1.4 依赖" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hongmao.run/spring-doc/core/beans/beans-dependencies/" />
@@ -20,9 +21,9 @@ Java package x.y; public class ThingOne { public ThingOne(ThingTwo thingTwo, Thi
 <title>1.4 依赖 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
+<link rel="stylesheet" href="/spring-doc/book.min.405d4346254ce257bd3e5575e8d315f376e36657e806f7d20dd7db045a5370f9.css" integrity="sha256-QF1DRiVM4le9PlV16NMV83bjZlfoBvfSDdfbBFpTcPk=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.811c09bada691e17b567d6a835bac1259d3edafb3cce71c51216afeb6e629e9a.js" integrity="sha256-gRwJutppHhe1Z9aoNbrBJZ0&#43;2vs8znHFEhav625inpo=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.ed96fa3601fb629eabfa8410941fde4defd19dbe31254cab748e0afd5ec94dcb.js" integrity="sha256-7Zb6NgH7Yp6r&#43;oQQlB/eTe/Rnb4xJUyrdI4K/V7JTcs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -39,7 +40,7 @@ https://github.com/alex-shpak/hugo-book
         
   <nav>
 <h2 class="book-brand">
-  <a href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
+  <a class="flex align-center" href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
   </a>
 </h2>
 
@@ -49,6 +50,7 @@ https://github.com/alex-shpak/hugo-book
   <div class="book-search-spinner hidden"></div>
   <ul id="book-search-results"></ul>
 </div>
+
 
 
 
@@ -1384,7 +1386,7 @@ support=support@example.co.uk
 <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;manager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;ManagerBean&#34;</span> <span style="color:#ff79c6">/&gt;</span>
 <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.jdbc.JdbcAccountDao&#34;</span> <span style="color:#ff79c6">/&gt;</span>
 </code></pre></div><blockquote class="book-hint note">
-  <code>depends-on</code>属性既可以指定初始化时间依赖，也可以指定相应的销毁时间依赖（仅在<a href="../beans-factory-scopes#151-%E5%8D%95%E4%BE%8B%E4%BD%9C%E7%94%A8%E5%9F%9F">单例</a>bean的情况下）。通过<code>depends-on</code>定义与给定bean关系的依赖bean首先被销毁，然后再销毁给定bean本身。因此，<code>depends-on</code>还可以控制程序退出的顺序。
+  <code>depends-on</code>属性既可以指定初始化时间依赖，也可以指定相应的销毁时间依赖（仅在<a href="../beans-factory-scopes#151-%e5%8d%95%e4%be%8b%e4%bd%9c%e7%94%a8%e5%9f%9f">单例</a>bean的情况下）。通过<code>depends-on</code>定义与给定bean关系的依赖bean首先被销毁，然后再销毁给定bean本身。因此，<code>depends-on</code>还可以控制程序退出的顺序。
 </blockquote>
 
 <h2 id="144-延迟初始化bean">
@@ -1688,7 +1690,7 @@ support=support@example.co.uk
 
 <p>请注意，您通常应该使用具体的存根实现声明此类带注解的查找方法，以便它们与Spring的组件扫描规则兼容，默认情况下抽象类会被忽略。此限制不适用于显式注册或显式导入的bean类。</p>
 <blockquote class="book-hint tip">
-  <p>另一种访问不同范围的目标bean的方法是<code>ObjectFactory</code>/<code>Provider</code>注入点。参考<a href="../beans-factory-scopes#%E6%9C%89%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84bean%E4%BD%9C%E4%B8%BA%E4%BE%9D%E8%B5%96%E9%A1%B9">有作用域的bean作为依赖项</a>。</p>
+  <p>另一种访问不同范围的目标bean的方法是<code>ObjectFactory</code>/<code>Provider</code>注入点。参考<a href="../beans-factory-scopes#%e6%9c%89%e4%bd%9c%e7%94%a8%e5%9f%9f%e7%9a%84bean%e4%bd%9c%e4%b8%ba%e4%be%9d%e8%b5%96%e9%a1%b9">有作用域的bean作为依赖项</a>。</p>
 <p>您还可能发现<code>ServiceLocatoryFactoryBean</code>（在<code>org.springframework.beans.factory.config</code>包中）很有用。</p>
 
 </blockquote>

@@ -15,7 +15,8 @@ Spring提供了ApplicationContext接口的几种实现。在独立的应用中�
 这些bean定义对应着构成应用程序的实际对象。通常，您定义服务层对象、数据访问对象（DAO）、表示对象（如Struts中的Action实例）、基础结构对象（如Hibernate SessionFactorys）、JMS Queues等。通常，不在容器中配置细粒度域对象，因为创建和加载域对象通常是DAO和业务逻辑的责任。但是，您可以使用Spring与AspectJ的集成来配置在IoC容器控制之外创建的对象。请参阅在Spring中使用AspectJ注入依赖域对象。
 以下示例显示了基于XML的配置元数据的基本结构：
 &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd&#34;&gt; &lt;bean id=&#34;...&#34; class=&#34;...&#34;&gt; 1 2 &lt;!-- 此处是当前bean的协作者和配置 --&gt; &lt;/bean&gt; &lt;bean id=&#34;...&#34; class=&#34;...&#34;&gt; &lt;!-- 此处是当前bean的协作者和配置 --&gt; &lt;/bean&gt; &lt;!">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.2 容器概述" />
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="1.2 容器概述" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hongmao.run/spring-doc/core/beans/beans-basics/" />
@@ -23,9 +24,9 @@ Spring提供了ApplicationContext接口的几种实现。在独立的应用中�
 <title>1.2 容器概述 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
+<link rel="stylesheet" href="/spring-doc/book.min.405d4346254ce257bd3e5575e8d315f376e36657e806f7d20dd7db045a5370f9.css" integrity="sha256-QF1DRiVM4le9PlV16NMV83bjZlfoBvfSDdfbBFpTcPk=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.811c09bada691e17b567d6a835bac1259d3edafb3cce71c51216afeb6e629e9a.js" integrity="sha256-gRwJutppHhe1Z9aoNbrBJZ0&#43;2vs8znHFEhav625inpo=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.ed96fa3601fb629eabfa8410941fde4defd19dbe31254cab748e0afd5ec94dcb.js" integrity="sha256-7Zb6NgH7Yp6r&#43;oQQlB/eTe/Rnb4xJUyrdI4K/V7JTcs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-basics/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -42,7 +43,7 @@ https://github.com/alex-shpak/hugo-book
         
   <nav>
 <h2 class="book-brand">
-  <a href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
+  <a class="flex align-center" href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
   </a>
 </h2>
 
@@ -52,6 +53,7 @@ https://github.com/alex-shpak/hugo-book
   <div class="book-search-spinner hidden"></div>
   <ul id="book-search-results"></ul>
 </div>
+
 
 
 

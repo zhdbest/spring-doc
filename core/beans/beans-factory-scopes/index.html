@@ -12,7 +12,8 @@
 换句话说，当您定义一个bean定义并将其作用域限定为一个单例时，Spring IoC容器只创建该bean定义所定义对象的一个实例。这个实例存储在这些单例bean的缓存中，后续所有对该命名bean的请求和引用都返回缓存对象。下图显示了单例作用域的工作原理：
 Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的单例模式。GoF单例硬编码对象的作用域，这样每个类加载器只创建一个特定类的实例。Spring单例的范围最好描述为每个容器和每个bean。这意味着，如果在单个Spring容器中为特定类定义一个bean，Spring容器将仅创建该bean定义的类的一个实例。单例作用域是Spring中的默认作用域。要在XML中将bean定义为单例，可以如下例所示定义bean：
 &lt;bean id=&#34;accountService&#34; class=&#34;com.something.DefaultAccountService&#34;/&gt; &lt;!-- 以下是等效的，尽管多余（默认是单例作用域） --&gt; &lt;bean id=&#34;accountService&#34; class=&#34;com.">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="1.5 bean的作用域" />
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="1.5 bean的作用域" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/" />
@@ -20,9 +21,9 @@ Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的�
 <title>1.5 bean的作用域 | Spring文档</title>
 <link rel="manifest" href="/spring-doc/manifest.json">
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/spring-doc/book.min.0abf258f707504285a746a0693d4e04c8ffde5ea7a6381c9e550648b2888a941.css" integrity="sha256-Cr8lj3B1BChadGoGk9TgTI/95ep6Y4HJ5VBkiyiIqUE=" crossorigin="anonymous">
+<link rel="stylesheet" href="/spring-doc/book.min.405d4346254ce257bd3e5575e8d315f376e36657e806f7d20dd7db045a5370f9.css" integrity="sha256-QF1DRiVM4le9PlV16NMV83bjZlfoBvfSDdfbBFpTcPk=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.811c09bada691e17b567d6a835bac1259d3edafb3cce71c51216afeb6e629e9a.js" integrity="sha256-gRwJutppHhe1Z9aoNbrBJZ0&#43;2vs8znHFEhav625inpo=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.ed96fa3601fb629eabfa8410941fde4defd19dbe31254cab748e0afd5ec94dcb.js" integrity="sha256-7Zb6NgH7Yp6r&#43;oQQlB/eTe/Rnb4xJUyrdI4K/V7JTcs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -39,7 +40,7 @@ https://github.com/alex-shpak/hugo-book
         
   <nav>
 <h2 class="book-brand">
-  <a href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
+  <a class="flex align-center" href="/spring-doc/"><img src="https://spring.io/images/projects/spring-framework-640ad1b04f7efa89e0f0f7353e6b5e02.svg?v=2" alt="Logo" /><span>Spring文档</span>
   </a>
 </h2>
 
@@ -49,6 +50,7 @@ https://github.com/alex-shpak/hugo-book
   <div class="book-search-spinner hidden"></div>
   <ul id="book-search-results"></ul>
 </div>
+
 
 
 
@@ -657,7 +659,7 @@ https://github.com/alex-shpak/hugo-book
 </tbody>
 </table>
 <blockquote class="book-hint note">
-  从Spring 3.0开始，线程作用域可以使用，但默认情况下是不注册的。有关更多信息，请参阅<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/context/support/SimpleThreadScope.html"><code>SimpleThreadScope</code></a>的文档。有关如何注册此作用域或任何其他自定义作用域的说明，请参阅<a href="./#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BD%9C%E7%94%A8%E5%9F%9F">使用自定义作用域</a>。
+  从Spring 3.0开始，线程作用域可以使用，但默认情况下是不注册的。有关更多信息，请参阅<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/context/support/SimpleThreadScope.html"><code>SimpleThreadScope</code></a>的文档。有关如何注册此作用域或任何其他自定义作用域的说明，请参阅<a href="./#%e4%bd%bf%e7%94%a8%e8%87%aa%e5%ae%9a%e4%b9%89%e4%bd%9c%e7%94%a8%e5%9f%9f">使用自定义作用域</a>。
 </blockquote>
 
 <h2 id="151-单例作用域">
@@ -760,14 +762,65 @@ https://github.com/alex-shpak/hugo-book
 </h3>
 <p>考虑如下bean定义的XML配置：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">/&gt;</span>
-</code></pre></div><h3 id="应用作用域">
+</code></pre></div><p>Spring容器通过在单个HTTP <code>Session</code>的生存期内使用<code>userPreferences</code> bean定义来创建<code>UserPreferences</code> bean的新实例。换句话说，<code>userPreferences</code> bean有效地限定了HTTP <code>Session</code>级别的范围。与作用域为请求的bean一样，您可以根据需要更改所创建实例的内部状态，因为其他HTTP <code>Session</code>实例也在使用从相同的<code>userPreferences</code> bean定义创建的实例，它们在状态中看不到这些更改，因为它们是特定于单个HTTP <code>Session</code>的。当HTTP <code>Session</code>最终被丢弃时，作用于该特定HTTP <code>Session</code>的bean也被丢弃。</p>
+<p>使用注解驱动组件或Java配置时，可以使用<code>@SessionScope</code>注解将组件分配为<code>session</code>作用域。</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-0" checked="checked" />
+  <label for="tabs-code-1-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">@SessionScope
+@Component
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">UserPreferences</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
+  <label for="tabs-code-1-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">@SessionScope
+@Component
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">UserPreferences</span> {
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span>}
+</code></pre></div></div></div>
+
+<h3 id="应用作用域">
   应用作用域
   <a class="anchor" href="#%e5%ba%94%e7%94%a8%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h3>
+<p>考虑以下bean定义的XML配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;appPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.AppPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;application&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</code></pre></div><p>Spring容器通过使用<code>appPreferences</code> bean定义来为整个web应用程序创建<code>AppPreferences</code> bean的新实例。也就是说，<code>appPreferences</code> bean的作用域是在<code>ServletContext</code>级别，并作为常规<code>ServletContext</code>属性存储。这有点类似于Spring单例bean，但在两个重要方面有所不同：它是每个<code>ServletContext</code>是单例，而不是在每个Spring“<code>ApplicationContext</code>”中是单例（在任何给定的web应用程序中可能有多个），并且它实际上是公开的，因此作为<code>ServletContext</code>属性可见。</p>
+<p>使用注解驱动组件或Java配置时，可以使用<code>@ApplicationScope</code>注解将组件分配成<code>application</code>作用域。以下示例展示了如何执行此操作：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-0" checked="checked" />
+  <label for="tabs-code-2-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">@ApplicationScope
+@Component
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">AppPreferences</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-1"  />
+  <label for="tabs-code-2-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">@ApplicationScope
+@Component
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">AppPreferences</span> {
+    <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span>}
+</code></pre></div></div></div>
+
 <h3 id="有作用域的bean作为依赖项">
   有作用域的bean作为依赖项
   <a class="anchor" href="#%e6%9c%89%e4%bd%9c%e7%94%a8%e5%9f%9f%e7%9a%84bean%e4%bd%9c%e4%b8%ba%e4%be%9d%e8%b5%96%e9%a1%b9">#</a>
 </h3>
+<p>Spring IoC容器不仅管理对象（bean）的实例化，还管理协作者（或依赖项）的连接。如果您想要（例如）将HTTP请求作用域的bean注入到另一个更长寿命作用域的bean中，您可以选择注入AOP代理来代替该作用域的bean。也就是说，您需要注入一个代理对象，该代理对象暴露与作用域对象相同的公共接口，并且也可以从相关作用域（如HTTP请求）检索真实目标对象，并将方法调用委托给真实对象。</p>
+<blockquote class="book-hint note">
+  您还可以在作用域为<code>singleton</code>的bean之间使用<code>&lt;aop:scoped-proxy/&gt;</code>，然后引用将经过可序列化的中间代理，从而能够在反序列化时重新获取目标单例bean。
+</blockquote>
+
 <h2 id="155-自定义作用域">
   1.5.5 自定义作用域
   <a class="anchor" href="#155-%e8%87%aa%e5%ae%9a%e4%b9%89%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
