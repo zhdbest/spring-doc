@@ -23,7 +23,7 @@ Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的�
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.95eea17cffc46ae5b06337143c85665a6e0bd69bfda37c3e055b8cd16b9ab0b3.css" integrity="sha256-le6hfP/EauWwYzcUPIVmWm4L1pv9o3w&#43;BVuM0WuasLM=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.dbcde891d9adf838c75b277908ca61d7e0712146abb32924c263efa4a515a7cb.js" integrity="sha256-283okdmt&#43;DjHWyd5CMph1&#43;BxIUarsykkwmPvpKUVp8s=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.46e8d3ccb2dedd3d21812517e38fb055020b64114354ff2023ffec4a3560b114.js" integrity="sha256-RujTzLLe3T0hgSUX44&#43;wVQILZBFDVP8gI//sSjVgsRQ=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -967,6 +967,76 @@ https://github.com/alex-shpak/hugo-book
   使用自定义作用域
   <a class="anchor" href="#%e4%bd%bf%e7%94%a8%e8%87%aa%e5%ae%9a%e4%b9%89%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h3>
+<p>在编写和测试一个或多个自定义<code>Scope</code>实现之后，需要让Spring容器知道您的新作用域。以下方法是向Spring容器注册新作用域的核心方法：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-7" id="tabs-code-7-0" checked="checked" />
+  <label for="tabs-code-7-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">registerScope</span><span style="color:#ff79c6">(</span>String scopeName<span style="color:#ff79c6">,</span> Scope scope<span style="color:#ff79c6">);</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-7" id="tabs-code-7-1"  />
+  <label for="tabs-code-7-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">registerScope</span>(scopeName: String, scope: Scope)
+</code></pre></div></div></div>
+
+<p>此方法在<code>ConfigurableBeanFactory</code>接口上声明的，该接口可通过Spring附带的大多数具体<code>ApplicationContext</code>实现的<code>BeanFactory</code>属性获得。</p>
+<p><code>registerScope(..)</code>方法的第一个参数是与作用域相关的唯一名称。Spring容器本身中此类名称的例子有<code>singleton</code>和<code>prototype</code>。<code>registerScope(..)</code>方法的第二个参数是要注册和使用的自定义作用域实现的实例。</p>
+<p>假设编写自定义<code>Scope</code>实现，然后注册它，如下一个示例所示。</p>
+<blockquote class="book-hint note">
+  下一个示例使用<code>SimpleThreadScope</code>，它包含在Spring中，但默认情况下未注册。对于您自己的自定义<code>Scope</code>实现来说，其做法将是相同的。
+</blockquote>
+
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-8" id="tabs-code-8-0" checked="checked" />
+  <label for="tabs-code-8-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Scope threadScope <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> SimpleThreadScope<span style="color:#ff79c6">();</span>
+beanFactory<span style="color:#ff79c6">.</span><span style="color:#50fa7b">registerScope</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">,</span> threadScope<span style="color:#ff79c6">);</span>
+</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-8" id="tabs-code-8-1"  />
+  <label for="tabs-code-8-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> threadScope = SimpleThreadScope()
+beanFactory.registerScope(<span style="color:#f1fa8c">&#34;thread&#34;</span>, threadScope)
+</code></pre></div></div></div>
+
+<p>然后，您可以创建符合自定义<code>Scope</code>的作用域规则的bean定义，如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">&gt;</span>
+</code></pre></div><p>通过自定义<code>Scope</code>实现，您不仅限于对作用域进行编程注册。还可以使用<code>CustomScopeConfigurer</code>类声明性地进行作用域注册，如下例所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+    <span style="color:#50fa7b">xmlns:aop=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/aop&#34;</span>
+    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span><span style="color:#f1fa8c">        http://www.springframework.org/schema/aop
+</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.beans.factory.config.CustomScopeConfigurer&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;scopes&#34;</span><span style="color:#ff79c6">&gt;</span>
+            <span style="color:#ff79c6">&lt;map&gt;</span>
+                <span style="color:#ff79c6">&lt;entry</span> <span style="color:#50fa7b">key=</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">&gt;</span>
+                    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.context.support.SimpleThreadScope&#34;</span><span style="color:#ff79c6">/&gt;</span>
+                <span style="color:#ff79c6">&lt;/entry&gt;</span>
+            <span style="color:#ff79c6">&lt;/map&gt;</span>
+        <span style="color:#ff79c6">&lt;/property&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;thing2&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.Thing2&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;name&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;Rick&#34;</span><span style="color:#ff79c6">/&gt;</span>
+        <span style="color:#ff79c6">&lt;aop:scoped-proxy/&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;thing1&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.Thing1&#34;</span><span style="color:#ff79c6">&gt;</span>
+        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;thing2&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;thing2&#34;</span><span style="color:#ff79c6">/&gt;</span>
+    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+
+<span style="color:#ff79c6">&lt;/beans&gt;</span>
+</code></pre></div><blockquote class="book-hint note">
+  在<code>FactoryBean</code>实现中设置<code>&lt;aop:scoped-proxy/&gt;</code>时，作用域是工厂bean本身，而不是<code>getObject()</code>返回的对象。
+</blockquote>
+
 </article>
  
       
