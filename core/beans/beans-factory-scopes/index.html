@@ -11,7 +11,7 @@
    作用域 描述     singleton （默认）为每个Spring IoC容器将单个bean定义的作用域限定为单个对象实例。   prototype 将单个bean定义的作用域限定为任意数量的对象实例。   request 将单个bean定义的作用域限定为单次HTTP请求的生命周期。也就是说，每个HTTP请求都有自己的bean实例，该实例是在单个bean定义的后面创建的。仅在支持web的Spring ApplicationContext中有效。   session 将单个bean定义的作用域限定为HTTP Session的生命周期。仅在支持web的Spring ApplicationContext中有效。   application 将单个bean定义的作用域限定到ServletContext的生命周期。仅在支持web的Spring ApplicationContext中有效。   websocket 将单个bean定义的作用域限定到WebSocket的生命周期。仅在支持web的Spring ApplicationContext中有效。    从Spring 3.0开始，线程作用域可以使用，但默认情况下是不注册的。有关更多信息，请参阅SimpleThreadScope的文档。有关如何注册此作用域或任何其他自定义作用域的说明，请参阅使用自定义作用域。  1.5.1 单例作用域 #  一个单例bean被管理的只有一个共享实例，通过ID请求该bean定义所匹配bean的所有请求都会导致Spring容器返回该特定的bean实例。
 换句话说，当您定义一个bean定义并将其作用域限定为一个单例时，Spring IoC容器只创建该bean定义所定义对象的一个实例。这个实例存储在这些单例bean的缓存中，后续所有对该命名bean的请求和引用都返回缓存对象。下图显示了单例作用域的工作原理：
 Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的单例模式。GoF单例硬编码对象的作用域，这样每个类加载器只创建一个特定类的实例。Spring单例的范围最好描述为每个容器和每个bean。这意味着，如果在单个Spring容器中为特定类定义一个bean，Spring容器将仅创建该bean定义的类的一个实例。单例作用域是Spring中的默认作用域。要在XML中将bean定义为单例，可以如下例所示定义bean：
-&lt;bean id=&#34;accountService&#34; class=&#34;com.something.DefaultAccountService&#34;/&gt; &lt;!-- 以下是等效的，尽管多余（默认是单例作用域） --&gt; &lt;bean id=&#34;accountService&#34; class=&#34;com.">
+&lt;bean id=&#34;accountService&#34; class=&#34;com.something.DefaultAccountService&#34;/&gt;  &lt;!-- 以下是等效的，尽管多余（默认是单例作用域） --&gt; &lt;bean id=&#34;accountService&#34; class=&#34;com.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="color-scheme" content="light dark"><meta property="og:title" content="1.5 bean的作用域" />
 <meta property="og:description" content="" />
@@ -23,7 +23,7 @@ Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的�
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.95eea17cffc46ae5b06337143c85665a6e0bd69bfda37c3e055b8cd16b9ab0b3.css" integrity="sha256-le6hfP/EauWwYzcUPIVmWm4L1pv9o3w&#43;BVuM0WuasLM=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.46e8d3ccb2dedd3d21812517e38fb055020b64114354ff2023ffec4a3560b114.js" integrity="sha256-RujTzLLe3T0hgSUX44&#43;wVQILZBFDVP8gI//sSjVgsRQ=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.099ef1eca3f2038c8d8faa91bdacddc3a711ef28116eb5009cbb25c8289c9cfb.js" integrity="sha256-CZ7x7KPyA4yNj6qRvazdw6cR7ygRbrUAnLslyCicnPs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -78,7 +78,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/overview/" class="">Spring框架概述</a>
+    <a href="/spring-doc/overview/" class="">Spring框架概述</a>
   
 
           
@@ -98,7 +98,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-0d1affe253952d37201d1163f8079748" class="toggle" checked />
     <label for="section-0d1affe253952d37201d1163f8079748" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/core/" class="">核心技术</a>
+      <a href="/spring-doc/core/" class="">核心技术</a>
     </label>
   
 
@@ -114,7 +114,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-235ed86e667da8fa828dd4f659577027" class="toggle" checked />
     <label for="section-235ed86e667da8fa828dd4f659577027" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/core/beans/" class="">1. IoC容器</a>
+      <a href="/spring-doc/core/beans/" class="">1. IoC容器</a>
     </label>
   
 
@@ -128,7 +128,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
+    <a href="/spring-doc/core/beans/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
   
 
           
@@ -146,7 +146,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-basics/" class="">1.2 容器概述</a>
+    <a href="/spring-doc/core/beans/beans-basics/" class="">1.2 容器概述</a>
   
 
           
@@ -164,7 +164,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-definition/" class="">1.3 Bean概述</a>
+    <a href="/spring-doc/core/beans/beans-definition/" class="">1.3 Bean概述</a>
   
 
           
@@ -182,7 +182,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/" class="">1.4 依赖</a>
+    <a href="/spring-doc/core/beans/beans-dependencies/" class="">1.4 依赖</a>
   
 
           
@@ -200,7 +200,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/" class=" active">1.5 bean的作用域</a>
+    <a href="/spring-doc/core/beans/beans-factory-scopes/" class=" active">1.5 bean的作用域</a>
   
 
           
@@ -218,7 +218,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-nature/" class="">1.6 自定义Bean的性质</a>
+    <a href="/spring-doc/core/beans/beans-factory-nature/" class="">1.6 自定义Bean的性质</a>
   
 
           
@@ -236,7 +236,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-child-bean-definitions/" class="">1.7 bean定义继承</a>
+    <a href="/spring-doc/core/beans/beans-child-bean-definitions/" class="">1.7 bean定义继承</a>
   
 
           
@@ -254,7 +254,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-extension/" class="">1.8 容器扩展点</a>
+    <a href="/spring-doc/core/beans/beans-factory-extension/" class="">1.8 容器扩展点</a>
   
 
           
@@ -272,7 +272,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-annotation-config/" class="">1.9 基于注解的容器配置</a>
+    <a href="/spring-doc/core/beans/beans-annotation-config/" class="">1.9 基于注解的容器配置</a>
   
 
           
@@ -300,7 +300,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/testing/" class="">测试</a>
+    <a href="/spring-doc/testing/" class="">测试</a>
   
 
           
@@ -318,7 +318,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/data-access/" class="">数据访问</a>
+    <a href="/spring-doc/data-access/" class="">数据访问</a>
   
 
           
@@ -338,7 +338,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-c7411df77aeebb9555479ccacbf66f41" class="toggle"  />
     <label for="section-c7411df77aeebb9555479ccacbf66f41" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/web/" class="">Web Servlet</a>
+      <a href="/spring-doc/web/" class="">Web Servlet</a>
     </label>
   
 
@@ -352,7 +352,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/mvc/" class="">1. Spring Web MVC</a>
+    <a href="/spring-doc/web/mvc/" class="">1. Spring Web MVC</a>
   
 
           
@@ -370,7 +370,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/webmvc-client/" class="">2. REST客户端</a>
+    <a href="/spring-doc/web/webmvc-client/" class="">2. REST客户端</a>
   
 
           
@@ -388,7 +388,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/testing/" class="">3. 测试</a>
+    <a href="/spring-doc/web/testing/" class="">3. 测试</a>
   
 
           
@@ -406,7 +406,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/websocket/" class="">4. WebSocket</a>
+    <a href="/spring-doc/web/websocket/" class="">4. WebSocket</a>
   
 
           
@@ -419,30 +419,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/websocket/websocket-stomp/" class="">4.4 STOMP</a>
-  
-
-          
-  <ul>
-    
-  </ul>
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="https://hongmao.run/spring-doc/web/web-integration/" class="">5. 其他Web框架</a>
+    <a href="/spring-doc/web/websocket/websocket-stomp/" class="">4.4 STOMP</a>
   
 
           
@@ -465,7 +442,30 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web-reactive/" class="">响应式Web</a>
+    <a href="/spring-doc/web/web-integration/" class="">5. 其他Web框架</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/spring-doc/web-reactive/" class="">响应式Web</a>
   
 
           
@@ -485,7 +485,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-8b9fad4111be4155727ef91074c37605" class="toggle"  />
     <label for="section-8b9fad4111be4155727ef91074c37605" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/integration/" class="">集成</a>
+      <a href="/spring-doc/integration/" class="">集成</a>
     </label>
   
 
@@ -499,7 +499,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/integration/jmx/" class="">4.JMX</a>
+    <a href="/spring-doc/integration/jmx/" class="">4.JMX</a>
   
 
           
@@ -522,7 +522,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/languages/" class="">支持的语言</a>
+    <a href="/spring-doc/languages/" class="">支持的语言</a>
   
 
           
@@ -554,7 +554,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
 
 
  
@@ -671,11 +671,11 @@ https://github.com/alex-shpak/hugo-book
 <p>换句话说，当您定义一个bean定义并将其作用域限定为一个单例时，Spring IoC容器只创建该bean定义所定义对象的一个实例。这个实例存储在这些单例bean的缓存中，后续所有对该命名bean的请求和引用都返回缓存对象。下图显示了单例作用域的工作原理：</p>
 <p><img src="https://img.hongmao.run/blog/2021/10/%E5%8D%95%E4%BE%8Bbean%E5%8E%9F%E7%90%86.png" alt="单例bean原理" /></p>
 <p>Spring的单例bean概念不同于四人组（GoF）设计模式书中定义的单例模式。GoF单例硬编码对象的作用域，这样每个类加载器只创建一个特定类的实例。Spring单例的范围最好描述为每个容器和每个bean。这意味着，如果在单个Spring容器中为特定类定义一个bean，Spring容器将仅创建该bean定义的类的一个实例。单例作用域是Spring中的默认作用域。要在XML中将bean定义为单例，可以如下例所示定义bean：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.DefaultAccountService&#34;</span><span style="color:#ff79c6">/&gt;</span>
-
-<span style="color:#6272a4">&lt;!-- 以下是等效的，尽管多余（默认是单例作用域） --&gt;</span>
-<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.DefaultAccountService&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;singleton&#34;</span><span style="color:#ff79c6">/&gt;</span>
-</code></pre></div><h2 id="152-原型作用域">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.DefaultAccountService&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">&lt;!-- 以下是等效的，尽管多余（默认是单例作用域） --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.DefaultAccountService&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;singleton&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span></code></pre></div><h2 id="152-原型作用域">
   1.5.2 原型作用域
   <a class="anchor" href="#152-%e5%8e%9f%e5%9e%8b%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h2>
@@ -684,8 +684,8 @@ https://github.com/alex-shpak/hugo-book
 <p><img src="https://img.hongmao.run/blog/2021/10/%E5%8E%9F%E5%9E%8Bbean%E5%8E%9F%E7%90%86.png" alt="原型bean原理" /></p>
 <p>（数据访问对象（DAO）通常不配置为原型，因为典型的DAO不包含任何对话状态。我们更容易复用单例图的核心。）</p>
 <p>以下示例在XML中将bean定义为原型：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.DefaultAccountService&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;prototype&#34;</span><span style="color:#ff79c6">/&gt;</span>
-</code></pre></div><p>与其他作用域不同，Spring并不管理原型bean的整个生命周期。容器实例化、配置和以其他方式组装原型对象并将其交给客户端，而不再记录该原型实例。因此，尽管对所有对象调用初始化生命周期回调方法，而不考虑作用域，但对于原型，不会调用配置的销毁生命周期回调。客户端代码必须清理原型作用域的对象，并释放原型bean所持有的昂贵资源。要让Spring容器释放原型作用域的bean所持有的资源，请尝试使用定制的<a href="../beans-factory-extension#181-%e4%bd%bf%e7%94%a8beanpostprocessor%e8%87%aa%e5%ae%9a%e4%b9%89bean">bean后置处理器</a>，该后置处理器持有对需要清理的bean的引用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.DefaultAccountService&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;prototype&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span></code></pre></div><p>与其他作用域不同，Spring并不管理原型bean的整个生命周期。容器实例化、配置和以其他方式组装原型对象并将其交给客户端，而不再记录该原型实例。因此，尽管对所有对象调用初始化生命周期回调方法，而不考虑作用域，但对于原型，不会调用配置的销毁生命周期回调。客户端代码必须清理原型作用域的对象，并释放原型bean所持有的昂贵资源。要让Spring容器释放原型作用域的bean所持有的资源，请尝试使用定制的<a href="../beans-factory-extension#181-%e4%bd%bf%e7%94%a8beanpostprocessor%e8%87%aa%e5%ae%9a%e4%b9%89bean">bean后置处理器</a>，该后置处理器持有对需要清理的bean的引用。</p>
 <p>在某些方面，Spring容器在原型作用域bean中的角色是Java <code>new</code>操作符的替代品。所有超过该点的生命周期管理都必须由客户端处理。（有关Spring容器中bean生命周期的详细信息，请参阅<a href="../beans-factory-nature#161-%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f%e5%9b%9e%e8%b0%83">生命周期回调</a>。）</p>
 <h2 id="153-具有原型bean依赖项的单例bean">
   1.5.3 具有原型bean依赖项的单例bean
@@ -706,36 +706,36 @@ https://github.com/alex-shpak/hugo-book
 <p>如何完成初始设置取决于特定的Servlet环境。</p>
 <p>如果您在Spring  WebMVC中访问作用域bean，请求实际上是在Spring <code>DispatcherServlet</code>处理的，则不需要特殊设置。<code>DispatcherServlet</code>已公开所有相关状态。</p>
 <p>如果使用Servlet 2.5 web容器，请求是在Spring的<code>DispatcherServlet</code>之外处理（例如，当使用JSF或Struts时），则需要注册<code>org.springframework.web.context.request.RequestContextListener</code> <code>ServletRequestListener</code>。对于Servlet 3.0+，这可以通过使用<code>WebApplicationInitializer</code>接口以编程方式完成。或者，对于旧容器，将以下声明添加到web应用程序的<code>web.xml</code>文件中：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;web-app&gt;</span>
-    ...
-    <span style="color:#ff79c6">&lt;listener&gt;</span>
-        <span style="color:#ff79c6">&lt;listener-class&gt;</span>
-            org.springframework.web.context.request.RequestContextListener
-        <span style="color:#ff79c6">&lt;/listener-class&gt;</span>
-    <span style="color:#ff79c6">&lt;/listener&gt;</span>
-    ...
-<span style="color:#ff79c6">&lt;/web-app&gt;</span>
-</code></pre></div><p>或者，如果您的监听器设置存在问题，请考虑使用Spring的<code>RequestContextFilter</code>过滤器。过滤器映射取决于周围的web应用程序配置，因此必须根据需要进行更改。以下列表展示了web应用程序的过滤器部分：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;web-app&gt;</span>
-    ...
-    <span style="color:#ff79c6">&lt;filter&gt;</span>
-        <span style="color:#ff79c6">&lt;filter-name&gt;</span>requestContextFilter<span style="color:#ff79c6">&lt;/filter-name&gt;</span>
-        <span style="color:#ff79c6">&lt;filter-class&gt;</span>org.springframework.web.filter.RequestContextFilter<span style="color:#ff79c6">&lt;/filter-class&gt;</span>
-    <span style="color:#ff79c6">&lt;/filter&gt;</span>
-    <span style="color:#ff79c6">&lt;filter-mapping&gt;</span>
-        <span style="color:#ff79c6">&lt;filter-name&gt;</span>requestContextFilter<span style="color:#ff79c6">&lt;/filter-name&gt;</span>
-        <span style="color:#ff79c6">&lt;url-pattern&gt;</span>/*<span style="color:#ff79c6">&lt;/url-pattern&gt;</span>
-    <span style="color:#ff79c6">&lt;/filter-mapping&gt;</span>
-    ...
-<span style="color:#ff79c6">&lt;/web-app&gt;</span>
-</code></pre></div><p><code>DispatcherServlet</code>、<code>RequestContextListener</code>和<code>RequestContextFilter</code>都执行完全相同的操作，即将HTTP请求对象绑定到为该请求提供服务的<code>Thread</code>。这使得请求和会话作用域的bean在调用链的更下游可用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;web-app&gt;</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;listener&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;listener-class&gt;</span>
+</span></span><span style="display:flex;"><span>            org.springframework.web.context.request.RequestContextListener
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;/listener-class&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/listener&gt;</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/web-app&gt;</span>
+</span></span></code></pre></div><p>或者，如果您的监听器设置存在问题，请考虑使用Spring的<code>RequestContextFilter</code>过滤器。过滤器映射取决于周围的web应用程序配置，因此必须根据需要进行更改。以下列表展示了web应用程序的过滤器部分：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;web-app&gt;</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;filter&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;filter-name&gt;</span>requestContextFilter<span style="color:#ff79c6">&lt;/filter-name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;filter-class&gt;</span>org.springframework.web.filter.RequestContextFilter<span style="color:#ff79c6">&lt;/filter-class&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/filter&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;filter-mapping&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;filter-name&gt;</span>requestContextFilter<span style="color:#ff79c6">&lt;/filter-name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;url-pattern&gt;</span>/*<span style="color:#ff79c6">&lt;/url-pattern&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/filter-mapping&gt;</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/web-app&gt;</span>
+</span></span></code></pre></div><p><code>DispatcherServlet</code>、<code>RequestContextListener</code>和<code>RequestContextFilter</code>都执行完全相同的操作，即将HTTP请求对象绑定到为该请求提供服务的<code>Thread</code>。这使得请求和会话作用域的bean在调用链的更下游可用。</p>
 <h3 id="请求作用域">
   请求作用域
   <a class="anchor" href="#%e8%af%b7%e6%b1%82%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h3>
 <p>考虑如下bean定义的XML配置：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;loginAction&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.LoginAction&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;request&#34;</span><span style="color:#ff79c6">/&gt;</span>
-</code></pre></div><p>Spring容器使用<code>loginAction</code> bean定义为每个HTTP请求来创建<code>LoginAction</code> bean的新实例。也就是说，<code>loginAction</code> bean的作用域是HTTP请求级别的。您可以随意更改所创建实例的内部状态，因为通过同一<code>loginAction</code> bean定义创建的其他实例看不到这些更改的状态。它们是特定于单个请求的。当请求完成处理时，作用域为请求的bean将被丢弃。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;loginAction&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.LoginAction&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;request&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span></code></pre></div><p>Spring容器使用<code>loginAction</code> bean定义为每个HTTP请求来创建<code>LoginAction</code> bean的新实例。也就是说，<code>loginAction</code> bean的作用域是HTTP请求级别的。您可以随意更改所创建实例的内部状态，因为通过同一<code>loginAction</code> bean定义创建的其他实例看不到这些更改的状态。它们是特定于单个请求的。当请求完成处理时，作用域为请求的bean将被丢弃。</p>
 <p>使用注解驱动的组件或Java配置时，<code>@RequestScope</code>注解可用于将组件分配为<code>request</code>作用域的。以下示例显示了如何执行此操作：</p>
 
 
@@ -743,27 +743,27 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-0" id="tabs-code-0-0" checked="checked" />
   <label for="tabs-code-0-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">@RequestScope
-@Component
-<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">LoginAction</span> <span style="color:#ff79c6">{</span>
-    <span style="color:#6272a4">// ...
-</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-0" id="tabs-code-0-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@RequestScope
+</span></span><span style="display:flex;"><span>@Component
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">LoginAction</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-0" id="tabs-code-0-1"  />
   <label for="tabs-code-0-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">@RequestScope
-@Component
-<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">LoginAction</span> {
-    <span style="color:#6272a4">// ...
-</span><span style="color:#6272a4"></span>}
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>@RequestScope
+</span></span><span style="display:flex;"><span>@Component
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">LoginAction</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div></div></div>
 
 <h3 id="session作用域">
   Session作用域
   <a class="anchor" href="#session%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h3>
 <p>考虑如下bean定义的XML配置：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">/&gt;</span>
-</code></pre></div><p>Spring容器通过在单个HTTP <code>Session</code>的生存期内使用<code>userPreferences</code> bean定义来创建<code>UserPreferences</code> bean的新实例。换句话说，<code>userPreferences</code> bean有效地限定了HTTP <code>Session</code>级别的范围。与作用域为请求的bean一样，您可以根据需要更改所创建实例的内部状态，因为其他HTTP <code>Session</code>实例也在使用从相同的<code>userPreferences</code> bean定义创建的实例，它们在状态中看不到这些更改，因为它们是特定于单个HTTP <code>Session</code>的。当HTTP <code>Session</code>最终被丢弃时，作用于该特定HTTP <code>Session</code>的bean也被丢弃。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span></code></pre></div><p>Spring容器通过在单个HTTP <code>Session</code>的生存期内使用<code>userPreferences</code> bean定义来创建<code>UserPreferences</code> bean的新实例。换句话说，<code>userPreferences</code> bean有效地限定了HTTP <code>Session</code>级别的范围。与作用域为请求的bean一样，您可以根据需要更改所创建实例的内部状态，因为其他HTTP <code>Session</code>实例也在使用从相同的<code>userPreferences</code> bean定义创建的实例，它们在状态中看不到这些更改，因为它们是特定于单个HTTP <code>Session</code>的。当HTTP <code>Session</code>最终被丢弃时，作用于该特定HTTP <code>Session</code>的bean也被丢弃。</p>
 <p>使用注解驱动组件或Java配置时，可以使用<code>@SessionScope</code>注解将组件分配为<code>session</code>作用域。</p>
 
 
@@ -771,27 +771,27 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-0" checked="checked" />
   <label for="tabs-code-1-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">@SessionScope
-@Component
-<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">UserPreferences</span> <span style="color:#ff79c6">{</span>
-    <span style="color:#6272a4">// ...
-</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@SessionScope
+</span></span><span style="display:flex;"><span>@Component
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">UserPreferences</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
   <label for="tabs-code-1-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">@SessionScope
-@Component
-<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">UserPreferences</span> {
-    <span style="color:#6272a4">// ...
-</span><span style="color:#6272a4"></span>}
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>@SessionScope
+</span></span><span style="display:flex;"><span>@Component
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">UserPreferences</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div></div></div>
 
 <h3 id="应用作用域">
   应用作用域
   <a class="anchor" href="#%e5%ba%94%e7%94%a8%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
 </h3>
 <p>考虑以下bean定义的XML配置：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;appPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.AppPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;application&#34;</span><span style="color:#ff79c6">/&gt;</span>
-</code></pre></div><p>Spring容器通过使用<code>appPreferences</code> bean定义来为整个web应用程序创建<code>AppPreferences</code> bean的新实例。也就是说，<code>appPreferences</code> bean的作用域是在<code>ServletContext</code>级别，并作为常规<code>ServletContext</code>属性存储。这有点类似于Spring单例bean，但在两个重要方面有所不同：它是每个<code>ServletContext</code>是单例，而不是在每个Spring“<code>ApplicationContext</code>”中是单例（在任何给定的web应用程序中可能有多个），并且它实际上是公开的，因此作为<code>ServletContext</code>属性可见。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;appPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.AppPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;application&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span></code></pre></div><p>Spring容器通过使用<code>appPreferences</code> bean定义来为整个web应用程序创建<code>AppPreferences</code> bean的新实例。也就是说，<code>appPreferences</code> bean的作用域是在<code>ServletContext</code>级别，并作为常规<code>ServletContext</code>属性存储。这有点类似于Spring单例bean，但在两个重要方面有所不同：它是每个<code>ServletContext</code>是单例，而不是在每个Spring“<code>ApplicationContext</code>”中是单例（在任何给定的web应用程序中可能有多个），并且它实际上是公开的，因此作为<code>ServletContext</code>属性可见。</p>
 <p>使用注解驱动组件或Java配置时，可以使用<code>@ApplicationScope</code>注解将组件分配成<code>application</code>作用域。以下示例展示了如何执行此操作：</p>
 
 
@@ -799,19 +799,19 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-0" checked="checked" />
   <label for="tabs-code-2-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">@ApplicationScope
-@Component
-<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">AppPreferences</span> <span style="color:#ff79c6">{</span>
-    <span style="color:#6272a4">// ...
-</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@ApplicationScope
+</span></span><span style="display:flex;"><span>@Component
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">AppPreferences</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-1"  />
   <label for="tabs-code-2-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">@ApplicationScope
-@Component
-<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">AppPreferences</span> {
-    <span style="color:#6272a4">// ...
-</span><span style="color:#6272a4"></span>}
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>@ApplicationScope
+</span></span><span style="display:flex;"><span>@Component
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">AppPreferences</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div></div></div>
 
 <h3 id="有作用域的bean作为依赖项">
   有作用域的bean作为依赖项
@@ -828,28 +828,28 @@ https://github.com/alex-shpak/hugo-book
 </blockquote>
 
 <p>以下示例中的配置仅为一行，但了解其背后的“为什么”和“如何做”很重要：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
-<span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
-    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
-    <span style="color:#50fa7b">xmlns:aop=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/aop&#34;</span>
-    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
-</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd
-</span><span style="color:#f1fa8c">        http://www.springframework.org/schema/aop
-</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
-
-    <span style="color:#6272a4">&lt;!-- an HTTP Session-scoped bean exposed as a proxy --&gt;</span>
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">&gt;</span>
-        <span style="color:#6272a4">&lt;!-- instructs the container to proxy the surrounding bean --&gt;</span>
-        <span style="color:#ff79c6">&lt;aop:scoped-proxy/&gt;</span> <span><div class='custom_num_in_span'>1</div></span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-    <span style="color:#6272a4">&lt;!-- a singleton-scoped bean injected with a proxy to the above bean --&gt;</span>
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.SimpleUserService&#34;</span><span style="color:#ff79c6">&gt;</span>
-        <span style="color:#6272a4">&lt;!-- a reference to the proxied userPreferences bean --&gt;</span>
-        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span><span style="color:#ff79c6">/&gt;</span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-<span style="color:#ff79c6">&lt;/beans&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xmlns:aop=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/aop&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        http://www.springframework.org/schema/aop
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        https://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">&lt;!-- an HTTP Session-scoped bean exposed as a proxy --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">&lt;!-- instructs the container to proxy the surrounding bean --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;aop:scoped-proxy/&gt;</span> <span><div class='custom_num_in_span'>1</div></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">&lt;!-- a singleton-scoped bean injected with a proxy to the above bean --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userService&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.SimpleUserService&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">&lt;!-- a reference to the proxied userPreferences bean --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/beans&gt;</span>
+</span></span></code></pre></div>
 <table style="margin: 10px 0px;">
     <tr>
         <td style="border: none; padding: 0px 12px">
@@ -864,22 +864,22 @@ https://github.com/alex-shpak/hugo-book
 </table>
 
 <p>要创建这样一个代理，需要将一个子元素<code>&lt;aop:scoped-proxy/&gt;</code>插入到作用域bean定义中（请参阅<a href="./#%e9%80%89%e6%8b%a9%e8%a6%81%e5%88%9b%e5%bb%ba%e7%9a%84%e4%bb%a3%e7%90%86%e7%9a%84%e7%b1%bb%e5%9e%8b">选择要创建的代理类型</a>和<a href="../beans-annotation-config#xsd-schemas">基于XML模式的配置</a>）。为什么在<code>request</code>、<code>session</code>和自定义作用域级别的bean中需要<code>&lt;aop:scoped-proxy/&gt;</code>元素？考虑下面的单例bean定义，并将它与前面所定义的作用域进行比较（注意，下面的<code>userPreferences</code> bean定义不完整）：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">/&gt;</span>
-
-<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userManager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserManager&#34;</span><span style="color:#ff79c6">&gt;</span>
-    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span><span style="color:#ff79c6">/&gt;</span>
-<span style="color:#ff79c6">&lt;/bean&gt;</span>
-</code></pre></div><p>在前面的示例中，向单例bean（<code>userManager</code>）中注入了对HTTP <code>Session作用域</code>bean（<code>userPreferences</code>）的引用。这里最突出的一点是<code>userManager</code>是一个单例bean：每个容器只实例化一次，其依赖项（在本例中只有一个，即<code>userPreferences</code>）也只注入一次。这意味着<code>userManager</code> bean只在完全相同的<code>userPreferences</code>对象（即最初注入的对象）上运行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userManager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserManager&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span></code></pre></div><p>在前面的示例中，向单例bean（<code>userManager</code>）中注入了对HTTP <code>Session作用域</code>bean（<code>userPreferences</code>）的引用。这里最突出的一点是<code>userManager</code>是一个单例bean：每个容器只实例化一次，其依赖项（在本例中只有一个，即<code>userPreferences</code>）也只注入一次。这意味着<code>userManager</code> bean只在完全相同的<code>userPreferences</code>对象（即最初注入的对象）上运行。</p>
 <p>当将一个寿命较短的作用域bean注入一个寿命较长的作用域bean（例如，将一个HTTP <code>Session</code>作用域的协作bean作为依赖项注入到单例bean中）时，这不是您想要的行为。相反，您需要一个<code>userManager</code>对象，并且在HTTP会话的生命周期内，您需要一个特定于该HTTP会话的<code>userPreferences</code>对象。因此，容器创建了一个对象，该对象暴露了与<code>UserPreferences</code>类完全相同的公共接口（理想情况下是一个<code>UserPreferences</code>实例的对象），该对象可以从作用域机制（HTTP请求、会话等）中获取真正的<code>UserPreferences</code>对象。容器将这个代理对象注入<code>userManager</code> bean，后者并不知道这个<code>UserPreferences</code>引用是一个代理。在本例中，当<code>UserManager</code>实例调用依赖注入的<code>UserPreferences</code>对象上的方法时，它实际上是在调用代理上的方法。然后，代理从HTTP <code>Session</code>（在本例中）获取真正的<code>UserPreferences</code>对象，并将方法调用委托给检索到的真正的<code>UserPreferences</code>对象。</p>
 <p>因此，在将请求范围和会话范围的bean注入协作对象时，需要以下（正确且完整）配置，如下例所示：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">&gt;</span>
-    <span style="color:#ff79c6">&lt;aop:scoped-proxy/&gt;</span>
-<span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userManager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserManager&#34;</span><span style="color:#ff79c6">&gt;</span>
-    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span><span style="color:#ff79c6">/&gt;</span>
-<span style="color:#ff79c6">&lt;/bean&gt;</span>
-</code></pre></div><h4 id="选择要创建的代理的类型">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;aop:scoped-proxy/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userManager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.something.UserManager&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span></code></pre></div><h4 id="选择要创建的代理的类型">
   选择要创建的代理的类型
   <a class="anchor" href="#%e9%80%89%e6%8b%a9%e8%a6%81%e5%88%9b%e5%bb%ba%e7%9a%84%e4%bb%a3%e7%90%86%e7%9a%84%e7%b1%bb%e5%9e%8b">#</a>
 </h4>
@@ -889,15 +889,15 @@ https://github.com/alex-shpak/hugo-book
 </blockquote>
 
 <p>或者，您可以配置Spring容器，通过将<code>&lt;aop:scoped-proxy/&gt;</code>元素的<code>proxy-target-class</code>属性的值指定false，来为此类作用域bean创建基于标准JDK接口的代理。使用基于JDK接口的代理意味着在应用程序类路径中不需要额外的库来实现这种代理。然而，这也意味着作用域bean的类必须实现至少一个接口，并且所有注入作用域bean的协作者必须通过其接口之一引用bean。以下示例显示了基于接口的代理：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#6272a4">&lt;!-- DefaultUserPreferences 实现了 UserPreferences 接口 --&gt;</span>
-<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.stuff.DefaultUserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">&gt;</span>
-    <span style="color:#ff79c6">&lt;aop:scoped-proxy</span> <span style="color:#50fa7b">proxy-target-class=</span><span style="color:#f1fa8c">&#34;false&#34;</span><span style="color:#ff79c6">/&gt;</span>
-<span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-<span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userManager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.stuff.UserManager&#34;</span><span style="color:#ff79c6">&gt;</span>
-    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span><span style="color:#ff79c6">/&gt;</span>
-<span style="color:#ff79c6">&lt;/bean&gt;</span>
-</code></pre></div><p>有关选择基于类或基于接口的代理的更多详细信息，请参阅<a href="../beans-annotation-config#aop-proxying">aop代理</a>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#6272a4">&lt;!-- DefaultUserPreferences 实现了 UserPreferences 接口 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.stuff.DefaultUserPreferences&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;session&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;aop:scoped-proxy</span> <span style="color:#50fa7b">proxy-target-class=</span><span style="color:#f1fa8c">&#34;false&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;userManager&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;com.stuff.UserManager&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;userPreferences&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span></code></pre></div><p>有关选择基于类或基于接口的代理的更多详细信息，请参阅<a href="../beans-annotation-config#aop-proxying">aop代理</a>。</p>
 <h2 id="155-自定义作用域">
   1.5.5 自定义作用域
   <a class="anchor" href="#155-%e8%87%aa%e5%ae%9a%e4%b9%89%e4%bd%9c%e7%94%a8%e5%9f%9f">#</a>
@@ -916,11 +916,11 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-0" checked="checked" />
   <label for="tabs-code-3-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Object <span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">,</span> ObjectFactory<span style="color:#ff79c6">&lt;?&gt;</span> objectFactory<span style="color:#ff79c6">)</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Object <span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">,</span> ObjectFactory<span style="color:#ff79c6">&lt;?&gt;</span> objectFactory<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-1"  />
   <label for="tabs-code-3-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">get</span>(name: String, objectFactory: ObjectFactory&lt;*&gt;): Any
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">get</span>(name: String, objectFactory: ObjectFactory&lt;*&gt;): Any
+</span></span></code></pre></div></div></div>
 
 <p>例如，会话作用域实现从基础会话中删除会话作用域bean，则应该返回该对象，但如果找不到具有指定名称的对象，则可以返回<code>null</code>。以下方法将对象从基础作用域中移除：</p>
 
@@ -929,11 +929,11 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-0" checked="checked" />
   <label for="tabs-code-4-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Object <span style="color:#50fa7b">remove</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">)</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Object <span style="color:#50fa7b">remove</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-1"  />
   <label for="tabs-code-4-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">remove</span>(name: String): Any
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">remove</span>(name: String): Any
+</span></span></code></pre></div></div></div>
 
 <p>以下方法注册作用域销毁或作用域中指定对象销毁时应执行的回调：</p>
 
@@ -942,11 +942,11 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-5" id="tabs-code-5-0" checked="checked" />
   <label for="tabs-code-5-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">registerDestructionCallback</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">,</span> Runnable destructionCallback<span style="color:#ff79c6">)</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-5" id="tabs-code-5-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">registerDestructionCallback</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">,</span> Runnable destructionCallback<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-5" id="tabs-code-5-1"  />
   <label for="tabs-code-5-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">registerDestructionCallback</span>(name: String, destructionCallback: Runnable)
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">registerDestructionCallback</span>(name: String, destructionCallback: Runnable)
+</span></span></code></pre></div></div></div>
 
 <p>有关销毁回调的更多信息，请参阅<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/beans/factory/config/Scope.html#registerDestructionCallback">javadoc</a>或Spring作用域实现。</p>
 <p>以下方法获取基础作用域的会话标识符：</p>
@@ -956,11 +956,11 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-6" id="tabs-code-6-0" checked="checked" />
   <label for="tabs-code-6-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">String <span style="color:#50fa7b">getConversationId</span><span style="color:#ff79c6">()</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-6" id="tabs-code-6-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String <span style="color:#50fa7b">getConversationId</span><span style="color:#ff79c6">()</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-6" id="tabs-code-6-1"  />
   <label for="tabs-code-6-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">getConversationId</span>(): String
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">getConversationId</span>(): String
+</span></span></code></pre></div></div></div>
 
 <p>每个作用域的标识符都不同。对于会话作用域的实现，该标识符可以是会话标识符。</p>
 <h3 id="使用自定义作用域">
@@ -974,11 +974,11 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-7" id="tabs-code-7-0" checked="checked" />
   <label for="tabs-code-7-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">registerScope</span><span style="color:#ff79c6">(</span>String scopeName<span style="color:#ff79c6">,</span> Scope scope<span style="color:#ff79c6">);</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-7" id="tabs-code-7-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">registerScope</span><span style="color:#ff79c6">(</span>String scopeName<span style="color:#ff79c6">,</span> Scope scope<span style="color:#ff79c6">);</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-7" id="tabs-code-7-1"  />
   <label for="tabs-code-7-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">registerScope</span>(scopeName: String, scope: Scope)
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">registerScope</span>(scopeName: String, scope: Scope)
+</span></span></code></pre></div></div></div>
 
 <p>此方法在<code>ConfigurableBeanFactory</code>接口上声明的，该接口可通过Spring附带的大多数具体<code>ApplicationContext</code>实现的<code>BeanFactory</code>属性获得。</p>
 <p><code>registerScope(..)</code>方法的第一个参数是与作用域相关的唯一名称。Spring容器本身中此类名称的例子有<code>singleton</code>和<code>prototype</code>。<code>registerScope(..)</code>方法的第二个参数是要注册和使用的自定义作用域实现的实例。</p>
@@ -993,47 +993,47 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-8" id="tabs-code-8-0" checked="checked" />
   <label for="tabs-code-8-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Scope threadScope <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> SimpleThreadScope<span style="color:#ff79c6">();</span>
-beanFactory<span style="color:#ff79c6">.</span><span style="color:#50fa7b">registerScope</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">,</span> threadScope<span style="color:#ff79c6">);</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-8" id="tabs-code-8-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Scope threadScope <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> SimpleThreadScope<span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>beanFactory<span style="color:#ff79c6">.</span><span style="color:#50fa7b">registerScope</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">,</span> threadScope<span style="color:#ff79c6">);</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-8" id="tabs-code-8-1"  />
   <label for="tabs-code-8-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> threadScope = SimpleThreadScope()
-beanFactory.registerScope(<span style="color:#f1fa8c">&#34;thread&#34;</span>, threadScope)
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">val</span> threadScope = SimpleThreadScope()
+</span></span><span style="display:flex;"><span>beanFactory.registerScope(<span style="color:#f1fa8c">&#34;thread&#34;</span>, threadScope)
+</span></span></code></pre></div></div></div>
 
 <p>然后，您可以创建符合自定义<code>Scope</code>的作用域规则的bean定义，如下所示：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">&gt;</span>
-</code></pre></div><p>通过自定义<code>Scope</code>实现，您不仅限于对作用域进行编程注册。还可以使用<code>CustomScopeConfigurer</code>类声明性地进行作用域注册，如下例所示：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
-<span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
-    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
-    <span style="color:#50fa7b">xmlns:aop=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/aop&#34;</span>
-    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
-</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd
-</span><span style="color:#f1fa8c">        http://www.springframework.org/schema/aop
-</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
-
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.beans.factory.config.CustomScopeConfigurer&#34;</span><span style="color:#ff79c6">&gt;</span>
-        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;scopes&#34;</span><span style="color:#ff79c6">&gt;</span>
-            <span style="color:#ff79c6">&lt;map&gt;</span>
-                <span style="color:#ff79c6">&lt;entry</span> <span style="color:#50fa7b">key=</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">&gt;</span>
-                    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.context.support.SimpleThreadScope&#34;</span><span style="color:#ff79c6">/&gt;</span>
-                <span style="color:#ff79c6">&lt;/entry&gt;</span>
-            <span style="color:#ff79c6">&lt;/map&gt;</span>
-        <span style="color:#ff79c6">&lt;/property&gt;</span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;thing2&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.Thing2&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">&gt;</span>
-        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;name&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;Rick&#34;</span><span style="color:#ff79c6">/&gt;</span>
-        <span style="color:#ff79c6">&lt;aop:scoped-proxy/&gt;</span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;thing1&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.Thing1&#34;</span><span style="color:#ff79c6">&gt;</span>
-        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;thing2&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;thing2&#34;</span><span style="color:#ff79c6">/&gt;</span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-<span style="color:#ff79c6">&lt;/beans&gt;</span>
-</code></pre></div><blockquote class="book-hint note">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span></code></pre></div><p>通过自定义<code>Scope</code>实现，您不仅限于对作用域进行编程注册。还可以使用<code>CustomScopeConfigurer</code>类声明性地进行作用域注册，如下例所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xmlns:aop=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/aop&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        http://www.springframework.org/schema/aop
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        https://www.springframework.org/schema/aop/spring-aop.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.beans.factory.config.CustomScopeConfigurer&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;scopes&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;map&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">&lt;entry</span> <span style="color:#50fa7b">key=</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.context.support.SimpleThreadScope&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">&lt;/entry&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;/map&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;thing2&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.Thing2&#34;</span> <span style="color:#50fa7b">scope=</span><span style="color:#f1fa8c">&#34;thread&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;name&#34;</span> <span style="color:#50fa7b">value=</span><span style="color:#f1fa8c">&#34;Rick&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;aop:scoped-proxy/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;thing1&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;x.y.Thing1&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;thing2&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;thing2&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/beans&gt;</span>
+</span></span></code></pre></div><blockquote class="book-hint note">
   在<code>FactoryBean</code>实现中设置<code>&lt;aop:scoped-proxy/&gt;</code>时，作用域是工厂bean本身，而不是<code>getObject()</code>返回的对象。
 </blockquote>
 
@@ -1053,7 +1053,7 @@ beanFactory.registerScope(<span style="color:#f1fa8c">&#34;thread&#34;</span>, t
 
 
 
-  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
 
 
  

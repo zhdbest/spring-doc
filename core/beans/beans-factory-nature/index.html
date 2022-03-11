@@ -4,7 +4,16 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="1.6 自定义Bean的性质 #  Version 5.2.2.RELEASE
- 1.6.1 生命周期回调 #  初始化时回调 #  销毁时回调 #  1.6.2. ApplicationContextAware 和 BeanNameAware #  ">
+ Spring框架提供了许多接口，可以用来定制bean的性质。本节将其分类如下：
+ 生命周期回调 ApplicationContextAware 和 BeanNameAware 其他Aware接口  1.6.1 生命周期回调 #  为了与容器对bean生命周期的管理进行交互，可以实现Spring InitializingBean和DisposableBean接口。容器为前者调用afterPropertiesSet()，为后者调用destroy()，以便bean在初始化和销毁bean时执行某些操作。
+JSR-250 @PostConstruct和@PreDestroy注解通常被认为是在现代Spring应用程序中接收生命周期回调的最佳实践。使用这些注解意味着您的bean没有耦合到特定于Spring的接口。有关详细信息，请参见使用@PostConstruct和@PreDestroy。
+如果不想使用JSR-250注解，但仍想解除耦合，请考虑init-method和destroy-method bean定义元数据。
+ 在内部，Spring框架使用BeanPostProcessor实现来处理它可以找到的任何回调接口，并调用适当的方法。如果您需要定制某些特性或Spring默认未提供的其他生命周期行为，您可以自己实现BeanPostProcessor。有关详细信息，请参见容器扩展点。
+除了初始化和销毁回调之外，Spring管理的对象还可以实现生命周期接口（Lifecycle），以便这些对象可以参与由容器自身生命周期驱动的启动和关闭过程。
+本节介绍了生命周期回调接口。
+初始化时回调 #  org.springframework.beans.factory.InitializingBean接口允许bean在容器对bean设置了所有必要的属性之后执行初始化工作。InitializingBean接口指定了一个方法：
+Java void afterPropertiesSet() throws Exception; Kotlin fun afterPropertiesSet()  我们建议您不要使用InitializingBean接口，因为它不必要地将代码和Spring耦合。或者说，我们建议使用@PostConstruct注解或指定POJO初始化方法。对于基于XML的配置元数据，可以使用init-method属性指定具有无返回值无参数的方法的名称。如果使用的是Java配置，可以使用@Bean的initMethod属性。请参阅接收生命周期回调。考虑下面的例子：
+&lt;bean id=&#34;exampleInitBean&#34; class=&#34;examples.ExampleBean&#34; init-method=&#34;init&#34;/&gt;  Java public class ExampleBean {   public void init() {  // 做某些初始化工作  } } Kotlin class ExampleBean {   fun init() {  // 做某些初始化工作  } }  前面的示例与下面的示例的效果几乎完全相同：">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="color-scheme" content="light dark"><meta property="og:title" content="1.6 自定义Bean的性质" />
 <meta property="og:description" content="" />
@@ -16,7 +25,7 @@
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.95eea17cffc46ae5b06337143c85665a6e0bd69bfda37c3e055b8cd16b9ab0b3.css" integrity="sha256-le6hfP/EauWwYzcUPIVmWm4L1pv9o3w&#43;BVuM0WuasLM=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.46e8d3ccb2dedd3d21812517e38fb055020b64114354ff2023ffec4a3560b114.js" integrity="sha256-RujTzLLe3T0hgSUX44&#43;wVQILZBFDVP8gI//sSjVgsRQ=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.099ef1eca3f2038c8d8faa91bdacddc3a711ef28116eb5009cbb25c8289c9cfb.js" integrity="sha256-CZ7x7KPyA4yNj6qRvazdw6cR7ygRbrUAnLslyCicnPs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-nature/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -71,7 +80,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/overview/" class="">Spring框架概述</a>
+    <a href="/spring-doc/overview/" class="">Spring框架概述</a>
   
 
           
@@ -91,7 +100,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-0d1affe253952d37201d1163f8079748" class="toggle" checked />
     <label for="section-0d1affe253952d37201d1163f8079748" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/core/" class="">核心技术</a>
+      <a href="/spring-doc/core/" class="">核心技术</a>
     </label>
   
 
@@ -107,7 +116,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-235ed86e667da8fa828dd4f659577027" class="toggle" checked />
     <label for="section-235ed86e667da8fa828dd4f659577027" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/core/beans/" class="">1. IoC容器</a>
+      <a href="/spring-doc/core/beans/" class="">1. IoC容器</a>
     </label>
   
 
@@ -121,7 +130,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
+    <a href="/spring-doc/core/beans/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
   
 
           
@@ -139,7 +148,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-basics/" class="">1.2 容器概述</a>
+    <a href="/spring-doc/core/beans/beans-basics/" class="">1.2 容器概述</a>
   
 
           
@@ -157,7 +166,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-definition/" class="">1.3 Bean概述</a>
+    <a href="/spring-doc/core/beans/beans-definition/" class="">1.3 Bean概述</a>
   
 
           
@@ -175,7 +184,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/" class="">1.4 依赖</a>
+    <a href="/spring-doc/core/beans/beans-dependencies/" class="">1.4 依赖</a>
   
 
           
@@ -193,7 +202,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/" class="">1.5 bean的作用域</a>
+    <a href="/spring-doc/core/beans/beans-factory-scopes/" class="">1.5 bean的作用域</a>
   
 
           
@@ -211,7 +220,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-nature/" class=" active">1.6 自定义Bean的性质</a>
+    <a href="/spring-doc/core/beans/beans-factory-nature/" class=" active">1.6 自定义Bean的性质</a>
   
 
           
@@ -229,7 +238,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-child-bean-definitions/" class="">1.7 bean定义继承</a>
+    <a href="/spring-doc/core/beans/beans-child-bean-definitions/" class="">1.7 bean定义继承</a>
   
 
           
@@ -247,7 +256,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-extension/" class="">1.8 容器扩展点</a>
+    <a href="/spring-doc/core/beans/beans-factory-extension/" class="">1.8 容器扩展点</a>
   
 
           
@@ -265,7 +274,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-annotation-config/" class="">1.9 基于注解的容器配置</a>
+    <a href="/spring-doc/core/beans/beans-annotation-config/" class="">1.9 基于注解的容器配置</a>
   
 
           
@@ -293,7 +302,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/testing/" class="">测试</a>
+    <a href="/spring-doc/testing/" class="">测试</a>
   
 
           
@@ -311,7 +320,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/data-access/" class="">数据访问</a>
+    <a href="/spring-doc/data-access/" class="">数据访问</a>
   
 
           
@@ -331,7 +340,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-c7411df77aeebb9555479ccacbf66f41" class="toggle"  />
     <label for="section-c7411df77aeebb9555479ccacbf66f41" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/web/" class="">Web Servlet</a>
+      <a href="/spring-doc/web/" class="">Web Servlet</a>
     </label>
   
 
@@ -345,7 +354,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/mvc/" class="">1. Spring Web MVC</a>
+    <a href="/spring-doc/web/mvc/" class="">1. Spring Web MVC</a>
   
 
           
@@ -363,7 +372,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/webmvc-client/" class="">2. REST客户端</a>
+    <a href="/spring-doc/web/webmvc-client/" class="">2. REST客户端</a>
   
 
           
@@ -381,7 +390,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/testing/" class="">3. 测试</a>
+    <a href="/spring-doc/web/testing/" class="">3. 测试</a>
   
 
           
@@ -399,7 +408,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/websocket/" class="">4. WebSocket</a>
+    <a href="/spring-doc/web/websocket/" class="">4. WebSocket</a>
   
 
           
@@ -412,30 +421,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/websocket/websocket-stomp/" class="">4.4 STOMP</a>
-  
-
-          
-  <ul>
-    
-  </ul>
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="https://hongmao.run/spring-doc/web/web-integration/" class="">5. 其他Web框架</a>
+    <a href="/spring-doc/web/websocket/websocket-stomp/" class="">4.4 STOMP</a>
   
 
           
@@ -458,7 +444,30 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web-reactive/" class="">响应式Web</a>
+    <a href="/spring-doc/web/web-integration/" class="">5. 其他Web框架</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/spring-doc/web-reactive/" class="">响应式Web</a>
   
 
           
@@ -478,7 +487,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-8b9fad4111be4155727ef91074c37605" class="toggle"  />
     <label for="section-8b9fad4111be4155727ef91074c37605" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/integration/" class="">集成</a>
+      <a href="/spring-doc/integration/" class="">集成</a>
     </label>
   
 
@@ -492,7 +501,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/integration/jmx/" class="">4.JMX</a>
+    <a href="/spring-doc/integration/jmx/" class="">4.JMX</a>
   
 
           
@@ -515,7 +524,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/languages/" class="">支持的语言</a>
+    <a href="/spring-doc/languages/" class="">支持的语言</a>
   
 
           
@@ -547,7 +556,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
 
 
  
@@ -585,6 +594,7 @@ https://github.com/alex-shpak/hugo-book
       </ul>
     </li>
     <li><a href="#162-applicationcontextaware-和-beannameaware">1.6.2. <code>ApplicationContextAware</code> 和 <code>BeanNameAware</code></a></li>
+    <li><a href="#163-其他aware接口">1.6.3 其他<code>Aware</code>接口</a></li>
   </ul>
 </nav>
 
@@ -603,21 +613,117 @@ https://github.com/alex-shpak/hugo-book
 </h1>
 <p><a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/spring-framework-reference/core.html#beans-factory-nature">Version 5.2.2.RELEASE</a></p>
 <hr>
+<p>Spring框架提供了许多接口，可以用来定制bean的性质。本节将其分类如下：</p>
+<ul>
+<li><a href="./#161-%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f%e5%9b%9e%e8%b0%83">生命周期回调</a></li>
+<li><a href="./#162-applicationcontextaware-%e5%92%8c-beannameaware"><code>ApplicationContextAware</code> 和 <code>BeanNameAware</code></a></li>
+<li><a href="./#163-%e5%85%b6%e4%bb%96aware%e6%8e%a5%e5%8f%a3">其他<code>Aware</code>接口</a></li>
+</ul>
 <h2 id="161-生命周期回调">
   1.6.1 生命周期回调
   <a class="anchor" href="#161-%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f%e5%9b%9e%e8%b0%83">#</a>
 </h2>
+<p>为了与容器对bean生命周期的管理进行交互，可以实现Spring <code>InitializingBean</code>和<code>DisposableBean</code>接口。容器为前者调用<code>afterPropertiesSet()</code>，为后者调用<code>destroy()</code>，以便bean在初始化和销毁bean时执行某些操作。</p>
+<blockquote class="book-hint tip">
+  <p>JSR-250 <code>@PostConstruct</code>和<code>@PreDestroy</code>注解通常被认为是在现代Spring应用程序中接收生命周期回调的最佳实践。使用这些注解意味着您的bean没有耦合到特定于Spring的接口。有关详细信息，请参见<a href="../beans-annotation-config#beans-postconstruct-and-predestroy-annotations">使用<code>@PostConstruct</code>和<code>@PreDestroy</code></a>。</p>
+<p>如果不想使用JSR-250注解，但仍想解除耦合，请考虑<code>init-method</code>和<code>destroy-method</code> bean定义元数据。</p>
+
+</blockquote>
+
+<p>在内部，Spring框架使用<code>BeanPostProcessor</code>实现来处理它可以找到的任何回调接口，并调用适当的方法。如果您需要定制某些特性或Spring默认未提供的其他生命周期行为，您可以自己实现<code>BeanPostProcessor</code>。有关详细信息，请参见<a href="../beans-factory-extension">容器扩展点</a>。</p>
+<p>除了初始化和销毁回调之外，Spring管理的对象还可以实现生命周期接口（<code>Lifecycle</code>），以便这些对象可以参与由容器自身生命周期驱动的启动和关闭过程。</p>
+<p>本节介绍了生命周期回调接口。</p>
 <h3 id="初始化时回调">
   初始化时回调
   <a class="anchor" href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e6%97%b6%e5%9b%9e%e8%b0%83">#</a>
 </h3>
+<p><code>org.springframework.beans.factory.InitializingBean</code>接口允许bean在容器对bean设置了所有必要的属性之后执行初始化工作。<code>InitializingBean</code>接口指定了一个方法：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-0" id="tabs-code-0-0" checked="checked" />
+  <label for="tabs-code-0-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">afterPropertiesSet</span><span style="color:#ff79c6">()</span> <span style="color:#8be9fd;font-style:italic">throws</span> Exception<span style="color:#ff79c6">;</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-0" id="tabs-code-0-1"  />
+  <label for="tabs-code-0-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">afterPropertiesSet</span>()
+</span></span></code></pre></div></div></div>
+
+<p>我们建议您不要使用<code>InitializingBean</code>接口，因为它不必要地将代码和Spring耦合。或者说，我们建议使用<a href="../beans-annotation-config#beans-postconstruct-and-predestroy-annotations"><code>@PostConstruct</code></a>注解或指定POJO初始化方法。对于基于XML的配置元数据，可以使用<code>init-method</code>属性指定具有无返回值无参数的方法的名称。如果使用的是Java配置，可以使用<code>@Bean</code>的<code>initMethod</code>属性。请参阅<a href="../beans-annotation-config#beans-java-lifecycle-callbacks">接收生命周期回调</a>。考虑下面的例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleInitBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.ExampleBean&#34;</span> <span style="color:#50fa7b">init-method=</span><span style="color:#f1fa8c">&#34;init&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span></code></pre></div>
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-0" checked="checked" />
+  <label for="tabs-code-1-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ExampleBean</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">init</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 做某些初始化工作
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
+  <label for="tabs-code-1-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ExampleBean</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">init</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 做某些初始化工作
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div></div>
+
+<p>前面的示例与下面的示例的效果几乎完全相同：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleInitBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.AnotherExampleBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span></code></pre></div>
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-0" checked="checked" />
+  <label for="tabs-code-1-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">AnotherExampleBean</span> <span style="color:#8be9fd;font-style:italic">implements</span> InitializingBean <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">afterPropertiesSet</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 做某些初始化工作
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
+  <label for="tabs-code-1-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">AnotherExampleBean</span> : InitializingBean {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">afterPropertiesSet</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 做某些初始化工作
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div></div>
+
+<p>然而，前面两个示例中的第一个并没有将代码与Spring耦合。</p>
 <h3 id="销毁时回调">
   销毁时回调
   <a class="anchor" href="#%e9%94%80%e6%af%81%e6%97%b6%e5%9b%9e%e8%b0%83">#</a>
 </h3>
+<p>实现<code>org.springframework.beans.factory.DisposableBean</code>接口允许bean在包含它的容器被销毁时获得回调。<code>DisposableBean</code>接口指定了一种方法：</p>
+
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-0" checked="checked" />
+  <label for="tabs-code-3-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">destroy</span><span style="color:#ff79c6">()</span> <span style="color:#8be9fd;font-style:italic">throws</span> Exception<span style="color:#ff79c6">;</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-1"  />
+  <label for="tabs-code-3-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">destroy</span>()
+</span></span></code></pre></div></div></div>
+
 <h2 id="162-applicationcontextaware-和-beannameaware">
   1.6.2. <code>ApplicationContextAware</code> 和 <code>BeanNameAware</code>
   <a class="anchor" href="#162-applicationcontextaware-%e5%92%8c-beannameaware">#</a>
+</h2>
+<h2 id="163-其他aware接口">
+  1.6.3 其他<code>Aware</code>接口
+  <a class="anchor" href="#163-%e5%85%b6%e4%bb%96aware%e6%8e%a5%e5%8f%a3">#</a>
 </h2>
 </article>
  
@@ -635,7 +741,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
 
 
  
@@ -667,6 +773,7 @@ https://github.com/alex-shpak/hugo-book
       </ul>
     </li>
     <li><a href="#162-applicationcontextaware-和-beannameaware">1.6.2. <code>ApplicationContextAware</code> 和 <code>BeanNameAware</code></a></li>
+    <li><a href="#163-其他aware接口">1.6.3 其他<code>Aware</code>接口</a></li>
   </ul>
 </nav>
 

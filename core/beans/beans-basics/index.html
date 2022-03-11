@@ -14,7 +14,7 @@ Spring提供了ApplicationContext接口的几种实现。在独立的应用中�
  基于注解的配置：Spring 2.5引入了对基于注解的配置元数据的支持。 基于Java的配置：从Spring 3.0开始，Spring JavaConfig项目提供的许多特性成为了核心Spring框架的一部分。因此，您可以使用Java而不是XML文件来定义应用程序类外的bean。要使用这些新功能，请参阅@Configuration、@Bean、@Import和@DependsOn注解。  Spring配置至少包括一个但通常不止一个必须由容器管理的bean定义。基于XML的配置元数据将这些bean配置为顶级&lt;beans/&gt;元素中的&lt;bean/&gt;元素。Java配置通常在@Configuration类中使用@Bean注解标注的方法来定义bean。
 这些bean定义对应着构成应用程序的实际对象。通常，您定义服务层对象、数据访问对象（DAO）、表示对象（如Struts中的Action实例）、基础结构对象（如Hibernate SessionFactorys）、JMS Queues等。通常，不在容器中配置细粒度域对象，因为创建和加载域对象通常是DAO和业务逻辑的责任。但是，您可以使用Spring与AspectJ的集成来配置在IoC容器控制之外创建的对象。请参阅在Spring中使用AspectJ注入依赖域对象。
 以下示例显示了基于XML的配置元数据的基本结构：
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd&#34;&gt; &lt;bean id=&#34;...&#34; class=&#34;...&#34;&gt; 1 2 &lt;!-- 此处是当前bean的协作者和配置 --&gt; &lt;/bean&gt; &lt;bean id=&#34;...&#34; class=&#34;...&#34;&gt; &lt;!-- 此处是当前bean的协作者和配置 --&gt; &lt;/bean&gt; &lt;!">
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34;  xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34;  xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd&#34;&gt;   &lt;bean id=&#34;...&#34; class=&#34;...&#34;&gt; 1 2  &lt;!-- 此处是当前bean的协作者和配置 --&gt;  &lt;/bean&gt;   &lt;bean id=&#34;.">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="color-scheme" content="light dark"><meta property="og:title" content="1.2 容器概述" />
 <meta property="og:description" content="" />
@@ -26,7 +26,7 @@ Spring提供了ApplicationContext接口的几种实现。在独立的应用中�
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.95eea17cffc46ae5b06337143c85665a6e0bd69bfda37c3e055b8cd16b9ab0b3.css" integrity="sha256-le6hfP/EauWwYzcUPIVmWm4L1pv9o3w&#43;BVuM0WuasLM=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.46e8d3ccb2dedd3d21812517e38fb055020b64114354ff2023ffec4a3560b114.js" integrity="sha256-RujTzLLe3T0hgSUX44&#43;wVQILZBFDVP8gI//sSjVgsRQ=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.099ef1eca3f2038c8d8faa91bdacddc3a711ef28116eb5009cbb25c8289c9cfb.js" integrity="sha256-CZ7x7KPyA4yNj6qRvazdw6cR7ygRbrUAnLslyCicnPs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-basics/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -81,7 +81,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/overview/" class="">Spring框架概述</a>
+    <a href="/spring-doc/overview/" class="">Spring框架概述</a>
   
 
           
@@ -101,7 +101,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-0d1affe253952d37201d1163f8079748" class="toggle" checked />
     <label for="section-0d1affe253952d37201d1163f8079748" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/core/" class="">核心技术</a>
+      <a href="/spring-doc/core/" class="">核心技术</a>
     </label>
   
 
@@ -117,7 +117,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-235ed86e667da8fa828dd4f659577027" class="toggle" checked />
     <label for="section-235ed86e667da8fa828dd4f659577027" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/core/beans/" class="">1. IoC容器</a>
+      <a href="/spring-doc/core/beans/" class="">1. IoC容器</a>
     </label>
   
 
@@ -131,7 +131,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
+    <a href="/spring-doc/core/beans/beans-introduction/" class="">1.1 Spring IoC容器和Beans简介</a>
   
 
           
@@ -149,7 +149,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-basics/" class=" active">1.2 容器概述</a>
+    <a href="/spring-doc/core/beans/beans-basics/" class=" active">1.2 容器概述</a>
   
 
           
@@ -167,7 +167,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-definition/" class="">1.3 Bean概述</a>
+    <a href="/spring-doc/core/beans/beans-definition/" class="">1.3 Bean概述</a>
   
 
           
@@ -185,7 +185,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-dependencies/" class="">1.4 依赖</a>
+    <a href="/spring-doc/core/beans/beans-dependencies/" class="">1.4 依赖</a>
   
 
           
@@ -203,7 +203,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-scopes/" class="">1.5 bean的作用域</a>
+    <a href="/spring-doc/core/beans/beans-factory-scopes/" class="">1.5 bean的作用域</a>
   
 
           
@@ -221,7 +221,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-nature/" class="">1.6 自定义Bean的性质</a>
+    <a href="/spring-doc/core/beans/beans-factory-nature/" class="">1.6 自定义Bean的性质</a>
   
 
           
@@ -239,7 +239,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-child-bean-definitions/" class="">1.7 bean定义继承</a>
+    <a href="/spring-doc/core/beans/beans-child-bean-definitions/" class="">1.7 bean定义继承</a>
   
 
           
@@ -257,7 +257,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-factory-extension/" class="">1.8 容器扩展点</a>
+    <a href="/spring-doc/core/beans/beans-factory-extension/" class="">1.8 容器扩展点</a>
   
 
           
@@ -275,7 +275,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/core/beans/beans-annotation-config/" class="">1.9 基于注解的容器配置</a>
+    <a href="/spring-doc/core/beans/beans-annotation-config/" class="">1.9 基于注解的容器配置</a>
   
 
           
@@ -303,7 +303,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/testing/" class="">测试</a>
+    <a href="/spring-doc/testing/" class="">测试</a>
   
 
           
@@ -321,7 +321,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/data-access/" class="">数据访问</a>
+    <a href="/spring-doc/data-access/" class="">数据访问</a>
   
 
           
@@ -341,7 +341,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-c7411df77aeebb9555479ccacbf66f41" class="toggle"  />
     <label for="section-c7411df77aeebb9555479ccacbf66f41" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/web/" class="">Web Servlet</a>
+      <a href="/spring-doc/web/" class="">Web Servlet</a>
     </label>
   
 
@@ -355,7 +355,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/mvc/" class="">1. Spring Web MVC</a>
+    <a href="/spring-doc/web/mvc/" class="">1. Spring Web MVC</a>
   
 
           
@@ -373,7 +373,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/webmvc-client/" class="">2. REST客户端</a>
+    <a href="/spring-doc/web/webmvc-client/" class="">2. REST客户端</a>
   
 
           
@@ -391,7 +391,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/testing/" class="">3. 测试</a>
+    <a href="/spring-doc/web/testing/" class="">3. 测试</a>
   
 
           
@@ -409,7 +409,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/websocket/" class="">4. WebSocket</a>
+    <a href="/spring-doc/web/websocket/" class="">4. WebSocket</a>
   
 
           
@@ -422,30 +422,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web/websocket/websocket-stomp/" class="">4.4 STOMP</a>
-  
-
-          
-  <ul>
-    
-  </ul>
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="https://hongmao.run/spring-doc/web/web-integration/" class="">5. 其他Web框架</a>
+    <a href="/spring-doc/web/websocket/websocket-stomp/" class="">4.4 STOMP</a>
   
 
           
@@ -468,7 +445,30 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/web-reactive/" class="">响应式Web</a>
+    <a href="/spring-doc/web/web-integration/" class="">5. 其他Web框架</a>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/spring-doc/web-reactive/" class="">响应式Web</a>
   
 
           
@@ -488,7 +488,7 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-8b9fad4111be4155727ef91074c37605" class="toggle"  />
     <label for="section-8b9fad4111be4155727ef91074c37605" class="flex justify-between">
-      <a href="https://hongmao.run/spring-doc/integration/" class="">集成</a>
+      <a href="/spring-doc/integration/" class="">集成</a>
     </label>
   
 
@@ -502,7 +502,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/integration/jmx/" class="">4.JMX</a>
+    <a href="/spring-doc/integration/jmx/" class="">4.JMX</a>
   
 
           
@@ -525,7 +525,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hongmao.run/spring-doc/languages/" class="">支持的语言</a>
+    <a href="/spring-doc/languages/" class="">支持的语言</a>
   
 
           
@@ -557,7 +557,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
 
 
  
@@ -641,24 +641,24 @@ https://github.com/alex-shpak/hugo-book
 <p>Spring配置至少包括一个但通常不止一个必须由容器管理的bean定义。基于XML的配置元数据将这些bean配置为顶级<code>&lt;beans/&gt;</code>元素中的<code>&lt;bean/&gt;</code>元素。Java配置通常在<code>@Configuration</code>类中使用<code>@Bean</code>注解标注的方法来定义bean。</p>
 <p>这些bean定义对应着构成应用程序的实际对象。通常，您定义服务层对象、数据访问对象（DAO）、表示对象（如Struts中的<code>Action</code>实例）、基础结构对象（如Hibernate <code>SessionFactorys</code>）、JMS <code>Queues</code>等。通常，不在容器中配置细粒度域对象，因为创建和加载域对象通常是DAO和业务逻辑的责任。但是，您可以使用Spring与AspectJ的集成来配置在IoC容器控制之外创建的对象。请参阅<a href="../beans-annotation-config/#aop-atconfigurable">在Spring中使用AspectJ注入依赖域对象</a>。</p>
 <p>以下示例显示了基于XML的配置元数据的基本结构：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
-<span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
-    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
-    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
-</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
-
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">&gt;</span> <span><div class='custom_num_in_span'>1</div></span> <span><div class='custom_num_in_span'>2</div></span>
-        <span style="color:#6272a4">&lt;!-- 此处是当前bean的协作者和配置 --&gt;</span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">&gt;</span>
-        <span style="color:#6272a4">&lt;!-- 此处是当前bean的协作者和配置 --&gt;</span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-    <span style="color:#6272a4">&lt;!-- 此处是其他的bean定义 --&gt;</span>
-
-<span style="color:#ff79c6">&lt;/beans&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">&gt;</span> <span><div class='custom_num_in_span'>1</div></span> <span><div class='custom_num_in_span'>2</div></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">&lt;!-- 此处是当前bean的协作者和配置 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;...&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">&lt;!-- 此处是当前bean的协作者和配置 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">&lt;!-- 此处是其他的bean定义 --&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/beans&gt;</span>
+</span></span></code></pre></div>
 <table style="margin: 10px 0px;">
     <tr>
         <td style="border: none; padding: 0px 12px">
@@ -698,69 +698,69 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code" id="tabs-code-0" checked="checked" />
   <label for="tabs-code-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ClassPathXmlApplicationContext<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.xml&#34;</span><span style="color:#ff79c6">);</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code" id="tabs-code-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>ApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ClassPathXmlApplicationContext<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.xml&#34;</span><span style="color:#ff79c6">);</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code" id="tabs-code-1"  />
   <label for="tabs-code-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> context = ClassPathXmlApplicationContext(<span style="color:#f1fa8c">&#34;services.xml&#34;</span>, <span style="color:#f1fa8c">&#34;daos.xml&#34;</span>)
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">val</span> context = ClassPathXmlApplicationContext(<span style="color:#f1fa8c">&#34;services.xml&#34;</span>, <span style="color:#f1fa8c">&#34;daos.xml&#34;</span>)
+</span></span></code></pre></div></div></div>
 
 <blockquote class="book-hint note">
   在了解Spring的IoC容器之后，您可能想进一步了解Spring的<code>Resource</code>抽象（如<a href="../beans-annotation-config/#resources">[资源]</a>中所述），它提供了一种方便的机制，通过URI语法定义的位置读取输入流。具体而言，<code>Resource</code>路径用于构建应用上下文，如<a href="../beans-annotation-config/#resources-app-ctx">[应用上下文与资源路径]</a>中所述。
 </blockquote>
 
 <p>以下示例展示了服务层对象<code>(services.xml)</code>配置文件：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
-<span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
-    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
-    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
-</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
-
-    <span style="color:#6272a4">&lt;!-- services --&gt;</span>
-
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;petStore&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.samples.jpetstore.services.PetStoreServiceImpl&#34;</span><span style="color:#ff79c6">&gt;</span>
-        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span><span style="color:#ff79c6">/&gt;</span>
-        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;itemDao&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;itemDao&#34;</span><span style="color:#ff79c6">/&gt;</span>
-        <span style="color:#6272a4">&lt;!-- 此处是当前bean的其他协作者和配置 --&gt;</span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-    <span style="color:#6272a4">&lt;!-- 此处是其他服务的bean定义 --&gt;</span>
-
-<span style="color:#ff79c6">&lt;/beans&gt;</span>
-</code></pre></div><p>以下示例展示了数据访问对象<code>daos.xml</code>文件：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
-<span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
-    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
-    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
-</span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
-
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span>
-        <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao&#34;</span><span style="color:#ff79c6">&gt;</span>
-        <span style="color:#6272a4">&lt;!-- 此处是当前bean的其他协作者和配置 --&gt;</span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;itemDao&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.samples.jpetstore.dao.jpa.JpaItemDao&#34;</span><span style="color:#ff79c6">&gt;</span>
-        <span style="color:#6272a4">&lt;!-- 此处是当前bean的其他协作者和配置 --&gt;</span>
-    <span style="color:#ff79c6">&lt;/bean&gt;</span>
-
-    <span style="color:#6272a4">&lt;!-- 此处是其他数据访问对象的bean定义 --&gt;</span>
-
-<span style="color:#ff79c6">&lt;/beans&gt;</span>
-</code></pre></div><p>在前面的示例中，服务层由<code>PetStoreServiceImpl</code>类和两个类型为<code>JpaAccountDao</code>和<code>JpaItemDao</code>（基于JPA对象关系映射标准）的数据访问对象组成。<code>property name</code>元素指JavaBean属性的名称，<code>ref</code>元素指另一个bean定义的名称。<code>id</code>和<code>ref</code>元素之间的联动表示协作对象之间的依赖关系。有关配置对象依赖的详细信息，请参见<a href="../beans-dependencies/#14-%e4%be%9d%e8%b5%96">依赖</a>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">&lt;!-- services --&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;petStore&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.samples.jpetstore.services.PetStoreServiceImpl&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;property</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;itemDao&#34;</span> <span style="color:#50fa7b">ref=</span><span style="color:#f1fa8c">&#34;itemDao&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">&lt;!-- 此处是当前bean的其他协作者和配置 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">&lt;!-- 此处是其他服务的bean定义 --&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/beans&gt;</span>
+</span></span></code></pre></div><p>以下示例展示了数据访问对象<code>daos.xml</code>文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;beans</span> <span style="color:#50fa7b">xmlns=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xmlns:xsi=</span><span style="color:#f1fa8c">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">xsi:schemaLocation=</span><span style="color:#f1fa8c">&#34;http://www.springframework.org/schema/beans
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        https://www.springframework.org/schema/beans/spring-beans.xsd&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;accountDao&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">&lt;!-- 此处是当前bean的其他协作者和配置 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;itemDao&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;org.springframework.samples.jpetstore.dao.jpa.JpaItemDao&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">&lt;!-- 此处是当前bean的其他协作者和配置 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">&lt;!-- 此处是其他数据访问对象的bean定义 --&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/beans&gt;</span>
+</span></span></code></pre></div><p>在前面的示例中，服务层由<code>PetStoreServiceImpl</code>类和两个类型为<code>JpaAccountDao</code>和<code>JpaItemDao</code>（基于JPA对象关系映射标准）的数据访问对象组成。<code>property name</code>元素指JavaBean属性的名称，<code>ref</code>元素指另一个bean定义的名称。<code>id</code>和<code>ref</code>元素之间的联动表示协作对象之间的依赖关系。有关配置对象依赖的详细信息，请参见<a href="../beans-dependencies/#14-%e4%be%9d%e8%b5%96">依赖</a>。</p>
 <h3 id="组合基于xml的配置元数据">
   组合基于XML的配置元数据
   <a class="anchor" href="#%e7%bb%84%e5%90%88%e5%9f%ba%e4%ba%8exml%e7%9a%84%e9%85%8d%e7%bd%ae%e5%85%83%e6%95%b0%e6%8d%ae">#</a>
 </h3>
 <p>让bean定义可以跨多个XML文件非常有用。通常，每个单独的XML配置文件都表示体系结构中的一个逻辑层或模块。</p>
 <p>您可以使用应用上下文构造函数从所有这些XML片段中加载bean定义。此构造函数可以获取多个<code>Resource</code>位置，如<a href="./#122-%e5%88%9d%e5%a7%8b%e5%8c%96%e5%ae%b9%e5%99%a8">前一节</a>所示。或者，使用一个或多个<code>&lt;import/&gt;</code>元素从另一个或多个文件中加载bean定义。以下示例展示了如何执行此操作：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#ff79c6">&lt;beans&gt;</span>
-    <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
-    <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;resources/messageSource.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
-    <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;/resources/themeSource.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
-
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;bean1&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">/&gt;</span>
-    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;bean2&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">/&gt;</span>
-<span style="color:#ff79c6">&lt;/beans&gt;</span>
-</code></pre></div><p>在前面的示例中，外部bean定义从三个文件中加载：<code>services.xml</code>、<code>messageSource.xml</code>和<code>themeSource.xml</code>。所有位置路径都是执行导入的定义文件的相对路径，因此<code>services.xml</code>必须与执行导入的文件位于同一目录或类路径位置，而<code>messageSource.xml</code>和<code>themeSource.xml</code>必须位于导入文件位置的<code>resources</code>目录下。如您所见，前面的斜杠被忽略了。然而，考虑到这些路径是相对的，最好不要使用斜杠。根据Spring Schema，要导入文件的内容包括顶级<code>&lt;beans/&gt;</code>元素，而且必须是有效的XML bean定义。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;beans&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;resources/messageSource.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;import</span> <span style="color:#50fa7b">resource=</span><span style="color:#f1fa8c">&#34;/resources/themeSource.xml&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;bean1&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;bean2&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;...&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/beans&gt;</span>
+</span></span></code></pre></div><p>在前面的示例中，外部bean定义从三个文件中加载：<code>services.xml</code>、<code>messageSource.xml</code>和<code>themeSource.xml</code>。所有位置路径都是执行导入的定义文件的相对路径，因此<code>services.xml</code>必须与执行导入的文件位于同一目录或类路径位置，而<code>messageSource.xml</code>和<code>themeSource.xml</code>必须位于导入文件位置的<code>resources</code>目录下。如您所见，前面的斜杠被忽略了。然而，考虑到这些路径是相对的，最好不要使用斜杠。根据Spring Schema，要导入文件的内容包括顶级<code>&lt;beans/&gt;</code>元素，而且必须是有效的XML bean定义。</p>
 <blockquote class="book-hint note">
   <p>可以使用相对“../”路径引用父目录中的文件，但不建议这么做。这样做会创建对当前应用之外的文件的依赖关系。特别是，不建议对<code>classpath:</code>URLs（例如，<code>classpath:../services.xml</code>）使用此引用，它在运行时解析过程中选择“最近的”类路径root，然后查看其父目录。类路径配置更改可能会导致选择不同的、不正确的目录。</p>
 <p>您始终可以使用完全限定的资源位置而不是相对路径：例如，<code>file:C:/config/services.xml</code>或<code>classpath:/config/services.xml</code>。但是，请注意，您正在将应用程序的配置耦合到特定的绝对位置。通常，最好让此类绝对位置是间接的 — 例如，在运行时通过“${…}&ldquo;解析JVM系统属性的占位符获取。</p>
@@ -773,24 +773,24 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#groovy-bean-%e5%ae%9a%e4%b9%89-dsl">#</a>
 </h3>
 <p>作为外部化配置元数据的另一个示例，bean定义也可以在Spring的Groovy Bean定义DSL中表示，正如所熟知的<code>Grails</code>框架那样。通常，此类配置位于“.groovy”文件中，其结构如以下示例所示：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy">beans <span style="color:#ff79c6">{</span>
-    dataSource<span style="color:#ff79c6">(</span>BasicDataSource<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-        driverClassName <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;org.hsqldb.jdbcDriver&#34;</span>
-        url <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;jdbc:hsqldb:mem:grailsDB&#34;</span>
-        username <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;sa&#34;</span>
-        password <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
-        settings <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">[</span><span style="color:#8be9fd;font-style:italic">mynew:</span><span style="color:#f1fa8c">&#34;setting&#34;</span><span style="color:#ff79c6">]</span>
-    <span style="color:#ff79c6">}</span>
-    sessionFactory<span style="color:#ff79c6">(</span>SessionFactory<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-        dataSource <span style="color:#ff79c6">=</span> dataSource
-    <span style="color:#ff79c6">}</span>
-    myService<span style="color:#ff79c6">(</span>MyService<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
-        nestedBean <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span> AnotherBean bean <span style="color:#ff79c6">-&gt;</span>
-            dataSource <span style="color:#ff79c6">=</span> dataSource
-        <span style="color:#ff79c6">}</span>
-    <span style="color:#ff79c6">}</span>
-<span style="color:#ff79c6">}</span>
-</code></pre></div><p>这种配置风格在很大程度上等同于XML bean定义，甚至支持Spring的XML配置命名空间。它还允许通过<code>importBeans</code>指令导入XML bean定义文件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-groovy" data-lang="groovy"><span style="display:flex;"><span>beans <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    dataSource<span style="color:#ff79c6">(</span>BasicDataSource<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        driverClassName <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;org.hsqldb.jdbcDriver&#34;</span>
+</span></span><span style="display:flex;"><span>        url <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;jdbc:hsqldb:mem:grailsDB&#34;</span>
+</span></span><span style="display:flex;"><span>        username <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;sa&#34;</span>
+</span></span><span style="display:flex;"><span>        password <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        settings <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">[</span><span style="color:#8be9fd;font-style:italic">mynew:</span><span style="color:#f1fa8c">&#34;setting&#34;</span><span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>    sessionFactory<span style="color:#ff79c6">(</span>SessionFactory<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        dataSource <span style="color:#ff79c6">=</span> dataSource
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>    myService<span style="color:#ff79c6">(</span>MyService<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        nestedBean <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span> AnotherBean bean <span style="color:#ff79c6">-&gt;</span>
+</span></span><span style="display:flex;"><span>            dataSource <span style="color:#ff79c6">=</span> dataSource
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>这种配置风格在很大程度上等同于XML bean定义，甚至支持Spring的XML配置命名空间。它还允许通过<code>importBeans</code>指令导入XML bean定义文件。</p>
 <h2 id="123-使用容器">
   1.2.3 使用容器
   <a class="anchor" href="#123-%e4%bd%bf%e7%94%a8%e5%ae%b9%e5%99%a8">#</a>
@@ -803,27 +803,27 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-0" checked="checked" />
   <label for="tabs-code-1-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#6272a4">// 创建并配置bean
-</span><span style="color:#6272a4"></span>ApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ClassPathXmlApplicationContext<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.xml&#34;</span><span style="color:#ff79c6">);</span>
-
-<span style="color:#6272a4">// 获取配置好的实例
-</span><span style="color:#6272a4"></span>PetStoreService service <span style="color:#ff79c6">=</span> context<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getBean</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;petStore&#34;</span><span style="color:#ff79c6">,</span> PetStoreService<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">);</span>
-
-<span style="color:#6272a4">// 使用配置好的实例
-</span><span style="color:#6272a4"></span>List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> userList <span style="color:#ff79c6">=</span> service<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getUsernameList</span><span style="color:#ff79c6">();</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6272a4">// 创建并配置bean
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>ApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ClassPathXmlApplicationContext<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.xml&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 获取配置好的实例
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>PetStoreService service <span style="color:#ff79c6">=</span> context<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getBean</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;petStore&#34;</span><span style="color:#ff79c6">,</span> PetStoreService<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 使用配置好的实例
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> userList <span style="color:#ff79c6">=</span> service<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getUsernameList</span><span style="color:#ff79c6">();</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
   <label for="tabs-code-1-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">import</span> org.springframework.beans.factory.getBean
-
-<span style="color:#6272a4">// 创建并配置bean
-</span><span style="color:#6272a4"></span><span style="color:#ff79c6">val</span> context = ClassPathXmlApplicationContext(<span style="color:#f1fa8c">&#34;services.xml&#34;</span>, <span style="color:#f1fa8c">&#34;daos.xml&#34;</span>)
-
-<span style="color:#6272a4">// 获取配置好的实例
-</span><span style="color:#6272a4"></span><span style="color:#ff79c6">val</span> service = context.getBean&lt;PetStoreService&gt;(<span style="color:#f1fa8c">&#34;petStore&#34;</span>)
-
-<span style="color:#6272a4">// 使用配置好的实例
-</span><span style="color:#6272a4"></span><span style="color:#ff79c6">var</span> userList = service.getUsernameList()
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">import</span> org.springframework.beans.factory.getBean
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 创建并配置bean
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">val</span> context = ClassPathXmlApplicationContext(<span style="color:#f1fa8c">&#34;services.xml&#34;</span>, <span style="color:#f1fa8c">&#34;daos.xml&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 获取配置好的实例
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">val</span> service = context.getBean&lt;PetStoreService&gt;(<span style="color:#f1fa8c">&#34;petStore&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 使用配置好的实例
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">var</span> userList = service.getUsernameList()
+</span></span></code></pre></div></div></div>
 
 <p>对于Groovy配置，引导看起来非常相似。它有一个不同的上下文实现类，是识别Groovy的（但也能识别XML bean定义）。以下示例展示了Groovy配置：</p>
 
@@ -832,11 +832,11 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-0" checked="checked" />
   <label for="tabs-code-2-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> GenericGroovyApplicationContext<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.groovy&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span><span style="color:#ff79c6">);</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>ApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> GenericGroovyApplicationContext<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.groovy&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span><span style="color:#ff79c6">);</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-1"  />
   <label for="tabs-code-2-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> context = GenericGroovyApplicationContext(<span style="color:#f1fa8c">&#34;services.groovy&#34;</span>, <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span>)
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">val</span> context = GenericGroovyApplicationContext(<span style="color:#f1fa8c">&#34;services.groovy&#34;</span>, <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span>)
+</span></span></code></pre></div></div></div>
 
 <p>最灵活的变种是<code>GenericApplicationContext</code>与读取器（reader）的组合 — 例如，对于XML文件使用<code>XmlBeanDefinitionReader</code>，如下例所示：</p>
 
@@ -845,15 +845,15 @@ https://github.com/alex-shpak/hugo-book
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-0" checked="checked" />
   <label for="tabs-code-3-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">GenericApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> GenericApplicationContext<span style="color:#ff79c6">();</span>
-<span style="color:#ff79c6">new</span> XmlBeanDefinitionReader<span style="color:#ff79c6">(</span>context<span style="color:#ff79c6">).</span><span style="color:#50fa7b">loadBeanDefinitions</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.xml&#34;</span><span style="color:#ff79c6">);</span>
-context<span style="color:#ff79c6">.</span><span style="color:#50fa7b">refresh</span><span style="color:#ff79c6">();</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>GenericApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> GenericApplicationContext<span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">new</span> XmlBeanDefinitionReader<span style="color:#ff79c6">(</span>context<span style="color:#ff79c6">).</span><span style="color:#50fa7b">loadBeanDefinitions</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.xml&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.xml&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>context<span style="color:#ff79c6">.</span><span style="color:#50fa7b">refresh</span><span style="color:#ff79c6">();</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-3" id="tabs-code-3-1"  />
   <label for="tabs-code-3-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> context = GenericApplicationContext()
-XmlBeanDefinitionReader(context).loadBeanDefinitions(<span style="color:#f1fa8c">&#34;services.xml&#34;</span>, <span style="color:#f1fa8c">&#34;daos.xml&#34;</span>)
-context.refresh()
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">val</span> context = GenericApplicationContext()
+</span></span><span style="display:flex;"><span>XmlBeanDefinitionReader(context).loadBeanDefinitions(<span style="color:#f1fa8c">&#34;services.xml&#34;</span>, <span style="color:#f1fa8c">&#34;daos.xml&#34;</span>)
+</span></span><span style="display:flex;"><span>context.refresh()
+</span></span></code></pre></div></div></div>
 
 <p>当然，对于Groovy文件，您还可以使用<code>GroovyBeanDefinitionReader</code>，如下例所示：</p>
 
@@ -862,15 +862,15 @@ context.refresh()
 
 <div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-0" checked="checked" />
   <label for="tabs-code-4-0">Java</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">GenericApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> GenericApplicationContext<span style="color:#ff79c6">();</span>
-<span style="color:#ff79c6">new</span> GroovyBeanDefinitionReader<span style="color:#ff79c6">(</span>context<span style="color:#ff79c6">).</span><span style="color:#50fa7b">loadBeanDefinitions</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.groovy&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span><span style="color:#ff79c6">);</span>
-context<span style="color:#ff79c6">.</span><span style="color:#50fa7b">refresh</span><span style="color:#ff79c6">();</span>
-</code></pre></div></div><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-1"  />
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>GenericApplicationContext context <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> GenericApplicationContext<span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">new</span> GroovyBeanDefinitionReader<span style="color:#ff79c6">(</span>context<span style="color:#ff79c6">).</span><span style="color:#50fa7b">loadBeanDefinitions</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;services.groovy&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>context<span style="color:#ff79c6">.</span><span style="color:#50fa7b">refresh</span><span style="color:#ff79c6">();</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-1"  />
   <label for="tabs-code-4-1">Kotlin</label>
-  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#ff79c6">val</span> context = GenericApplicationContext()
-GroovyBeanDefinitionReader(context).loadBeanDefinitions(<span style="color:#f1fa8c">&#34;services.groovy&#34;</span>, <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span>)
-context.refresh()
-</code></pre></div></div></div>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">val</span> context = GenericApplicationContext()
+</span></span><span style="display:flex;"><span>GroovyBeanDefinitionReader(context).loadBeanDefinitions(<span style="color:#f1fa8c">&#34;services.groovy&#34;</span>, <span style="color:#f1fa8c">&#34;daos.groovy&#34;</span>)
+</span></span><span style="display:flex;"><span>context.refresh()
+</span></span></code></pre></div></div></div>
 
 <p>您可以在同一<code>ApplicationContext</code>上混合使用这些读取器（reader），以从不同的配置源读取bean定义。</p>
 <p>然后可以使用<code>getBean</code>获取bean的实例。<code>ApplicationContext</code>接口还有有一些其他方法用于获取bean，但是，理想情况下，应用程序代码中不应该使用它们。实际上，您的应用程序代码中应该根本没有对<code>getBean()</code>方法的调用，因此也完全不依赖于Spring的API。例如，Spring与web框架的集成为各种web框架组件（如控制器和JSF托管bean）提供了依赖项注入，允许您通过元数据（如自动注入注解）声明对特定bean的依赖。</p>
@@ -890,7 +890,7 @@ context.refresh()
 
 
 
-  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
 
 
  
