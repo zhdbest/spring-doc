@@ -25,7 +25,7 @@ Java void afterPropertiesSet() throws Exception; Kotlin fun afterPropertiesSet()
 <link rel="icon" href="/spring-doc/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/spring-doc/book.min.95eea17cffc46ae5b06337143c85665a6e0bd69bfda37c3e055b8cd16b9ab0b3.css" integrity="sha256-le6hfP/EauWwYzcUPIVmWm4L1pv9o3w&#43;BVuM0WuasLM=" crossorigin="anonymous">
   <script defer src="/spring-doc/flexsearch.min.js"></script>
-  <script defer src="/spring-doc/zh-cn.search.min.099ef1eca3f2038c8d8faa91bdacddc3a711ef28116eb5009cbb25c8289c9cfb.js" integrity="sha256-CZ7x7KPyA4yNj6qRvazdw6cR7ygRbrUAnLslyCicnPs=" crossorigin="anonymous"></script>
+  <script defer src="/spring-doc/zh-cn.search.min.ede586b94d4626f64176dd0171f66b749184c3d6e3ea4b04ba776e531de06e3b.js" integrity="sha256-7eWGuU1GJvZBdt0BcfZrdJGEw9bj6ksEunduUx3gbjs=" crossorigin="anonymous"></script>
 <link rel="alternate" type="application/rss+xml" href="https://hongmao.run/spring-doc/core/beans/beans-factory-nature/index.xml" title="Spring文档" />
 <!--
 Made with Book Theme
@@ -591,6 +591,7 @@ https://github.com/alex-shpak/hugo-book
       <ul>
         <li><a href="#初始化时回调">初始化时回调</a></li>
         <li><a href="#销毁时回调">销毁时回调</a></li>
+        <li><a href="#默认初始化和销毁方法">默认初始化和销毁方法</a></li>
       </ul>
     </li>
     <li><a href="#162-applicationcontextaware-和-beannameaware">1.6.2. <code>ApplicationContextAware</code> 和 <code>BeanNameAware</code></a></li>
@@ -680,8 +681,8 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-0" checked="checked" />
-  <label for="tabs-code-1-0">Java</label>
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-0" checked="checked" />
+  <label for="tabs-code-2-0">Java</label>
   <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">AnotherExampleBean</span> <span style="color:#8be9fd;font-style:italic">implements</span> InitializingBean <span style="color:#ff79c6">{</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    @Override
@@ -689,8 +690,8 @@ https://github.com/alex-shpak/hugo-book
 </span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 做某些初始化工作
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
-</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-1" id="tabs-code-1-1"  />
-  <label for="tabs-code-1-1">Kotlin</label>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-2" id="tabs-code-2-1"  />
+  <label for="tabs-code-2-1">Kotlin</label>
   <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">AnotherExampleBean</span> : InitializingBean {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">afterPropertiesSet</span>() {
@@ -717,6 +718,64 @@ https://github.com/alex-shpak/hugo-book
   <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">destroy</span>()
 </span></span></code></pre></div></div></div>
 
+<p>我们建议您不要使用<code>DisposableBean</code>回调接口，因为它不必要地将代码与Spring耦合。或者，我们建议使用<a href="../beans-annotation-config#beans-postconstruct-and-predestroy-annotations"><code>@PreDestroy</code></a>注解或指定bean定义支持的通用方法。使用基于XML的配置元数据，可以在<code>&lt;bean/&gt;</code>上使用<code>destroy-method</code>属性。通过Java配置，您可以使用<code>@Bean</code>的<code>destroyMethod</code>属性。请参阅<a href="../beans-annotation-config#beans-java-lifecycle-callbacks">接收生命周期回调</a>。考虑下面的定义：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleInitBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.ExampleBean&#34;</span> <span style="color:#50fa7b">destroy-method=</span><span style="color:#f1fa8c">&#34;cleanup&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span></code></pre></div>
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-0" checked="checked" />
+  <label for="tabs-code-4-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">ExampleBean</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">cleanup</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 做某些销毁工作（比如释放池连接）
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-4" id="tabs-code-4-1"  />
+  <label for="tabs-code-4-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ExampleBean</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">cleanup</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 做某些销毁工作（比如释放池连接）
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div></div>
+
+<p>前面的定义与下面的定义几乎完全相同：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;bean</span> <span style="color:#50fa7b">id=</span><span style="color:#f1fa8c">&#34;exampleInitBean&#34;</span> <span style="color:#50fa7b">class=</span><span style="color:#f1fa8c">&#34;examples.AnotherExampleBean&#34;</span><span style="color:#ff79c6">/&gt;</span>
+</span></span></code></pre></div>
+
+
+
+<div class="book-tabs"><input type="radio" class="toggle" name="tabs-code-5" id="tabs-code-5-0" checked="checked" />
+  <label for="tabs-code-5-0">Java</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">AnotherExampleBean</span> <span style="color:#8be9fd;font-style:italic">implements</span> DisposableBean <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">destroy</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 做某些销毁工作（比如释放池连接）
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div></div><input type="radio" class="toggle" name="tabs-code-5" id="tabs-code-5-1"  />
+  <label for="tabs-code-5-1">Kotlin</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">AnotherExampleBean</span> : DisposableBean {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">fun</span> <span style="color:#50fa7b">destroy</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// 做某些销毁工作（比如释放池连接）
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div></div>
+
+<p>然而，前面两个定义中的第一个并没有将代码耦合到Spring。</p>
+<blockquote class="book-hint tip">
+  可以为<code>&lt;bean&gt;</code>元素的<code>destroy-method</code>属性指定一个特殊（推断）值，该值指示Spring自动检测特定bean类上的公共<code>close</code>或<code>shutdown</code>方法。（因此，任何实现<code>java.lang.AutoCloseable</code>或<code>java.io.Closeable</code>的类都将匹配。）还可以在<code>&lt;beans&gt;</code>元素的<code>default-destroy-method</code>属性上设置这个特殊（推断）值，以将此行为应用于整个bean集（请参见<a href="./#%e9%bb%98%e8%ae%a4%e5%88%9d%e5%a7%8b%e5%8c%96%e5%92%8c%e9%94%80%e6%af%81%e6%96%b9%e6%b3%95">默认初始化和销毁方法</a>）。请注意，这是Java配置的默认行为。
+</blockquote>
+
+<h3 id="默认初始化和销毁方法">
+  默认初始化和销毁方法
+  <a class="anchor" href="#%e9%bb%98%e8%ae%a4%e5%88%9d%e5%a7%8b%e5%8c%96%e5%92%8c%e9%94%80%e6%af%81%e6%96%b9%e6%b3%95">#</a>
+</h3>
 <h2 id="162-applicationcontextaware-和-beannameaware">
   1.6.2. <code>ApplicationContextAware</code> 和 <code>BeanNameAware</code>
   <a class="anchor" href="#162-applicationcontextaware-%e5%92%8c-beannameaware">#</a>
@@ -770,6 +829,7 @@ https://github.com/alex-shpak/hugo-book
       <ul>
         <li><a href="#初始化时回调">初始化时回调</a></li>
         <li><a href="#销毁时回调">销毁时回调</a></li>
+        <li><a href="#默认初始化和销毁方法">默认初始化和销毁方法</a></li>
       </ul>
     </li>
     <li><a href="#162-applicationcontextaware-和-beannameaware">1.6.2. <code>ApplicationContextAware</code> 和 <code>BeanNameAware</code></a></li>
